@@ -59,17 +59,34 @@ class BuyCoinACHScreen extends Component {
 
           <View style={styles.addFundsRow}>
               <Text style={styles.infoBold}>Add Funds in</Text>
-              <TouchableOpacity
-                style={styles.addFundsDisplay}
-                onPress={() => { navigation.navigate("BuyCoinBTC")} }
-              >
+              <View style={styles.addFundsDisplay}>
+                <TouchableOpacity
+                  onPress={() => { navigation.navigate("BuyCoinETH")} }
+                >
+                    <Image
+                      source={require("../../assets/images/arrow-left.png")}
+                      style={{height:15, width: 15}}
+                      resizeMode="contain"
+                    />
+                </TouchableOpacity>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Image
                   source={require("../../assets/images/icon-usd.png")}
                   style={styles.BTCicon}
                   resizeMode="contain"
                 />
                 <Text style={styles.currecySelect}>USD</Text>
-              </TouchableOpacity>
+                </View>
+                <TouchableOpacity
+                  onPress={() => { navigation.navigate("BuyCoinBTC")} }
+                >
+                    <Image
+                      source={require("../../assets/images/arrow-right.png")}
+                      style={{height:15, width: 15}}
+                      resizeMode="contain"
+                    />
+                </TouchableOpacity>
+              </View>
           </View>
 
           <View style={styles.amountRow}>
@@ -103,14 +120,14 @@ class BuyCoinACHScreen extends Component {
 
           <View style={styles.bankRow}>
             <Text style={styles.infoBold}>Debit from</Text>
-            <View style={styles.bankDisplay}>
-              <Image
-                source={require("../../assets/images/logo-bofa.png")}
-                style={styles.bankIcon}
-                resizeMode="contain"
-              />
-              <Text>Adam Checking {"\n"}xx-00204</Text>
-            </View>
+              <View style={styles.bankDisplay}>
+                <Image
+                  source={require("../../assets/images/logo-bofa.png")}
+                  style={styles.bankIcon}
+                  resizeMode="contain"
+                />
+                <Text>Adam Checking {"\n"}xx-00204</Text>
+              </View>
           </View>
 
           <View style={styles.walletRow}>
@@ -196,7 +213,7 @@ const styles = StyleSheet.create({
   addFundsDisplay: {
     flex: 0.5,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   currencySelect: {

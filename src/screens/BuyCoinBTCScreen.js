@@ -59,17 +59,34 @@ class BuyCoinBTCScreen extends Component {
 
           <View style={styles.addFundsRow}>
               <Text style={styles.infoBold}>Add Funds in</Text>
-              <TouchableOpacity
-                style={styles.addFundsDisplay}
-                onPress={() => { navigation.navigate("BuyCoinETH")} }
-              >
-                  <Image
-                    source={require("../../assets/images/icon-btc.png")}
-                    style={styles.BTCicon}
-                    resizeMode="contain"
-                  />
-                  <Text style={styles.currecySelect}>Bitcoin</Text>
-              </TouchableOpacity>
+              <View style={styles.addFundsDisplay}>
+                <TouchableOpacity
+                  onPress={() => { navigation.navigate("BuyCoinACH")} }
+                >
+                    <Image
+                      source={require("../../assets/images/arrow-left.png")}
+                      style={{height:15, width: 15}}
+                      resizeMode="contain"
+                    />
+                </TouchableOpacity>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Image
+                        source={require("../../assets/images/icon-btc.png")}
+                        style={styles.BTCicon}
+                        resizeMode="contain"
+                      />
+                      <Text style={styles.currecySelect}>Bitcoin</Text>
+                    </View>
+                <TouchableOpacity
+                  onPress={() => { navigation.navigate("BuyCoinETH")} }
+                >
+                    <Image
+                      source={require("../../assets/images/arrow-right.png")}
+                      style={{height:15, width: 15}}
+                      resizeMode="contain"
+                    />
+                </TouchableOpacity>
+              </View>
           </View>
 
           <View style={styles.amountRow}>
@@ -189,7 +206,7 @@ const styles = StyleSheet.create({
   addFundsDisplay: {
     flex: 0.5,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   currencySelect: {
