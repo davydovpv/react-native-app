@@ -12,10 +12,11 @@ import {
 
 import MainHeader from '../components/MainHeader';
 
+import data from '../data';
+
 class BuyCoinBTCScreen extends Component {
 
   state: {
-      balanceLFI: string,
       buyLFI: number,
       btcSellRate: number,
   }
@@ -23,7 +24,6 @@ class BuyCoinBTCScreen extends Component {
   constructor() {
     super();
     this.state = {
-      balanceLFI: '70,000',
       buyLFI: 1500,
       btcSellRate: .000000167,
     };
@@ -32,9 +32,9 @@ class BuyCoinBTCScreen extends Component {
   render() {
 
     const { navigation } = this.props;
-    const { balanceLFI, buyLFI, btcSellRate } = this.state;
+    const { buyLFI, btcSellRate } = this.state;
 
-    let btcValue = buyLFI * btcSellRate;
+    let tradeValue = buyLFI * btcSellRate;
 
     return (
       <View style={styles.container}>
@@ -51,7 +51,7 @@ class BuyCoinBTCScreen extends Component {
                 style={styles.LFIicon}
                 resizeMode="contain"
               />
-            <Text style={styles.balanceBig}>{balanceLFI}</Text>
+            <Text style={styles.balanceBig}>{data.lfiBalance}</Text>
             </View>
         </View>
 
@@ -114,7 +114,7 @@ class BuyCoinBTCScreen extends Component {
               <Text style={styles.amountEqual}> = </Text>
 
               <TextInput
-                placeholder={`${btcValue.toFixed(6)} BTC`}
+                placeholder={`${tradeValue.toFixed(6)} BTC`}
                 placeholderTextColor="rgba(0,0,0,0.5)"
                 underlineColorAndroid="rgba(0,0,0,0)"
                 autoCapitalize="none"
@@ -141,7 +141,7 @@ class BuyCoinBTCScreen extends Component {
           <View style={styles.totalRow}>
             <View style={styles.depositDisplay}>
               <Text style={styles.smallTextBold}>TOTAL</Text>
-              <Text style={styles.smallText}>{btcValue.toFixed(6)} BTC</Text>
+              <Text style={styles.smallText}>{tradeValue.toFixed(6)} BTC</Text>
             </View>
             <View style={styles.totalDisplay}>
               <Image

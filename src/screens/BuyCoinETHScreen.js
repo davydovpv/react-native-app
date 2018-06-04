@@ -12,29 +12,29 @@ import {
 
 import MainHeader from '../components/MainHeader';
 
+import data from '../data';
+
 class BuyCoinETHScreen extends Component {
 
   state: {
-      balanceLFI: string,
       buyLFI: number,
-      lfiSellRate: number,
+      tradeETH: float
   }
 
   constructor() {
     super();
     this.state = {
-      balanceLFI: '70,000',
       buyLFI: 1500,
-      ethSellRate: .00002115,
+      tradeETH: 0.00002115
     };
   }
 
   render() {
 
     const { navigation } = this.props;
-    const { balanceLFI, buyLFI, ethSellRate } = this.state;
+    const { buyLFI, tradeETH } = this.state;
 
-    let btcValue = buyLFI * ethSellRate;
+    let tradeValue = buyLFI * tradeETH;
 
     return (
       <View style={styles.container}>
@@ -51,7 +51,7 @@ class BuyCoinETHScreen extends Component {
                 style={styles.LFIicon}
                 resizeMode="contain"
               />
-            <Text style={styles.balanceBig}>{balanceLFI}</Text>
+            <Text style={styles.balanceBig}>{data.lfiBalance}</Text>
             </View>
         </View>
 
@@ -70,7 +70,7 @@ class BuyCoinETHScreen extends Component {
                         resizeMode="contain"
                       />
                   </TouchableOpacity>
-                  
+
                   <TouchableOpacity
                     onPress={() => { navigation.navigate("BuyCoinACH")}}
                   >
@@ -114,7 +114,7 @@ class BuyCoinETHScreen extends Component {
               <Text style={styles.amountEqual}> = </Text>
 
               <TextInput
-                placeholder={`${btcValue.toFixed(4)} ETH`}
+                placeholder={`${tradeValue.toFixed(4)} ETH`}
                 placeholderTextColor="rgba(0,0,0,0.5)"
                 underlineColorAndroid="rgba(0,0,0,0)"
                 autoCapitalize="none"
@@ -141,7 +141,7 @@ class BuyCoinETHScreen extends Component {
           <View style={styles.totalRow}>
             <View style={styles.depositDisplay}>
               <Text style={styles.smallTextBold}>TOTAL</Text>
-              <Text style={styles.smallText}>{btcValue.toFixed(4)} ETH</Text>
+              <Text style={styles.smallText}>{tradeValue.toFixed(4)} ETH</Text>
             </View>
             <View style={styles.totalDisplay}>
               <Image

@@ -11,11 +11,11 @@ import {
 } from 'react-native';
 
 import MainHeader from '../components/MainHeader';
+import data from '../data';
 
 class BuyCoinACHScreen extends Component {
 
   state: {
-      balanceLFI: string,
       buyLFI: number,
       usdSellRate: number,
   }
@@ -23,7 +23,6 @@ class BuyCoinACHScreen extends Component {
   constructor() {
     super();
     this.state = {
-      balanceLFI: '70,000',
       buyLFI: 1500,
       usdSellRate: .16074,
     };
@@ -32,9 +31,9 @@ class BuyCoinACHScreen extends Component {
   render() {
 
     const { navigation } = this.props;
-    const { balanceLFI, buyLFI, usdSellRate } = this.state;
+    const { buyLFI, usdSellRate } = this.state;
 
-    let btcValue = buyLFI * usdSellRate;
+    let tradeValue = buyLFI * usdSellRate;
 
     return (
       <View style={styles.container}>
@@ -51,7 +50,7 @@ class BuyCoinACHScreen extends Component {
                 style={styles.LFIicon}
                 resizeMode="contain"
               />
-            <Text style={styles.balanceBig}>{balanceLFI}</Text>
+            <Text style={styles.balanceBig}>{data.lfiBalance}</Text>
             </View>
         </View>
 
@@ -113,7 +112,7 @@ class BuyCoinACHScreen extends Component {
               <Text style={styles.amountEqual}> = </Text>
 
               <TextInput
-                placeholder={`${btcValue.toFixed(2)} USD`}
+                placeholder={`${tradeValue.toFixed(2)} USD`}
                 placeholderTextColor="rgba(0,0,0,0.5)"
                 underlineColorAndroid="rgba(0,0,0,0)"
                 autoCapitalize="none"
@@ -133,7 +132,7 @@ class BuyCoinACHScreen extends Component {
                   style={styles.bankIcon}
                   resizeMode="contain"
                 />
-                <Text>Adam Checking {"\n"}xx-00204</Text>
+              <Text>{data.bankDetail[0].accountName} {"\n"}xx-{data.bankDetail[0].bank5digit}</Text>
               </View>
           </View>
 
@@ -147,7 +146,7 @@ class BuyCoinACHScreen extends Component {
           <View style={styles.totalRow}>
             <View style={styles.depositDisplay}>
               <Text style={styles.smallTextBold}>TOTAL</Text>
-              <Text style={styles.smallText}>{btcValue.toFixed(2)} USD</Text>
+              <Text style={styles.smallText}>{tradeValue.toFixed(2)} USD</Text>
             </View>
             <View style={styles.totalDisplay}>
               <Image
@@ -275,14 +274,13 @@ const styles = StyleSheet.create({
   bankDisplay: {
     flex: 0.5,
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   bankIcon: {
     height: 35,
     width: 35,
     borderRadius: 5,
-    marginLeft: -25,
     marginRight: 10,
   },
   totalRow: {

@@ -17,6 +17,9 @@ import {
   FONT_HEADLINE_SEMIBOLD
 } from '../styles/common';
 
+import data from '../data';
+
+
 class CertificateScreen extends Component {
   render() {
     return (
@@ -49,17 +52,17 @@ class CertificateScreen extends Component {
                 color="black"
                 nameWeight="bold"
                 photo={require("../../assets/images/profile.png")}
-                name="Adam Rosen"
-                age="32"
-                sex="M"
-                location="New York, NY"
-                ssn4digit="0910"
+                name={data.name}
+                age={data.age}
+                sex={data.sex}
+                location={data.location}
+                ssn4digit={data.ssn4digit}
             />
           </View>
 
           <ScrollView>
             <View style={styles.certContent}>
-              <Text style={styles.certText}>This certificate guarantees that this wallet and contained LFI tokens belong to Adam Rosen, resident of the State of New York and a Citizen of the United States with Social Security Number ending xx-0910.{"\n"}</Text>
+              <Text style={styles.certText}>This certificate guarantees that this wallet and contained LFI tokens belong to {data.name}, resident of the State of {data.state} and a Citizen of the {data.country} with Social Security Number ending xx-{data.ssn4digit}.{"\n"}</Text>
               <Text style={styles.certText}>Upon his death, our Smart Contract will verify records via the US Social Security Administration and other API's. Once validated, the balance of his LFI wallet will multiply and funds will be available to the holder of this certificate.</Text>
             </View>
           </ScrollView>

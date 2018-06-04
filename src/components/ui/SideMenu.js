@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { DrawerActions, NavigationActions } from 'react-navigation';
 import UserProfile from '../UserProfile';
+import data from '../../data';
 
 class SideMenu extends Component {
 
@@ -37,11 +38,11 @@ class SideMenu extends Component {
               color="white"
               nameWeight="bold"
               photo={require("../../../assets/images/profile.png")}
-              name="Adam Rosen"
-              age="32"
-              sex="M"
-              location="New York, NY"
-              ssn4digit="0910"
+              name={data.name}
+              age={data.age}
+              sex={data.sex}
+              location={data.location}
+              ssn4digit={data.ssn4digit}
           />
 
           <View style={styles.navContent}>

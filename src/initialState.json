@@ -1,0 +1,53 @@
+{
+  "user": {
+    "name": "Adam Rosen",
+    "photo": "../assets/images/profile.png",
+    "age": 34,
+    "sex": "M",
+    "location": "New York, NY",
+    "state": "New York",
+    "country": "United States",
+    "ssn4digit": 9010,
+    "id_verified": true
+  },
+  "wallet": {
+    "lfiBalance": "70,000",
+    "multipleFactor": 2,
+    "multipleYear": 2023,
+    "bankAttached": true,
+    "bankDetail": [
+      {
+        "bankName": "Chase",
+        "accountName": "Checking",
+        "bank5digit": 32004,
+        "bank_verified": true
+      },
+      {
+        "bankName": "Fidelity",
+        "accountName": "Joint Savings",
+        "bank5digit": 14083,
+        "bank_verified": true
+      }
+    ],
+  },
+  "transactions": [
+    {
+      "fundAmount": 150,
+      "fundCurrency": "ETH",
+      "fundDate": "2018-06-04",
+      "hash": "1239xf9231902nw9210091k"
+    },
+    {
+      "fundAmount": 1200,
+      "fundCurrency": "USD",
+      "fundDate": "2018-05-20",
+      "hash": "5902w1u290495490xp001w"
+    }
+  ],
+  "lfiTrade": {
+    "BTC": 0.000000167,
+    "ETH": 0.00002115,
+    "USD": 0.09074
+  },
+  "errors": []
+}

@@ -13,6 +13,7 @@ import {
 import MainHeader from '../components/MainHeader';
 import UserProfileHome from '../components/UserProfileHome';
 import { BUTTON_COLOR } from '../styles/common';
+import data from '../data';
 
 class HomeScreen extends Component {
 
@@ -26,10 +27,7 @@ class HomeScreen extends Component {
     constructor(props) {
       super(props);
       this.state = {
-        balanceLFI: '70,000',
         balanceUSD: '$15,000',
-        multipleLFI: '2',
-        multipleYearLFI: 2023
       };
 
     }
@@ -47,12 +45,12 @@ class HomeScreen extends Component {
 
           <UserProfileHome
             photo={require("../../assets/images/profile.png")}
-            name="Adam Rosen"
+            name={data.name}
           />
 
           <View style={styles.balance}>
             <View style={styles.balanceRow}>
-                <Text style={styles.balanceBig}>{balanceLFI}</Text>
+                <Text style={styles.balanceBig}>{data.lfiBalance}</Text>
                 <Image
                   source={require("../../assets/images/icon-lfi.png")}
                   style={styles.LFIicon}
@@ -70,7 +68,7 @@ class HomeScreen extends Component {
           </View>
 
           <View style={styles.infoRegion}>
-            <Text style={styles.infoText}>Your LFI balance multiplies {multipleLFI}x in {multipleYearLFI}</Text>
+            <Text style={styles.infoText}>Your LFI balance multiplies {data.multipleFactor}x in {data.multipleYear}</Text>
 
             <TouchableOpacity
               style={styles.buttonBuy}
