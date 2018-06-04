@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Navigator from './src/navigators';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import store from './src/store';
+
 
 class App extends Component {
 
@@ -20,6 +21,7 @@ class App extends Component {
     });
 
     this.setState({ fontLoaded: true });
+
   }
 
   render() {

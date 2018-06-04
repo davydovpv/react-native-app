@@ -10,9 +10,10 @@ import {
   Button,
   Alert
 } from 'react-native';
-
 import MainHeader from '../components/MainHeader';
 import UserProfileHome from '../components/UserProfileHome';
+
+import { BUTTON_COLOR } from '../styles/common';
 
 class HomeScreen extends Component {
 
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 30,
-    backgroundColor: '#2FB87E',
+    backgroundColor: BUTTON_COLOR,
     borderRadius: 15,
     paddingVertical: 20,
     height: 65,

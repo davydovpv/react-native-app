@@ -15,7 +15,7 @@ const UserProfileHome = ({ photo, name }) => (
           style={styles.profilePic}
           resizeMode="contain"
         />
-        <Text style={styles.profileName}>{name}</Text>
+      <Text style={styles.profileName}>{name}</Text>
       </View>
 
 );

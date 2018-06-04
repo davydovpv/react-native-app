@@ -27,11 +27,15 @@ const MainHeader = ({ navigation, ...props}) => (
         </TouchableOpacity>
 
 
+        <TouchableOpacity
+          onPress={() => { navigation.navigate("Home")} }
+        >
         <Image
           source={require("../../assets/images/logo.png")}
           style={styles.logo}
           resizeMode="contain"
         />
+        </TouchableOpacity>
 
         <TouchableOpacity>
           <Image

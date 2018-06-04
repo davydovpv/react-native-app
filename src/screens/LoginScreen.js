@@ -10,6 +10,11 @@ import {
   KeyboardAvoidingView
 } from 'react-native';
 
+import {
+  BACKGROUND_DARK,
+  BUTTON_COLOR,
+  FONT_HEADLINE_SEMIBOLD
+} from '../styles/common';
 
 class LoginScreen extends Component {
 
@@ -109,7 +114,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#1E4072',
+    backgroundColor: BACKGROUND_DARK,
     padding: 20,
   },
   loginLogo: {
@@ -151,12 +156,12 @@ const styles = StyleSheet.create({
     width: 250,
   },
   boldButton: {
-    fontFamily: 'MontserratSemiBold',
+    fontFamily: FONT_HEADLINE_SEMIBOLD,
     fontSize: 20,
     color: 'rgba(255,255,255,1)',
   },
   buttonLogin: {
-    backgroundColor: '#2FB87E',
+    backgroundColor: BUTTON_COLOR,
     borderRadius: 15,
     paddingVertical: 20,
     height: 65,

@@ -11,6 +11,11 @@ import {
 
 import MainHeader from '../components/MainHeader';
 import UserProfile from '../components/UserProfile';
+import {
+  BACKGROUND_DARK,
+  BORDER_COLOR,
+  FONT_HEADLINE_SEMIBOLD
+} from '../styles/common';
 
 class CertificateScreen extends Component {
   render() {
@@ -83,7 +88,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#1E4072',
+    backgroundColor: BACKGROUND_DARK,
   },
   certificateLFI: {
     flex: 1,
@@ -93,7 +98,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 20,
     borderWidth: 5,
-    borderColor: '#ccc',
+    borderColor: BORDER_COLOR,
     backgroundColor: '#F2EDE6',
   },
   certificateHeader: {
@@ -127,7 +132,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   navItem: {
-    fontFamily: 'MontserratSemiBold',
+    fontFamily: FONT_HEADLINE_SEMIBOLD,
     color: 'rgba(255,255,255,1)',
     fontSize: 14,
   },
