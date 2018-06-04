@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import Navigator from './src/navigators';
-import { Provider, connect } from 'react-redux';
-import store from './src/store';
-
 
 class App extends Component {
 
@@ -27,9 +24,7 @@ class App extends Component {
   render() {
     return this.state.fontLoaded ? (
 
-      <Provider store={store}>
-        <Navigator />
-      </Provider>
+      <Navigator />
 
     ) : null ;
 

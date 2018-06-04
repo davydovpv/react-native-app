@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import MainHeader from '../components/MainHeader';
 import UserProfileHome from '../components/UserProfileHome';
-
 import { BUTTON_COLOR } from '../styles/common';
 
 class HomeScreen extends Component {
@@ -75,7 +74,7 @@ class HomeScreen extends Component {
 
             <TouchableOpacity
               style={styles.buttonBuy}
-              onPress={() => { navigation.navigate("BuyCoin")} }
+              onPress={() => { navigation.navigate("BuyCoin")}}
             >
                 <Text style={styles.boldButton}>Buy LFI Coin</Text>
             </TouchableOpacity>
@@ -83,6 +82,7 @@ class HomeScreen extends Component {
 
 
         </View>
+
       );
     }
 
