@@ -61,7 +61,8 @@ class BuyCoinACHScreen extends Component {
               <Text style={styles.infoBold}>Add Funds in</Text>
               <View style={styles.addFundsDisplay}>
                 <TouchableOpacity
-                  onPress={() => { navigation.navigate("BuyCoinETH")} }
+                  onPress={() => { navigation.navigate("BuyCoinETH")}}
+                  style={{padding: 10, marginLeft: -5}}
                 >
                     <Image
                       source={require("../../assets/images/arrow-left.png")}
@@ -69,16 +70,22 @@ class BuyCoinACHScreen extends Component {
                       resizeMode="contain"
                     />
                 </TouchableOpacity>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Image
-                  source={require("../../assets/images/icon-usd.png")}
-                  style={styles.BTCicon}
-                  resizeMode="contain"
-                />
-                <Text style={styles.currecySelect}>USD</Text>
-                </View>
+
                 <TouchableOpacity
-                  onPress={() => { navigation.navigate("BuyCoinBTC")} }
+                  onPress={() => { navigation.navigate("BuyCoinBTC")}}
+                >
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Image
+                    source={require("../../assets/images/icon-usd.png")}
+                    style={styles.BTCicon}
+                    resizeMode="contain"
+                  />
+                  <Text style={styles.currecySelect}>USD</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => { navigation.navigate("BuyCoinBTC")}}
+                  style={{padding: 10, marginRight: -5}}
                 >
                     <Image
                       source={require("../../assets/images/arrow-right.png")}
@@ -275,8 +282,8 @@ const styles = StyleSheet.create({
     height: 35,
     width: 35,
     borderRadius: 5,
-    marginLeft: -10,
-    marginRight: 5,
+    marginLeft: -25,
+    marginRight: 10,
   },
   totalRow: {
     height: 90,

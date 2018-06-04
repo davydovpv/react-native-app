@@ -60,25 +60,33 @@ class BuyCoinETHScreen extends Component {
           <View style={styles.addFundsRow}>
               <Text style={styles.infoBold}>Add Funds in</Text>
               <View style={styles.addFundsDisplay}>
-                <TouchableOpacity
-                  onPress={() => { navigation.navigate("BuyCoinBTC")} }
-                >
-                    <Image
-                      source={require("../../assets/images/arrow-left.png")}
-                      style={{height:15, width: 15}}
-                      resizeMode="contain"
-                    />
+                  <TouchableOpacity
+                    onPress={() => { navigation.navigate("BuyCoinBTC")}}
+                    style={{padding: 10, marginLeft: -5}}
+                  >
+                      <Image
+                        source={require("../../assets/images/arrow-left.png")}
+                        style={{height:15, width: 15}}
+                        resizeMode="contain"
+                      />
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity
+                    onPress={() => { navigation.navigate("BuyCoinACH")}}
+                  >
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Image
+                        source={require("../../assets/images/icon-eth.png")}
+                        style={styles.BTCicon}
+                        resizeMode="contain"
+                      />
+                      <Text style={styles.currecySelect}>Ether</Text>
+                    </View>
                 </TouchableOpacity>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Image
-                    source={require("../../assets/images/icon-eth.png")}
-                    style={styles.BTCicon}
-                    resizeMode="contain"
-                  />
-                  <Text style={styles.currecySelect}>Ether</Text>
-                </View>
+
                 <TouchableOpacity
-                  onPress={() => { navigation.navigate("BuyCoinACH")} }
+                  onPress={() => { navigation.navigate("BuyCoinACH")}}
+                  style={{padding: 10, marginRight: -5}}
                 >
                     <Image
                       source={require("../../assets/images/arrow-right.png")}

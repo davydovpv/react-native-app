@@ -61,7 +61,8 @@ class BuyCoinBTCScreen extends Component {
               <Text style={styles.infoBold}>Add Funds in</Text>
               <View style={styles.addFundsDisplay}>
                 <TouchableOpacity
-                  onPress={() => { navigation.navigate("BuyCoinACH")} }
+                  onPress={() => { navigation.navigate("BuyCoinACH")}}
+                  style={{padding: 10, marginLeft: -5}}
                 >
                     <Image
                       source={require("../../assets/images/arrow-left.png")}
@@ -69,6 +70,10 @@ class BuyCoinBTCScreen extends Component {
                       resizeMode="contain"
                     />
                 </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => { navigation.navigate("BuyCoinETH")}}
+                >
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                       <Image
                         source={require("../../assets/images/icon-btc.png")}
@@ -77,8 +82,11 @@ class BuyCoinBTCScreen extends Component {
                       />
                       <Text style={styles.currecySelect}>Bitcoin</Text>
                     </View>
+                </TouchableOpacity>
+
                 <TouchableOpacity
-                  onPress={() => { navigation.navigate("BuyCoinETH")} }
+                  onPress={() => { navigation.navigate("BuyCoinETH")}}
+                  style={{padding: 10, marginRight: -5}}
                 >
                     <Image
                       source={require("../../assets/images/arrow-right.png")}
