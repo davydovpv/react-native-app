@@ -129,12 +129,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 30,
+    paddingVertical: 20,
   },
   balance: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 30,
+    paddingVertical: 20,
   },
   balanceRow: {
     flexDirection: 'row',
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     width: 30,
   },
   LFIiconSM: {
-    marginHorizontal: 3,
+    marginHorizontal: 2,
     height: 16,
     width: 16,
   },
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    paddingTop: 20,
+    paddingTop: 10,
   },
   infoTextBold: {
     fontFamily: 'OpenSansBold',
@@ -198,7 +198,6 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 30,
     backgroundColor: BUTTON_COLOR,
     borderRadius: 15,
     paddingVertical: 20,
