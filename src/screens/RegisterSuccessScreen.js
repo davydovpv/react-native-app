@@ -20,7 +20,7 @@ class RegisterSuccessScreen extends Component {
       return (
 
         <View style={styles.container}>
-          <StatusBar barStyle="dark-content" />
+          <StatusBar barStyle="light-content" />
           <RegisterHeader />
 
           <View style={styles.headingRow}>

@@ -19,7 +19,7 @@ class VerifyIDScreen extends Component {
       return (
 
         <View style={styles.container}>
-          <StatusBar barStyle="dark-content" />
+          <StatusBar barStyle="light-content" />
           <RegisterHeader />
 
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>

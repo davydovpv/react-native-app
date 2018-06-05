@@ -22,7 +22,7 @@ class RegisterScreen extends Component {
       return (
 
         <View style={styles.container}>
-          <StatusBar barStyle="dark-content" />
+          <StatusBar barStyle="light-content" />
 
           <RegisterHeader/>
 
@@ -184,8 +184,6 @@ const styles = StyleSheet.create({
   },
   footer: {
     width: '100%',
-    position: 'absolute',
-    bottom: 0, left: 0, right: 0,
     padding: 20,
     borderTopWidth: 1,
     borderTopColor: '#ccc',

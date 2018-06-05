@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
       margin: 15,
   },
   profileName: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600'
   }
 });
