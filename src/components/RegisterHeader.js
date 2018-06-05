@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -7,37 +8,37 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import { DrawerActions, withNavigation } from 'react-navigation';
+import { withNavigation } from 'react-navigation';
 
-const MainHeader = ({ navigation, ...props}) => (
+const RegisterHeader = ({ navigation, ...props})  => (
 
     <View style={styles.headerContainer}>
 
         <TouchableOpacity
-          onPress={() => navigation.dispatch(DrawerActions.openDrawer()) }
+          onPress={() => { navigation.goBack()}}
+          style={{padding:10}}
         >
           <Image
-            source={require("../../assets/images/icon-menu.png")}
-            style={styles.iconMenu}
+            source={require("../../assets/images/arrow-left.png")}
+            style={styles.iconLeft}
             resizeMode="contain"
           />
         </TouchableOpacity>
 
 
-        <TouchableOpacity
-          onPress={() => { navigation.navigate("Home")} }
-        >
         <Image
           source={require("../../assets/images/logo.png")}
           style={styles.logo}
           resizeMode="contain"
         />
-        </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => { navigation.navigate("LoginHandler")}}
+          style={{padding:10}}
+        >
           <Image
-            source={require("../../assets/images/icon-info-white.png")}
-            style={styles.iconInfo}
+            source={require("../../assets/images/icon-close.png")}
+            style={styles.iconRight}
             resizeMode="contain"
           />
         </TouchableOpacity>
@@ -58,19 +59,21 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 40,
   },
-  iconMenu: {
+  iconLeft: {
     height: 20,
     width: 20,
+    tintColor: '#fff'
   },
   logo: {
       width: 125,
       height: 25,
   },
-  iconInfo: {
-    height: 28,
-    width: 30,
+  iconRight: {
+    height: 18,
+    width: 18,
+    tintColor: '#fff'
   },
 });
 
 
-export default withNavigation(MainHeader);
+export default withNavigation(RegisterHeader);

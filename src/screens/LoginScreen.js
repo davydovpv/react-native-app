@@ -94,7 +94,8 @@ class LoginScreen extends Component {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={styles.buttonRegister}>
+                  style={styles.buttonRegister}
+                  onPress={registerHandler}>
                   <Text style={styles.boldButton}>create account</Text>
                 </TouchableOpacity>
 

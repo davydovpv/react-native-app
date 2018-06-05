@@ -50,12 +50,12 @@ class HomeScreen extends Component {
 
           <View style={styles.balance}>
             <View style={styles.balanceRow}>
-                <Text style={styles.balanceBig}>{data.lfiBalance}</Text>
                 <Image
                   source={require("../../assets/images/icon-lfi.png")}
                   style={styles.LFIicon}
                   resizeMode="contain"
                 />
+                <Text style={styles.balanceBig}>{data.lfiBalance}</Text>
             </View>
             <View style={styles.balanceRow}>
                 <Image
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   LFIicon: {
-    marginLeft: 5,
+    marginHorizontal: 5,
     height: 30,
     width: 30,
   },
@@ -117,22 +117,23 @@ const styles = StyleSheet.create({
     fontWeight: '200',
   },
   USDicon: {
-    marginRight: 5,
+    marginHorizontal: 5,
     height: 20,
     width: 20,
   },
   infoRegion: {
-    height: 200,
+    height: 180,
     width: '100%',
     padding: 20,
     borderTopColor: '#ccc',
-    borderTopWidth: 1,
+    borderTopWidth: 0.5,
     backgroundColor: '#F2F2F2',
     justifyContent: 'center',
     alignItems: 'center',
   },
   infoText: {
     fontFamily: 'OpenSansRegular',
+    fontSize: 16,
   },
   boldButton: {
     fontFamily: 'MontserratSemiBold',

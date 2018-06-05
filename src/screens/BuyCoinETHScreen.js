@@ -39,9 +39,7 @@ class BuyCoinETHScreen extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <MainHeader
-          openSidemenu = {() => { navigation.navigate("DrawerOpen")}}
-        />
+        <MainHeader />
 
         <View style={styles.balanceRow}>
             <Text style={styles.headingBold}>LFI Balance</Text>

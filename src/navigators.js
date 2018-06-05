@@ -13,6 +13,8 @@ import BuyCoinETHScreen from "./screens/BuyCoinETHScreen";
 import BuyCoinACHScreen from "./screens/BuyCoinACHScreen";
 import CertificateScreen from "./screens/CertificateScreen";
 import RegisterScreen from "./screens/RegisterScreen";
+import VerifyIDScreen from "./screens/VerifyIDScreen";
+import RegisterSuccessScreen from "./screens/RegisterSuccessScreen";
 import SideMenu from "./components/ui/SideMenu";
 
 const globalStackConfig = {
@@ -39,21 +41,25 @@ const BuyCoinStack = createStackNavigator(
   buyCoinStackConfig
 );
 
+const RegisterStack = createStackNavigator(
+  {
+    Register_1: { screen: RegisterScreen },
+    Register_2: { screen: VerifyIDScreen },
+    Register_3: { screen: RegisterSuccessScreen }
+  },
+  globalStackConfig
+);
 
 
 const DrawerNav = createDrawerNavigator(
   {
     Home: { screen: HomeScreen },
     BuyCoin: { screen: BuyCoinStack },
-    Certificate: { screen: CertificateScreen },
-    Register: { screen: RegisterScreen },
+    Certificate: { screen: CertificateScreen }
   },
   {
      contentComponent: SideMenu,
      drawerWidth: 275,
-     drawerOpenRoute: "DrawerOpen",
-     drawerCloseRoute: "DrawerClose",
-     drawerToggleRoute: "DrawerToggle",
      navigationOptions: {
        drawerLockMode: "locked-closed",
        lockMode: "locked-closed",
@@ -65,7 +71,8 @@ const DrawerNav = createDrawerNavigator(
 const LoginStack = createSwitchNavigator(
   {
     LoginHandler: LoginScreen,
-    Home: DrawerNav
+    Home: DrawerNav,
+    Register: RegisterStack
   },
   {
     initialRouteName: "LoginHandler",

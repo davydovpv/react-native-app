@@ -25,9 +25,7 @@ class CertificateScreen extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <MainHeader
-          openSidemenu = {() => { this.props.navigation.navigate("DrawerOpen")}}
-        />
+        <MainHeader />
 
         <View style={styles.certificateLFI}>
           <View style={styles.certificateHeader}>
