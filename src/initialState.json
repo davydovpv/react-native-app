@@ -11,7 +11,7 @@
     "id_verified": true
   },
   "wallet": {
-    "lfiBalance": "70,000",
+    "lfiBalance": 70000,
     "multipleFactor": 2,
     "multipleYear": 2023,
     "bankAttached": true,

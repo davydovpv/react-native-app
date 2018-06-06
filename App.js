@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Navigator from './src/navigators';
-
 class App extends Component {
 
   state = {
@@ -23,9 +22,7 @@ class App extends Component {
 
   render() {
     return this.state.fontLoaded ? (
-
       <Navigator />
-
     ) : null ;
 
   }

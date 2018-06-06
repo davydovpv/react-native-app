@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import { IntlProvider, FormattedMessage } from 'react-intl';
 import MainHeader from '../components/MainHeader';
 import data from '../data';
 
@@ -36,6 +37,10 @@ class BuyCoinACHScreen extends Component {
     let tradeValue = buyLFI * usdSellRate;
 
     return (
+    <IntlProvider
+      locale="en"
+      textComponent={Text}
+      >
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <MainHeader />
@@ -48,7 +53,13 @@ class BuyCoinACHScreen extends Component {
                 style={styles.LFIicon}
                 resizeMode="contain"
               />
-            <Text style={styles.balanceBig}>{data.lfiBalance}</Text>
+              <Text style={styles.balanceBig}>
+                <FormattedMessage
+                  id="balanceLFI"
+                  defaultMessage={` {n, number} `}
+                  values={{ n: data.lfiBalance }}
+                />
+              </Text>
             </View>
         </View>
 
@@ -144,7 +155,14 @@ class BuyCoinACHScreen extends Component {
           <View style={styles.totalRow}>
             <View style={styles.depositDisplay}>
               <Text style={styles.smallTextBold}>TOTAL</Text>
-              <Text style={styles.smallText}>{tradeValue.toFixed(2)} USD</Text>
+              <Text style={styles.smallText}>
+                <FormattedMessage
+                  id="balanceLFI"
+                  defaultMessage={` {n, number} `}
+                  values={{ n: tradeValue.toFixed(2) }}
+                /> USD
+
+              </Text>
             </View>
             <View style={styles.totalDisplay}>
               <Image
@@ -152,7 +170,13 @@ class BuyCoinACHScreen extends Component {
                 style={styles.LFIicon}
                 resizeMode="contain"
               />
-            <Text style={styles.addTotalLFI}>{buyLFI}</Text>
+            <Text style={styles.addTotalLFI}>
+              <FormattedMessage
+                id="balanceLFI"
+                defaultMessage={` {n, number} `}
+                values={{ n: buyLFI }}
+              />
+            </Text>
             </View>
           </View>
         </ScrollView>
@@ -162,10 +186,19 @@ class BuyCoinACHScreen extends Component {
             style={styles.buttonBuy}
             onPress={() => { navigation.navigate("BuyConfirm")} }
           >
-            <Text style={styles.boldButton}>Buy {buyLFI} LFI</Text>
+            <Text style={styles.boldButton}>
+              Buy
+              <FormattedMessage
+                id="balanceLFI"
+                defaultMessage={` {n, number} `}
+                values={{ n: buyLFI }}
+              />
+              LFI
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
+    </IntlProvider>
     );
   }
 }

@@ -10,8 +10,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import { IntlProvider, FormattedMessage } from 'react-intl';
 import MainHeader from '../components/MainHeader';
-
 import data from '../data';
 
 class BuyCoinETHScreen extends Component {
@@ -37,6 +37,10 @@ class BuyCoinETHScreen extends Component {
     let tradeValue = buyLFI * tradeETH;
 
     return (
+    <IntlProvider
+      locale="en"
+      textComponent={Text}
+      >
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <MainHeader />
@@ -49,7 +53,13 @@ class BuyCoinETHScreen extends Component {
                 style={styles.LFIicon}
                 resizeMode="contain"
               />
-            <Text style={styles.balanceBig}>{data.lfiBalance}</Text>
+              <Text style={styles.balanceBig}>
+                <FormattedMessage
+                  id="balanceLFI"
+                  defaultMessage={` {n, number} `}
+                  values={{ n: data.lfiBalance }}
+                />
+              </Text>
             </View>
         </View>
 
@@ -147,7 +157,13 @@ class BuyCoinETHScreen extends Component {
                 style={styles.LFIicon}
                 resizeMode="contain"
               />
-            <Text style={styles.addTotalLFI}>{buyLFI}</Text>
+            <Text style={styles.addTotalLFI}>
+              <FormattedMessage
+                id="balanceLFI"
+                defaultMessage={` {n, number} `}
+                values={{ n: buyLFI }}
+              />
+            </Text>
             </View>
           </View>
         </ScrollView>
@@ -157,10 +173,19 @@ class BuyCoinETHScreen extends Component {
             style={styles.buttonBuy}
             onPress={() => { navigation.navigate("BuyConfirm")} }
           >
-            <Text style={styles.boldButton}>Buy {buyLFI} LFI</Text>
+            <Text style={styles.boldButton}>
+              Buy
+              <FormattedMessage
+                id="balanceLFI"
+                defaultMessage={` {n, number} `}
+                values={{ n: buyLFI }}
+              />
+              LFI
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
+    </IntlProvider>
     );
   }
 }

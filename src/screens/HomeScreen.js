@@ -10,6 +10,8 @@ import {
   Button,
   Alert
 } from 'react-native';
+
+import { IntlProvider, FormattedMessage } from 'react-intl';
 import MainHeader from '../components/MainHeader';
 import UserProfileHome from '../components/UserProfileHome';
 import { BUTTON_COLOR } from '../styles/common';
@@ -24,7 +26,7 @@ class HomeScreen extends Component {
     constructor(props) {
       super(props);
       this.state = {
-        balanceUSD: '$15,000',
+        balanceUSD: 15000,
       };
 
     }
@@ -33,8 +35,17 @@ class HomeScreen extends Component {
 
       const { navigation } = this.props;
       const { balanceUSD } = this.state;
+      let multiple1 = data.lfiBalance * data.multipleFactor;
+      let multiple2 = multiple1 * 2;
+      let multiple3 = multiple2 * 2;
 
       return (
+
+      <IntlProvider
+        locale="en"
+        textComponent={Text}
+        >
+
         <View style={styles.homeContainer}>
           <StatusBar barStyle="light-content" />
 
@@ -54,7 +65,13 @@ class HomeScreen extends Component {
                     style={styles.LFIicon}
                     resizeMode="contain"
                   />
-                  <Text style={styles.balanceBig}>{data.lfiBalance}</Text>
+                  <Text style={styles.balanceBig}>
+                    <FormattedMessage
+                      id="balanceLFI"
+                      defaultMessage={` {n, number} `}
+                      values={{ n: data.lfiBalance }}
+                    />
+                  </Text>
               </View>
               <View style={styles.balanceRow}>
                   <Image
@@ -62,7 +79,15 @@ class HomeScreen extends Component {
                     style={styles.USDicon}
                     resizeMode="contain"
                   />
-                <Text style={styles.balanceUSD}>USD {balanceUSD}</Text>
+
+                <Text style={styles.balanceUSD}>
+                  <FormattedMessage
+                    id="balanceUS"
+                    defaultMessage={` {n, number} USD`}
+                    values={{ n: balanceUSD }}
+                  />
+                </Text>
+
               </View>
             </View>
           </View>
@@ -74,32 +99,37 @@ class HomeScreen extends Component {
               <Text style={[styles.infoText, {flex: 1}]}>
                 {data.multipleYear}{'\n'}
                 {data.multipleYear + 5}{'\n'}
-                {data.multipleYear + 10}{'\n'}
+                {'\n'}
               </Text>
               <Text style={[styles.infoText, {flex: 0.75}]}>
                 {data.multipleFactor}x{'\n'}
                 {data.multipleFactor * 2}x{'\n'}
-                {data.multipleFactor *2 * 2}x{'\n'}
               </Text>
               <Text style={[styles.infoText, {flex: 2, alignItems: 'flex-end'}]}>
-                {parseInt(data.lfiBalance) * data.multipleFactor * 1000}
+
+                <FormattedMessage
+                  id="multiple1"
+                  defaultMessage={`{n, number}`}
+                  values={{ n: multiple1 }}
+                />
+
                 <Image
                     source={require("../../assets/images/icon-lfi.png")}
-                    style={styles.LFIiconSM}
+                    style={{ marginHorizontal: 3, height: 18, width: 18}}
                     resizeMode="contain"
                   /> {'\n'}
-                {(parseInt(data.lfiBalance) * data.multipleFactor) * 2 * 1000 }
+
+                <FormattedMessage
+                  id="multiple2"
+                  defaultMessage={`{n, number}`}
+                  values={{ n: multiple2 }}
+                />
                 <Image
                   source={require("../../assets/images/icon-lfi.png")}
-                  style={styles.LFIiconSM}
+                  style={{ marginHorizontal: 3, height: 18, width: 18}}
                   resizeMode="contain"
                 /> {'\n'}
-                {((parseInt(data.lfiBalance) * data.multipleFactor) * 2) * 2 * 1000}
-                <Image
-                  source={require("../../assets/images/icon-lfi.png")}
-                  style={styles.LFIiconSM}
-                  resizeMode="contain"
-                /> {'\n'}
+
               </Text>
             </View>
 
@@ -114,6 +144,7 @@ class HomeScreen extends Component {
 
         </View>
 
+      </IntlProvider>
       );
     }
 
@@ -134,7 +165,7 @@ const styles = StyleSheet.create({
   balance: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 20,
+    paddingVertical: 15,
   },
   balanceRow: {
     flexDirection: 'row',
@@ -152,9 +183,9 @@ const styles = StyleSheet.create({
     width: 30,
   },
   LFIiconSM: {
-    marginHorizontal: 2,
-    height: 16,
-    width: 16,
+    marginHorizontal: 3,
+    height: 18,
+    width: 18,
   },
   balanceUSD: {
     fontFamily: 'OpenSansRegular',
@@ -179,7 +210,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    paddingTop: 10,
   },
   infoTextBold: {
     fontFamily: 'OpenSansBold',
