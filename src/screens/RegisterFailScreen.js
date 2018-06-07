@@ -25,9 +25,9 @@ class RegisterSuccessScreen extends Component {
           <RegisterHeader />
 
           <View style={styles.headingRow}>
-            <Text style={styles.headingText}>Identify Verified</Text>
+            <Text style={styles.headingText}>Identify Not Verified</Text>
             <Image
-              source={require("../../assets/images/icon-checkshield.png")}
+              source={require("../../assets/images/icon-warning.png")}
               style={styles.iconShield}
               resizeMode='contain'
             />
@@ -36,15 +36,15 @@ class RegisterSuccessScreen extends Component {
 
           <ScrollView>
           <View style={styles.body}>
-            
+
             <Text style={styles.bodyText}>
               Dear Adam Rosen, {'\n'}
               {'\n'}
-              Your identify was verified with NETVERIFY by Jumio. You now have full access to the Life Insure App and LFI Wallet.{'\n'}
+              Your identify could not be verified via NETVERIFY. Please contact us to complete your registration manually.
+              {'\n'}{'\n'}
+              For security reasons and to maintain the integrity of our network, we verify every member's identity. After successfully verifying your identity, you'll have full access to the Life Insure App.{'\n'}
               {'\n'}
-              Welcome to LFI!{'\n'}
-              {'\n'}
-              Best,{'\n'}
+              Thank you for your patience,{'\n'}
             </Text>
 
             <Image
@@ -64,9 +64,9 @@ class RegisterSuccessScreen extends Component {
           <View style={styles.footer}>
             <TouchableOpacity
               style={styles.buttonBuy}
-              onPress={ () => { navigation.navigate("WelcomeFund")} }
+              onPress={ () => { navigation.navigate("ContactSupport")} }
             >
-              <Text style={styles.boldButton}>Setup LFI Wallet</Text>
+              <Text style={styles.boldButton}>Contact LFI Support</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
   iconShield: {
     height: 30,
     width: 30,
-    tintColor: 'green',
     marginLeft: 10
   },
   body: {

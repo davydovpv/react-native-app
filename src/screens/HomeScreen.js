@@ -107,27 +107,26 @@ class HomeScreen extends Component {
               </Text>
               <Text style={[styles.infoText, {flex: 2, alignItems: 'flex-end'}]}>
 
-                <FormattedMessage
-                  id="multiple1"
-                  defaultMessage={`{n, number}`}
-                  values={{ n: multiple1 }}
-                />
-
                 <Image
                     source={require("../../assets/images/icon-lfi.png")}
                     style={{ marginHorizontal: 3, height: 18, width: 18}}
                     resizeMode="contain"
+                  />
+                  <FormattedMessage
+                    id="multiple1"
+                    defaultMessage={`{n, number}`}
+                    values={{ n: multiple1 }}
                   /> {'\n'}
 
-                <FormattedMessage
-                  id="multiple2"
-                  defaultMessage={`{n, number}`}
-                  values={{ n: multiple2 }}
-                />
                 <Image
                   source={require("../../assets/images/icon-lfi.png")}
                   style={{ marginHorizontal: 3, height: 18, width: 18}}
                   resizeMode="contain"
+                />
+                <FormattedMessage
+                  id="multiple2"
+                  defaultMessage={`{n, number}`}
+                  values={{ n: multiple2 }}
                 /> {'\n'}
 
               </Text>
@@ -135,7 +134,7 @@ class HomeScreen extends Component {
 
             <TouchableOpacity
               style={styles.buttonBuy}
-              onPress={() => { navigation.navigate("BuyCoin")}}
+              onPress={() => { navigation.navigate('BuyCoin')}}
             >
                 <Text style={styles.boldButton}>Buy LFI Coin</Text>
             </TouchableOpacity>

@@ -1,3 +1,5 @@
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 import React, { Component } from 'react';
 import Navigator from './src/navigators';
 class App extends Component {

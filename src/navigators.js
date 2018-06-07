@@ -11,10 +11,13 @@ import HomeScreen from "./screens/HomeScreen";
 import BuyCoinBTCScreen from "./screens/BuyCoinBTCScreen";
 import BuyCoinETHScreen from "./screens/BuyCoinETHScreen";
 import BuyCoinACHScreen from "./screens/BuyCoinACHScreen";
+import BuyConfirmScreen from "./screens/BuyCoinConfirm";
 import CertificateScreen from "./screens/CertificateScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import VerifyIDScreen from "./screens/VerifyIDScreen";
 import RegisterSuccessScreen from "./screens/RegisterSuccessScreen";
+import RegisterFailScreen from "./screens/RegisterFailScreen";
+import WelcomeFundScreen from "./screens/WelcomeFundScreen";
 import SideMenu from "./components/ui/SideMenu";
 
 const globalStackConfig = {
@@ -37,6 +40,7 @@ const BuyCoinStack = createStackNavigator(
     BuyCoinBTC: { screen: BuyCoinBTCScreen },
     BuyCoinETH: { screen: BuyCoinETHScreen },
     BuyCoinACH: { screen: BuyCoinACHScreen },
+    BuyConfirm: { screen: BuyConfirmScreen }
   },
   buyCoinStackConfig
 );
@@ -45,7 +49,9 @@ const RegisterStack = createStackNavigator(
   {
     Register_1: { screen: RegisterScreen },
     Register_2: { screen: VerifyIDScreen },
-    Register_3: { screen: RegisterSuccessScreen }
+    Register_3: { screen: RegisterSuccessScreen },
+    Register_Fail: { screen: RegisterFailScreen },
+    WelcomeFund: { screen: WelcomeFundScreen }
   },
   globalStackConfig
 );

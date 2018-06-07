@@ -25,7 +25,7 @@ class BuyCoinETHScreen extends Component {
     super();
     this.state = {
       buyLFI: 1500,
-      tradeETH: 0.00002115
+      tradeETH: 0.001647
     };
   }
 

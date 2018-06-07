@@ -25,7 +25,7 @@ class BuyCoinBTCScreen extends Component {
     super();
     this.state = {
       buyLFI: 1500,
-      btcSellRate: .000000167,
+      btcSellRate: .000013
     };
   }
 

@@ -25,7 +25,7 @@ class BuyCoinACHScreen extends Component {
     super();
     this.state = {
       buyLFI: 1500,
-      usdSellRate: .16074,
+      usdSellRate: .1,
     };
   }
 
