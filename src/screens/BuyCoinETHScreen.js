@@ -41,13 +41,13 @@ class BuyCoinETHScreen extends Component {
   }
 
   async componentDidMount() {
+
+    this.setState ({
+      ETH: data.lfiETH
+    });
+
     this.loadData();
 
-    if (this.state.ETH === undefined) {
-      this.setState ({
-        ETH: data.lfiETH
-      });
-    }
   }
 
   render() {

@@ -41,13 +41,12 @@ class BuyCoinBTCScreen extends Component {
   }
 
   async componentDidMount() {
+    
     this.setState ({
       BTC: data.lfiBTC
     });
 
     this.loadData();
-
-    }
 
   }
 
