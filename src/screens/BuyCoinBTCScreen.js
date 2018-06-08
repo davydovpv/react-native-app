@@ -18,23 +18,45 @@ class BuyCoinBTCScreen extends Component {
 
   state: {
       buyLFI: number,
-      btcSellRate: number,
   }
 
   constructor() {
     super();
     this.state = {
       buyLFI: 1500,
-      btcSellRate: .000013
     };
+  }
+
+  loadData() {
+    fetch('https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC')
+    .then(response => response.json())
+    .then(json => {
+      this.setState({
+        BTC: json.BTC * data.lfiUSD
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+
+  async componentDidMount() {
+    this.setState ({
+      BTC: data.lfiBTC
+    });
+
+    this.loadData();
+
+    }
+
   }
 
   render() {
 
     const { navigation } = this.props;
-    const { buyLFI, btcSellRate } = this.state;
+    const { buyLFI, BTC } = this.state;
 
-    let tradeValue = buyLFI * btcSellRate;
+    let tradeValue = buyLFI * BTC;
 
     return (
     <IntlProvider

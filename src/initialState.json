@@ -27,7 +27,7 @@
         "accountName": "Joint Savings",
         "bank5digit": 14083,
         "bank_verified": true
-      }
+      },
     ],
   },
   "transactions": [
@@ -44,10 +44,10 @@
       "hash": "5902w1u290495490xp001w"
     }
   ],
-  "lfiTrade": {
-    "BTC": 0.000013,
-    "ETH": 0.001647,
-    "USD": 0.01
+  "rates": {
+    "lfiBTC": 2.0001303,
+    "lfiETH": 0.001663,
+    "lfiUSD": 0.01,
   },
   "errors": []
 }

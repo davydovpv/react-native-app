@@ -17,24 +17,45 @@ import data from '../data';
 class BuyCoinETHScreen extends Component {
 
   state: {
-      buyLFI: number,
-      tradeETH: float
+      buyLFI: number
   }
 
   constructor() {
     super();
     this.state = {
-      buyLFI: 1500,
-      tradeETH: 0.001647
+      buyLFI: 1500
     };
+  }
+
+  loadData() {
+    fetch('https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=ETH')
+    .then(response => response.json())
+    .then(json => {
+      this.setState({
+        ETH: json.ETH * data.lfiUSD
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+
+  async componentDidMount() {
+    this.loadData();
+
+    if (this.state.ETH === undefined) {
+      this.setState ({
+        ETH: data.lfiETH
+      });
+    }
   }
 
   render() {
 
     const { navigation } = this.props;
-    const { buyLFI, tradeETH } = this.state;
+    const { buyLFI, ETH } = this.state;
 
-    let tradeValue = buyLFI * tradeETH;
+    let tradeValue = buyLFI * ETH;
 
     return (
     <IntlProvider
@@ -122,7 +143,7 @@ class BuyCoinETHScreen extends Component {
               <Text style={styles.amountEqual}> = </Text>
 
               <TextInput
-                placeholder={`${tradeValue.toFixed(4)} ETH`}
+                placeholder={`${tradeValue.toFixed(6)} ETH`}
                 placeholderTextColor="rgba(0,0,0,0.5)"
                 underlineColorAndroid="rgba(0,0,0,0)"
                 autoCapitalize="none"

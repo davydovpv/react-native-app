@@ -18,23 +18,21 @@ class BuyCoinACHScreen extends Component {
 
   state: {
       buyLFI: number,
-      usdSellRate: number,
   }
 
   constructor() {
     super();
     this.state = {
       buyLFI: 1500,
-      usdSellRate: .1,
     };
   }
 
   render() {
 
     const { navigation } = this.props;
-    const { buyLFI, usdSellRate } = this.state;
+    const { buyLFI } = this.state;
 
-    let tradeValue = buyLFI * usdSellRate;
+    let tradeValue = buyLFI * data.lfiUSD;
 
     return (
     <IntlProvider

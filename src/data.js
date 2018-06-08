@@ -1,9 +1,10 @@
 import C from './constants';
-import { user, wallet } from './initialState.json';
+import { user, wallet, rates } from './initialState.json';
 
 const data = {
   ...user,
-  ...wallet
+  ...wallet,
+  ...rates
 };
 
 export default data;

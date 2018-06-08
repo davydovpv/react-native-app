@@ -30,12 +30,12 @@ class WelcomeFundScreen extends Component {
           <View style={styles.body}>
 
             <Text style={styles.bodyText}>
-              To finish setting up your LifeInsure Wallet, you'll need to buy LFI Tokens.
+              To finish setting up your Life Insure Wallet, please add LFI Tokens.
             </Text>
 
             <Text style={styles.subHeadingText}>I would like to buy LFI Tokens with:</Text>
 
-            <View style={{width: '100%', flexDirection: 'row', justifyContent: 'space-around'}}>
+            <View style={{width: '100%', flexDirection: 'row', justifyContent: 'space-around', margin: 10}}>
 
               <TouchableOpacity
                 style={styles.fundMethod}
@@ -125,17 +125,15 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
   },
   fundMethod: {
+    borderWidth: 1,
+    borderColor: '#ccc',
     backgroundColor: 'white',
     height: 120,
     width: 120,
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
-    shadowColor: '#ccc',
-    shadowOffset: { width: 0, height: 0 },
-    shadowRadius: 4,
-    shadowOpacity: 0.5,
+    borderRadius: 10
   },
   subHeadingText: {
     fontSize: 15,
