@@ -45,8 +45,8 @@
     }
   ],
   "rates": {
-    "lfiBTC": 2.0001303,
-    "lfiETH": 0.001663,
+    "lfiBTC": 0,
+    "lfiETH": 0,
     "lfiUSD": 0.01,
   },
   "errors": []
