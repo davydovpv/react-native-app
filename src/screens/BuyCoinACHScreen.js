@@ -27,6 +27,10 @@ class BuyCoinACHScreen extends Component {
     };
   }
 
+  updateLFIBuyAmount() {
+    data.buyLFIAmount = this.state.buyLFI
+  }
+  
   render() {
 
     const { navigation } = this.props;
@@ -113,7 +117,7 @@ class BuyCoinACHScreen extends Component {
                 keyboardType="numeric"
                 style={styles.inputAmount}
                 onChangeText={(buyLFI) => this.setState({buyLFI})}
-                value={this.state.buyLFI.toString()}
+                value={buyLFI.toString()}
                 />
 
               <Text style={styles.amountEqual}> = </Text>
@@ -182,7 +186,11 @@ class BuyCoinACHScreen extends Component {
         <View style={styles.buyRow}>
           <TouchableOpacity
             style={styles.buttonBuy}
-            onPress={() => { navigation.navigate("BuyConfirm")} }
+            onPress={() => {
+                this.updateLFIBuyAmount(),
+                navigation.navigate("BuyConfirm")
+              }
+            }
           >
             <Text style={styles.boldButton}>
               Buy

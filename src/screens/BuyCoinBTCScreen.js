@@ -18,17 +18,20 @@ class BuyCoinBTCScreen extends Component {
 
   state: {
       buyLFI: number,
+      BTC: number
   }
 
   constructor() {
     super();
     this.state = {
       buyLFI: 1500,
+      BTC: 0
     };
   }
 
-  loadData() {
-    fetch('https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC')
+  loadData = async () => {
+    await fetch('https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC')
+
     .then(response => response.json())
     .then(json => {
       this.setState({
@@ -41,13 +44,11 @@ class BuyCoinBTCScreen extends Component {
   }
 
   async componentDidMount() {
-    
-    this.setState ({
-      BTC: data.lfiBTC
-    });
-
     this.loadData();
+  }
 
+  updateLFIBuyAmount() {
+    data.buyLFIAmount = this.state.buyLFI
   }
 
   render() {
@@ -137,7 +138,7 @@ class BuyCoinBTCScreen extends Component {
                 keyboardType="numeric"
                 style={styles.inputAmount}
                 onChangeText={(buyLFI) => this.setState({buyLFI})}
-                value={this.state.buyLFI.toString()}
+                value={buyLFI.toString()}
                 />
 
               <Text style={styles.amountEqual}> = </Text>
@@ -192,7 +193,11 @@ class BuyCoinBTCScreen extends Component {
         <View style={styles.buyRow}>
           <TouchableOpacity
             style={styles.buttonBuy}
-            onPress={() => { navigation.navigate("BuyConfirm")} }
+            onPress={() => {
+                this.updateLFIBuyAmount(),
+                navigation.navigate("BuyConfirm")
+              }
+            }
           >
             <Text style={styles.boldButton}>
               Buy

@@ -17,18 +17,22 @@ import data from '../data';
 class BuyCoinETHScreen extends Component {
 
   state: {
-      buyLFI: number
+      buyLFI: number,
+      BTC: number
   }
 
   constructor() {
     super();
     this.state = {
-      buyLFI: 1500
+      buyLFI: 1500,
+      ETH: 0
     };
   }
 
-  loadData() {
-    fetch('https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=ETH')
+  async loadData() {
+
+    await fetch('https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=ETH')
+
     .then(response => response.json())
     .then(json => {
       this.setState({
@@ -41,13 +45,11 @@ class BuyCoinETHScreen extends Component {
   }
 
   async componentDidMount() {
-
-    this.setState ({
-      ETH: data.lfiETH
-    });
-
     this.loadData();
+  }
 
+  updateLFIBuyAmount() {
+    data.buyLFIAmount = this.state.buyLFI
   }
 
   render() {
@@ -137,7 +139,7 @@ class BuyCoinETHScreen extends Component {
                 keyboardType="numeric"
                 style={styles.inputAmount}
                 onChangeText={(buyLFI) => this.setState({buyLFI})}
-                value={this.state.buyLFI.toString()}
+                value={buyLFI.toString()}
                 />
 
               <Text style={styles.amountEqual}> = </Text>
@@ -192,7 +194,11 @@ class BuyCoinETHScreen extends Component {
         <View style={styles.buyRow}>
           <TouchableOpacity
             style={styles.buttonBuy}
-            onPress={() => { navigation.navigate("BuyConfirm")} }
+            onPress={() => {
+                  this.updateLFIBuyAmount(),
+                  navigation.navigate("BuyConfirm")
+                }
+            }
           >
             <Text style={styles.boldButton}>
               Buy

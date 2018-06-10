@@ -17,22 +17,13 @@ import data from '../data';
 
 class BuyConfirmScreen extends Component {
 
-  state: {
-      buyLFI: number
-  }
-
-  constructor() {
-    super();
-    this.state = {
-      buyLFI: 1500
-    };
+  updateBalanceJSON() {
+      data.lfiBalance = parseInt(data.lfiBalance) + parseInt(data.buyLFIAmount)
   }
 
   render() {
 
     const { navigation } = this.props;
-    const { buyLFI } = this.state;
-
 
     return (
     <IntlProvider
@@ -66,7 +57,7 @@ class BuyConfirmScreen extends Component {
                   <FormattedMessage
                     id="balanceLFI"
                     defaultMessage={` {n, number} `}
-                    values={{ n: buyLFI }}
+                    values={{ n: data.buyLFIAmount }}
                   />
                 </Text>
                 </View>
@@ -91,7 +82,7 @@ class BuyConfirmScreen extends Component {
                 <FormattedMessage
                   id="balanceLFI"
                   defaultMessage={` {n, number} `}
-                  values={{ n: buyLFI + data.lfiBalance }}
+                  values={{ n: parseInt(data.lfiBalance) + parseInt(data.buyLFIAmount) }}
                 />
               </Text>
             </View>
@@ -107,6 +98,7 @@ class BuyConfirmScreen extends Component {
           <TouchableOpacity
             style={styles.buttonBuy}
             onPress={() => {
+              this.updateBalanceJSON(),
               navigation.popToTop(),
               navigation.navigate('Home')}
             }
