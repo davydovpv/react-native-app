@@ -76,18 +76,16 @@ class ScreensLogin extends Component {
       });
     }
 
-    renderLoginField = (placeholder, name, secure) => {
+    renderLoginField = (placeholder, name, secure, nextFocus) => {
         return (
           <TextInput
             placeholder={`${placeholder}`}
             placeholderTextColor="rgba(255,255,255,0.7)"
             underlineColorAndroid="rgba(0,0,0,0)"
-            autoCapitalize="none"
-            autoCorrect={false}
-            returnKeyType="next"
-            secureTextEntry={secure}
-            onSubmitEditing={() => this.passwordInput.focus()}
             style={styles.input}
+            autoCorrect={false}
+            autoCapitalize="none"
+            secureTextEntry={secure}
             onChangeText={value => this.onChangeText(name, value)}
           />
         )
@@ -123,7 +121,7 @@ class ScreensLogin extends Component {
                     { !this.state.hasSuccessLogin &&
                       <View>
 
-                        { this.renderLoginField("Username", 'username', false) }
+                        { this.renderLoginField("Username", 'username', false, 'password') }
 
                         <View style={styles.lineStyle} />
 
