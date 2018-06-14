@@ -52,10 +52,10 @@ class ScreensRegisterAccount extends Component {
         this.setState({
           verifyNewAccount: true
         })
-        console.log('signed up!', res)
+        console.log('Account Created! ', res)
       })
       .catch(err => {
-        console.log('error: ', err)
+        console.log('Error Creating Account: ', err)
       })
     }
 
@@ -64,11 +64,11 @@ class ScreensRegisterAccount extends Component {
       const { username, authCode } = this.state
       Auth.confirmSignUp(username, authCode)
         .then(res => {
-          console.log('confirmed', res)
+          console.log('Confirmed', res)
           this.props.navigation.navigate('ConfirmID')
         })
         .catch(err => {
-          console.log('error confirming: ', err)
+          console.log('Error Verifying: ', err)
         })
     }
 
