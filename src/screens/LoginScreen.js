@@ -36,13 +36,8 @@ class ScreensLogin extends Component {
       user: ''
     }
 
-    onChangeText(key, value) {
-      this.setState({
-        [key]: value
-      });
-    }
 
-    signIn() {
+    loginHandler = () => {
       const { username, password } = this.state
       Auth.signIn(username, password)
       .then(user => {
@@ -59,7 +54,7 @@ class ScreensLogin extends Component {
       })
     }
 
-    verify() {
+    verifyHandler = () => {
       const { user, authCode } = this.state
       Auth.confirmSignIn(user, authCode)
         .then(user => {
@@ -71,29 +66,36 @@ class ScreensLogin extends Component {
         })
     }
 
-    async componentDidMount() {
-      const {
-        navigation: { navigate },
-      } = this.props;
+    registerHandler = () => {
+      this.props.navigation.navigate('Register');
     }
 
+    onChangeText(key, value) {
+      this.setState({
+        [key]: value
+      });
+    }
+
+    renderLoginField = (placeholder, name, secure) => {
+        return (
+          <TextInput
+            placeholder={`${placeholder}`}
+            placeholderTextColor="rgba(255,255,255,0.7)"
+            underlineColorAndroid="rgba(0,0,0,0)"
+            autoCapitalize="none"
+            autoCorrect={false}
+            returnKeyType="next"
+            secureTextEntry={secure}
+            onSubmitEditing={() => this.passwordInput.focus()}
+            style={styles.input}
+            onChangeText={value => this.onChangeText(name, value)}
+          />
+        )
+    }
 
     render() {
 
-      const { navigation } = this.props;
       const { hasSuccessLogin } = this.state
-
-      loginHandler = () => {
-        this.signIn()
-      }
-
-      verifyHandler = () => {
-        this.verify()
-      }
-
-      registerHandler = () => {
-        navigation.navigate('Register');
-      }
 
       return (
         <View style={styles.loginContainer}>
@@ -120,31 +122,12 @@ class ScreensLogin extends Component {
 
                     { !this.state.hasSuccessLogin &&
                       <View>
-                        <TextInput
-                          placeholder="Username"
-                          placeholderTextColor="rgba(255,255,255,0.7)"
-                          underlineColorAndroid="rgba(0,0,0,0)"
-                          autoCapitalize="none"
-                          autoCorrect={false}
-                          returnKeyType="next"
-                          keyboardType="email-address"
-                          onSubmitEditing={() => this.passwordInput.focus()}
-                          style={styles.input}
-                          onChangeText={value => this.onChangeText('username', value)}
-                          />
+
+                        { this.renderLoginField("Username", 'username', false) }
 
                         <View style={styles.lineStyle} />
 
-                        <TextInput
-                          placeholder="Password"
-                          placeholderTextColor="rgba(255,255,255,0.7)"
-                          underlineColorAndroid="rgba(0,0,0,0)"
-                          secureTextEntry
-                          returnKeyType="next"
-                          style={styles.input}
-                          ref={(input) => this.passwordInput = input }
-                          onChangeText={value => this.onChangeText('password', value)}
-                          />
+                        { this.renderLoginField("Password", 'password', true) }
 
                       </View>
                     }
@@ -156,15 +139,7 @@ class ScreensLogin extends Component {
                           <Text style={styles.bodyText}>Verification Key sent via SMS</Text>
                         </View>
 
-                        <TextInput
-                          placeholder="Enter Verification Key"
-                          placeholderTextColor="rgba(255,255,255,0.7)"
-                          underlineColorAndroid="rgba(0,0,0,0)"
-                          secureTextEntry
-                          returnKeyType="go"
-                          style={styles.input}
-                          onChangeText={value => this.onChangeText('authCode', value)}
-                          />
+                          { this.renderLoginField("Enter Verification Key", 'authCode', true) }
 
                         <View style={styles.lineStyle} />
 
@@ -180,7 +155,7 @@ class ScreensLogin extends Component {
                 { this.state.hasSuccessLogin &&
                   <TouchableOpacity
                     style={styles.buttonLogin}
-                    onPress={verifyHandler}>
+                    onPress={ this.verifyHandler }>
                     <Text style={styles.boldButton}>verify key</Text>
                   </TouchableOpacity>
                 }
@@ -188,14 +163,14 @@ class ScreensLogin extends Component {
                 { !this.state.hasSuccessLogin &&
                   <TouchableOpacity
                     style={styles.buttonLogin}
-                    onPress={loginHandler}>
+                    onPress={ this.loginHandler }>
                     <Text style={styles.boldButton}>login</Text>
                   </TouchableOpacity>
                 }
 
                 <TouchableOpacity
                   style={styles.buttonRegister}
-                  onPress={registerHandler}>
+                  onPress={ this.registerHandler }>
                   <Text style={styles.boldButton}>create account</Text>
                 </TouchableOpacity>
 
@@ -257,6 +232,7 @@ const styles = StyleSheet.create({
     marginVertical: 40
   },
   bodyText: {
+    justifyContent: 'center',
     fontFamily: 'OpenSansBold',
     fontSize: 14,
     color: 'rgba(255,255,255,1)',
