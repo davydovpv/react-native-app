@@ -19,7 +19,7 @@ import {
   FONT_HEADLINE_SEMIBOLD
 } from '../styles/common';
 
-class LoginScreen extends Component {
+class ScreensLogin extends Component {
 
     constructor() {
       super();
@@ -105,12 +105,12 @@ class LoginScreen extends Component {
 
                   <View style={styles.loginLogo}>
                     <Image
-                      source={require("../../assets/images/logo.png")}
+                      source={require('../../assets/images/logo.png')}
                       style={styles.logo}
                       resizeMode="contain"
                     />
                     <Image
-                      source={require("../../assets/images/slogan.png")}
+                      source={require('../../assets/images/slogan.png')}
                       style={styles.slogan}
                       resizeMode="contain"
                     />
@@ -140,7 +140,7 @@ class LoginScreen extends Component {
                           placeholderTextColor="rgba(255,255,255,0.7)"
                           underlineColorAndroid="rgba(0,0,0,0)"
                           secureTextEntry
-                          returnKeyType="go"
+                          returnKeyType="next"
                           style={styles.input}
                           ref={(input) => this.passwordInput = input }
                           onChangeText={value => this.onChangeText('password', value)}
@@ -293,4 +293,4 @@ const styles = StyleSheet.create({
 
 
 
-export default LoginScreen;
+export default ScreensLogin;

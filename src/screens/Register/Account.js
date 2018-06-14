@@ -65,7 +65,7 @@ class ScreensRegisterAccount extends Component {
       Auth.confirmSignUp(username, authCode)
         .then(res => {
           console.log('confirmed', res)
-          this.props.navigation.navigate("Register_1")
+          this.props.navigation.navigate('ConfirmID')
         })
         .catch(err => {
           console.log('error confirming: ', err)
@@ -111,7 +111,7 @@ class ScreensRegisterAccount extends Component {
                 <View style={styles.inputRow}>
                   <Text style={styles.inputLabel}>User Name</Text>
                   <TextInput
-                    placeholder="(Ex: jsmith72)"
+                    placeholder="Ex: jsmith72"
                     underlineColorAndroid="rgba(0,0,0,0)"
                     autoCapitalize="none"
                     autoCorrect={false}

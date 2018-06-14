@@ -3,36 +3,36 @@ import {
   createDrawerNavigator,
   createSwitchNavigator,
   navigationOptions
-} from "react-navigation";
+} from 'react-navigation';
 import { Animated, Easing } from 'react-native';
 
-import LoginScreen from "./screens/LoginScreen";
-import SideMenu from "./components/ui/SideMenu";
-import HomeScreen from "./screens/HomeScreen";
-import CertificateScreen from "./screens/CertificateScreen";
-
+import ScreensLogin from './screens/LoginScreen';
+import ScreensHome from './screens/HomeScreen';
+import ScreensCertificate from './screens/CertificateScreen';
 
 // LFI Wallet / Buy Flow
-import ScreensBuyBTC from "./screens/Buy/BTC";
-import ScreensBuyETH from "./screens/Buy/ETH";
-import ScreensBuyACH from "./screens/Buy/ACH";
-import ScreensBuyConfirm from "./screens/Buy/Confirm";
+import ScreensBuyBTC from './screens/Buy/BTC';
+import ScreensBuyETH from './screens/Buy/ETH';
+import ScreensBuyACH from './screens/Buy/ACH';
+import ScreensBuyConfirm from './screens/Buy/Confirm';
 
 // Create New Account (Cognito) / ID Flow
-import ScreensRegisterAccount from "./screens/Register/Account";
-import ScreensRegisterConfirmID from "./screens/Register/ConfirmID";
-import ScreensRegisterVerifyID from "./screens/Register/VerifyID";
-import ScreensRegisterSuccess from "./screens/Register/Success";
-import ScreensRegisterFail from "./screens/Register/Fail";
-import ScreensRegisterSetup from "./screens/Register/Setup";
+import ScreensRegisterAccount from './screens/Register/Account';
+import ScreensRegisterConfirmID from './screens/Register/ConfirmID';
+import ScreensRegisterVerifyID from './screens/Register/VerifyID';
+import ScreensRegisterSuccess from './screens/Register/Success';
+import ScreensRegisterFail from './screens/Register/Fail';
+import ScreensRegisterSetup from './screens/Register/Setup';
 
+// Nav Content Component
+import SideMenu from './components/Nav/SideMenu';
 
 const globalStackConfig = {
-  headerMode: "none"
+  headerMode: 'none'
 };
 
 const buyCoinStackConfig = {
-  headerMode: "none",
+  headerMode: 'none',
   transitionConfig : () => ({
   	transitionSpec: {
   		duration: 0,
@@ -54,12 +54,12 @@ const BuyCoinStack = createStackNavigator(
 
 const RegisterStack = createStackNavigator(
   {
-    Register_0: { screen: ScreensRegisterAccount },
-    Register_1: { screen: ScreensRegisterConfirmID },
-    Register_2: { screen: ScreensRegisterVerifyID },
-    Register_3: { screen: ScreensRegisterSuccess },
-    Register_Fail: { screen: ScreensRegisterFail },
-    WelcomeFund: { screen: ScreensRegisterSetup }
+    NewAccount: { screen: ScreensRegisterAccount },
+    ConfirmID: { screen: ScreensRegisterConfirmID },
+    VerifyID: { screen: ScreensRegisterVerifyID },
+    Success: { screen: ScreensRegisterSuccess },
+    Fail: { screen: ScreensRegisterFail },
+    SetupWallet: { screen: ScreensRegisterSetup }
   },
   globalStackConfig
 );
@@ -75,9 +75,9 @@ const DrawerNav = createDrawerNavigator(
      contentComponent: SideMenu,
      drawerWidth: 275,
      navigationOptions: {
-       drawerLockMode: "locked-closed",
-       lockMode: "locked-closed",
-       disableOpenGesture: "false"
+       drawerLockMode: 'locked-closed',
+       lockMode: 'locked-closed',
+       disableOpenGesture: 'false'
      }
    }
 );
@@ -89,8 +89,8 @@ const LoginStack = createSwitchNavigator(
     Register: RegisterStack
   },
   {
-    initialRouteName: "LoginHandler",
-    headerMode: "none"
+    initialRouteName: 'LoginHandler',
+    headerMode: 'none'
   }
 );
 

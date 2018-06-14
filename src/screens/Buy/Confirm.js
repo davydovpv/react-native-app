@@ -37,7 +37,7 @@ class ScreensBuyConfirm extends Component {
         <View style={styles.headingRow}>
             <Text style={styles.headingBold}>LFI Purchase Confirmed</Text>
             <Image
-              source={require("../../../assets/images/icon-checked.png")}
+              source={require('../../../assets/images/icon-checked.png')}
               style={styles.LFIicon}
               resizeMode="contain"
             />
@@ -49,7 +49,7 @@ class ScreensBuyConfirm extends Component {
               <Text style={styles.infoBold}>You Added</Text>
                 <View style={styles.totalDisplay}>
                   <Image
-                    source={require("../../../assets/images/icon-lfi.png")}
+                    source={require('../../../assets/images/icon-lfi.png')}
                     style={styles.LFIicon}
                     resizeMode="contain"
                   />
@@ -74,7 +74,7 @@ class ScreensBuyConfirm extends Component {
             <Text style={styles.infoBold}>New Balance</Text>
               <View style={styles.totalDisplay}>
                 <Image
-                  source={require("../../../assets/images/icon-lfi.png")}
+                  source={require('../../../assets/images/icon-lfi.png')}
                   style={styles.LFIicon}
                   resizeMode="contain"
                 />

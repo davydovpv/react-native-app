@@ -39,7 +39,7 @@ class ScreensRegisterSetup extends Component {
 
               <TouchableOpacity
                 style={styles.fundMethod}
-                onPress={ () => { navigation.navigate("FundViaCrypto")} }
+                onPress={ () => { navigation.navigate('FundCrypto')} }
               >
 
                 <View style={{flexDirection: 'row', margin: 5}}>
@@ -60,7 +60,7 @@ class ScreensRegisterSetup extends Component {
 
               <TouchableOpacity
                 style={styles.fundMethod}
-                onPress={ () => { navigation.navigate("FundViaBank")} }
+                onPress={ () => { navigation.navigate('FundBank')} }
               >
                 <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', margin: 5}}>
 
@@ -95,7 +95,7 @@ class ScreensRegisterSetup extends Component {
 
             <TouchableOpacity
               style={styles.buttonBuy}
-              onPress={ () => { navigation.navigate("ImportTokens")} }
+              onPress={ () => { navigation.navigate('ImportTokens')} }
             >
               <Text style={styles.boldButton}>Import Your Tokens</Text>
             </TouchableOpacity>

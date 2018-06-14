@@ -27,7 +27,7 @@ class ScreensRegisterFail extends Component {
           <View style={styles.headingRow}>
             <Text style={styles.headingText}>Identify Not Verified</Text>
             <Image
-              source={require("../../../assets/images/icon-warning.png")}
+              source={require('../../../assets/images/icon-warning.png')}
               style={styles.iconShield}
               resizeMode='contain'
             />
@@ -48,7 +48,7 @@ class ScreensRegisterFail extends Component {
             </Text>
 
             <Image
-              source={require("../../../assets/images/signature.png")}
+              source={require('../../../assets/images/signature.png')}
               style={{height:80, width: 120}}
               resizeMode="contain"
             />
@@ -64,7 +64,7 @@ class ScreensRegisterFail extends Component {
           <View style={styles.footer}>
             <TouchableOpacity
               style={styles.buttonBuy}
-              onPress={ () => { navigation.navigate("ContactSupport")} }
+              onPress={ () => { navigation.navigate('ContactSupport')} }
             >
               <Text style={styles.boldButton}>Contact LFI Support</Text>
             </TouchableOpacity>

@@ -27,7 +27,7 @@ class ScreensRegisterSuccess extends Component {
           <View style={styles.headingRow}>
             <Text style={styles.headingText}>Identify Verified</Text>
             <Image
-              source={require("../../../assets/images/icon-checkshield.png")}
+              source={require('../../../assets/images/icon-checkshield.png')}
               style={styles.iconShield}
               resizeMode='contain'
             />
@@ -48,7 +48,7 @@ class ScreensRegisterSuccess extends Component {
             </Text>
 
             <Image
-              source={require("../../../assets/images/signature.png")}
+              source={require('../../../assets/images/signature.png')}
               style={{height:80, width: 120}}
               resizeMode="contain"
             />
@@ -64,7 +64,7 @@ class ScreensRegisterSuccess extends Component {
           <View style={styles.footer}>
             <TouchableOpacity
               style={styles.buttonBuy}
-              onPress={ () => { navigation.navigate("WelcomeFund")} }
+              onPress={ () => { navigation.navigate('SetupWallet')} }
             >
               <Text style={styles.boldButton}>Setup LFI Wallet</Text>
             </TouchableOpacity>

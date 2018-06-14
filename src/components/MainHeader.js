@@ -25,10 +25,10 @@ const MainHeader = ({ navigation, ...props}) => (
 
 
         <TouchableOpacity
-          onPress={() => { navigation.navigate("Home")} }
+          onPress={() => { navigation.navigate('Home')} }
         >
         <Image
-          source={require("../../assets/images/logo.png")}
+          source={require('../../assets/images/logo.png')}
           style={styles.logo}
           resizeMode="contain"
         />
@@ -36,7 +36,7 @@ const MainHeader = ({ navigation, ...props}) => (
 
         <TouchableOpacity>
           <Image
-            source={require("../../assets/images/icon-info-white.png")}
+            source={require('../../assets/images/icon-info-white.png')}
             style={styles.iconInfo}
             resizeMode="contain"
           />

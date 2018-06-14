@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -13,11 +13,11 @@ import {
 
 import { IntlProvider, FormattedMessage } from 'react-intl';
 import MainHeader from '../components/MainHeader';
-import UserProfileHome from '../components/UserProfileHome';
+import UserProfileHome from '../components/User/ProfileHome';
 import { BUTTON_COLOR } from '../styles/common';
 import data from '../data';
 
-class HomeScreen extends Component {
+class ScreensHome extends Component {
 
     state: {
         balanceUSD: string,
@@ -54,14 +54,14 @@ class HomeScreen extends Component {
 
           <View style={styles.profileRegion}>
             <UserProfileHome
-              photo={require("../../assets/images/profile.png")}
+              photo={require('../../assets/images/profile.png')}
               name={data.name}
             />
 
             <View style={styles.balance}>
               <View style={styles.balanceRow}>
                   <Image
-                    source={require("../../assets/images/icon-lfi.png")}
+                    source={require('../../assets/images/icon-lfi.png')}
                     style={styles.LFIicon}
                     resizeMode="contain"
                   />
@@ -75,7 +75,7 @@ class HomeScreen extends Component {
               </View>
               <View style={styles.balanceRow}>
                   <Image
-                    source={require("../../assets/images/icon-usd.png")}
+                    source={require('../../assets/images/icon-usd.png')}
                     style={styles.USDicon}
                     resizeMode="contain"
                   />
@@ -108,7 +108,7 @@ class HomeScreen extends Component {
               <Text style={[styles.infoText, {flex: 2, alignItems: 'flex-end'}]}>
 
                 <Image
-                    source={require("../../assets/images/icon-lfi.png")}
+                    source={require('../../assets/images/icon-lfi.png')}
                     style={{ marginHorizontal: 3, height: 18, width: 18}}
                     resizeMode="contain"
                   />
@@ -119,7 +119,7 @@ class HomeScreen extends Component {
                   /> {'\n'}
 
                 <Image
-                  source={require("../../assets/images/icon-lfi.png")}
+                  source={require('../../assets/images/icon-lfi.png')}
                   style={{ marginHorizontal: 3, height: 18, width: 18}}
                   resizeMode="contain"
                 />
@@ -234,8 +234,8 @@ const styles = StyleSheet.create({
   },
 });
 
-HomeScreen.propTypes = {
+ScreensHome.propTypes = {
   navigation: PropTypes.object.isRequired
 };
 
-export default HomeScreen;
+export default SreensHome;

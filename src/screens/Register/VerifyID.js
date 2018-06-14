@@ -24,7 +24,7 @@ class ScreensRegisterVerifyID extends Component {
 
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <Image
-              source={require("../../../assets/images/logo-netverify.png")}
+              source={require('../../../assets/images/logo-netverify.png')}
               style={{width: 250, height: 100}}
               resizeMode="contain"
             />
@@ -33,13 +33,13 @@ class ScreensRegisterVerifyID extends Component {
 
           <View style={{justifyContent: 'center', alignItems: 'center', padding: 20}}>
             <TouchableOpacity
-              onPress={ () => { navigation.navigate("Register_3")} }
+              onPress={ () => { navigation.navigate('Success')} }
             >
               <Text style={{fontFamily: 'MontserratSemiBold', fontSize: 16}}>Proceed to Successful Verification{'\n'}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={ () => { navigation.navigate("Register_Fail")} }
+              onPress={ () => { navigation.navigate('Fail')} }
             >
               <Text>Show Failed Verification</Text>
             </TouchableOpacity>

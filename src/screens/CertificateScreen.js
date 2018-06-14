@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import MainHeader from '../components/MainHeader';
-import UserProfile from '../components/UserProfile';
+import UserProfile from '../components/User/Profile';
 import {
   BACKGROUND_DARK,
   BORDER_COLOR,
@@ -20,7 +20,7 @@ import {
 import data from '../data';
 
 
-class CertificateScreen extends Component {
+class ScreensCertificate extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -30,12 +30,12 @@ class CertificateScreen extends Component {
         <View style={styles.certificateLFI}>
           <View style={styles.certificateHeader}>
             <Image
-              source={require("../../assets/images/cert-border-left.png")}
+              source={require('../../assets/images/cert-border-left.png')}
               style={styles.certBorder}
               resizeMode="contain"
             />
             <Image
-              source={require("../../assets/images/cert-border-right.png")}
+              source={require('../../assets/images/cert-border-right.png')}
               style={styles.certBorder}
               resizeMode="contain"
             />
@@ -49,7 +49,7 @@ class CertificateScreen extends Component {
             <UserProfile
                 color="black"
                 nameWeight="bold"
-                photo={require("../../assets/images/profile.png")}
+                photo={require('../../assets/images/profile.png')}
                 name={data.name}
                 age={data.age}
                 sex={data.sex}
@@ -72,7 +72,7 @@ class CertificateScreen extends Component {
             style={styles.navRow}
           >
             <Image
-              source={require("../../assets/images/icon-email.png")}
+              source={require('../../assets/images/icon-email.png')}
               style={styles.iconNav}
               resizeMode="contain"
             />
@@ -151,4 +151,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CertificateScreen;
+export default ScreensCertificate;

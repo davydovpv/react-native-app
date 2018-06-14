@@ -118,7 +118,7 @@ class ScreensRegisterConfirmID extends Component {
           <View style={styles.footer}>
             <TouchableOpacity
               style={styles.buttonBuy}
-              onPress={ () => { navigation.navigate("Register_2")} }
+              onPress={ () => { navigation.navigate('VerifyID')} }
             >
               <Text style={styles.boldButton}>Continue to Verify ID</Text>
             </TouchableOpacity>

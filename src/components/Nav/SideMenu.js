@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { DrawerActions, NavigationActions } from 'react-navigation';
-import UserProfile from '../UserProfile';
+import UserProfile from '../User/Profile';
 import data from '../../data';
 import { Auth } from 'aws-amplify';
 
@@ -22,7 +22,7 @@ class SideMenu extends Component {
       .then(data => console.log(data))
       .catch(err => console.log(err));
 
-      this.props.navigation.navigate("LoginHandler")
+      this.props.navigation.navigate('LoginHandler')
     }
 
     return(
@@ -30,7 +30,7 @@ class SideMenu extends Component {
 
           <View style={styles.sideNavTop}>
             <Image
-              source={require("../../../assets/images/logo.png")}
+              source={require('../../../assets/images/logo.png')}
               style={styles.logo}
               resizeMode="contain"
             />
@@ -38,7 +38,7 @@ class SideMenu extends Component {
               onPress={() => { this.props.navigation.dispatch(DrawerActions.closeDrawer())}}
             >
               <Image
-                source={require("../../../assets/images/icon-menu.png")}
+                source={require('../../../assets/images/icon-menu.png')}
                 style={styles.iconMenu}
                 resizeMode="contain"
               />
@@ -48,7 +48,7 @@ class SideMenu extends Component {
           <UserProfile
               color="white"
               nameWeight="bold"
-              photo={require("../../../assets/images/profile.png")}
+              photo={require('../../../assets/images/profile.png')}
               name={data.name}
               age={data.age}
               sex={data.sex}
@@ -58,11 +58,11 @@ class SideMenu extends Component {
 
           <View style={styles.navContent}>
             <TouchableOpacity
-              onPress={this.navigateToScreen("Home")}
+              onPress={this.navigateToScreen('Home')}
               style={styles.navRow}
             >
               <Image
-                source={require("../../../assets/images/icon-wallet.png")}
+                source={require('../../../assets/images/icon-wallet.png')}
                 style={styles.iconNav}
                 resizeMode="contain"
               />
@@ -70,22 +70,22 @@ class SideMenu extends Component {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={this.navigateToScreen("BuyCoin")}
+              onPress={this.navigateToScreen('BuyCoin')}
               style={styles.navRow}
             >
               <Image
-                source={require("../../../assets/images/icon-coins.png")}
+                source={require('../../../assets/images/icon-coins.png')}
                 style={styles.iconNav}
                 resizeMode="contain"
               />
               <Text style={styles.navItem}>Buy LFI Coin</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={this.navigateToScreen("Certificate")}
+              onPress={this.navigateToScreen('Certificate')}
               style={styles.navRow}
             >
               <Image
-                source={require("../../../assets/images/icon-certificate.png")}
+                source={require('../../../assets/images/icon-certificate.png')}
                 style={styles.iconNav}
                 resizeMode="contain"
               />

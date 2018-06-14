@@ -51,7 +51,7 @@ class ScreensBuyACH extends Component {
             <Text style={styles.headingBold}>LFI Balance</Text>
             <View style={styles.balanceDisplay}>
               <Image
-                source={require("../../../assets/images/icon-lfi.png")}
+                source={require('../../../assets/images/icon-lfi.png')}
                 style={styles.LFIicon}
                 resizeMode="contain"
               />
@@ -71,22 +71,22 @@ class ScreensBuyACH extends Component {
               <Text style={styles.infoBold}>Add Funds in</Text>
               <View style={styles.addFundsDisplay}>
                 <TouchableOpacity
-                  onPress={() => { navigation.navigate("BuyCoinETH")}}
+                  onPress={() => { navigation.navigate('BuyCoinETH')}}
                   style={{padding: 10, marginLeft: -5}}
                 >
                     <Image
-                      source={require("../../../assets/images/arrow-left.png")}
+                      source={require('../../../assets/images/arrow-left.png')}
                       style={{height:15, width: 15}}
                       resizeMode="contain"
                     />
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  onPress={() => { navigation.navigate("BuyCoinBTC")}}
+                  onPress={() => { navigation.navigate('BuyCoinBTC')}}
                 >
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Image
-                    source={require("../../../assets/images/icon-usd.png")}
+                    source={require('../../../assets/images/icon-usd.png')}
                     style={styles.BTCicon}
                     resizeMode="contain"
                   />
@@ -94,11 +94,11 @@ class ScreensBuyACH extends Component {
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => { navigation.navigate("BuyCoinBTC")}}
+                  onPress={() => { navigation.navigate('BuyCoinBTC')}}
                   style={{padding: 10, marginRight: -5}}
                 >
                     <Image
-                      source={require("../../../assets/images/arrow-right.png")}
+                      source={require('../../../assets/images/arrow-right.png')}
                       style={{height:15, width: 15}}
                       resizeMode="contain"
                     />
@@ -139,7 +139,7 @@ class ScreensBuyACH extends Component {
             <Text style={styles.infoBold}>Debit from</Text>
               <View style={styles.bankDisplay}>
                 <Image
-                  source={require("../../../assets/images/logo-bofa.png")}
+                  source={require('../../../assets/images/logo-bofa.png')}
                   style={styles.bankIcon}
                   resizeMode="contain"
                 />
@@ -168,7 +168,7 @@ class ScreensBuyACH extends Component {
             </View>
             <View style={styles.totalDisplay}>
               <Image
-                source={require("../../../assets/images/icon-lfi.png")}
+                source={require('../../../assets/images/icon-lfi.png')}
                 style={styles.LFIicon}
                 resizeMode="contain"
               />
@@ -188,7 +188,7 @@ class ScreensBuyACH extends Component {
             style={styles.buttonBuy}
             onPress={() => {
                 this.updateLFIBuyAmount(),
-                navigation.navigate("BuyConfirm")
+                navigation.navigate('BuyConfirm')
               }
             }
           >
