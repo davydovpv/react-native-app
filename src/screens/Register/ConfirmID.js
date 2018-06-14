@@ -10,10 +10,10 @@ import {
   TextInput
 } from 'react-native';
 
-import { BUTTON_COLOR } from '../styles/common';
-import RegisterHeader from '../components/RegisterHeader';
+import { BUTTON_COLOR } from '../../styles/common';
+import RegisterHeader from '../../components/Register/Header';
 
-class RegisterScreen extends Component {
+class ScreensRegisterConfirmID extends Component {
 
     render() {
 
@@ -27,7 +27,7 @@ class RegisterScreen extends Component {
           <RegisterHeader/>
 
           <View style={styles.headingRow}>
-            <Text style={styles.headingText}>Create Account</Text>
+            <Text style={styles.headingText}>Confirm Your Idenfity</Text>
           </View>
 
 
@@ -55,34 +55,19 @@ class RegisterScreen extends Component {
                   autoCorrect={false}
                   returnKeyType="next"
                   ref={(input) => this.lastNameInput = input }
-                  onSubmitEditing={() => this.emailInput.focus()}
+                  onSubmitEditing={() => this.addressInput.focus()}
                   style={styles.input}
                   />
               </View>
 
               <View style={styles.inputRow}>
-                <Text style={styles.inputLabel}>Email</Text>
+                <Text style={styles.inputLabel}>Address</Text>
                 <TextInput
+                  placeholder="Your primary residence"
                   underlineColorAndroid="rgba(0,0,0,0)"
-                  autoCapitalize="none"
                   autoCorrect={false}
                   returnKeyType="next"
-                  keyboardType="email-address"
-                  ref={(input) => this.emailInput = input }
-                  onSubmitEditing={() => this.phoneInput.focus()}
-                  style={styles.input}
-                  />
-              </View>
-
-              <View style={styles.inputRow}>
-                <Text style={styles.inputLabel}>Phone</Text>
-                <TextInput
-                  underlineColorAndroid="rgba(0,0,0,0)"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  returnKeyType="next"
-                  keyboardType="phone-pad"
-                  ref={(input) => this.phoneInput = input }
+                  ref={(input) => this.addressInput = input }
                   onSubmitEditing={() => this.countryInput.focus()}
                   style={styles.input}
                   />
@@ -107,8 +92,22 @@ class RegisterScreen extends Component {
                   underlineColorAndroid="rgba(0,0,0,0)"
                   autoCapitalize="none"
                   autoCorrect={false}
-                  returnKeyType="go"
+                  returnKeyType="next"
                   ref={(input) => this.zipCodeInput = input }
+                  onSubmitEditing={() => this.sexInput.focus()}
+                  style={styles.input}
+                  />
+              </View>
+
+              <View style={styles.inputRow}>
+                <Text style={styles.inputLabel}>Sex</Text>
+                <TextInput
+                  placeholder="M or F"
+                  underlineColorAndroid="rgba(0,0,0,0)"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  returnKeyType="go"
+                  ref={(input) => this.sexInput = input }
                   style={styles.input}
                   />
               </View>
@@ -205,4 +204,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterScreen;
+export default ScreensRegisterConfirmID;

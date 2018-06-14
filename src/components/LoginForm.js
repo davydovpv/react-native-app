@@ -5,45 +5,45 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Button
 } from 'react-native';
 
 const LoginForm = () => (
 
-    <View style={styles.loginForm}>
+  <View style={styles.loginForm}>
+    <TextInput
+      placeholder="Username or Email"
+      placeholderTextColor="rgba(255,255,255,0.7)"
+      underlineColorAndroid="rgba(0,0,0,0)"
+      autoCapitalize="none"
+      autoCorrect={false}
+      returnKeyType="next"
+      keyboardType="email-address"
+      onSubmitEditing={() => passwordInput.focus()}
+      style={styles.input}
+      />
 
-        <TextInput
-          placeholder="Username or Email"
-          placeholderTextColor="rgba(255,255,255,0.7)"
-          underlineColorAndroid="rgba(0,0,0,0)"
-          autoCapitalize="none"
-          autoCorrect={false}
-          returnKeyType="next"
-          keyboardType="email-address"
-          onSubmitEditing={() => this.passwordInput.focus()}
-          style={styles.input}
-          />
+    <View style={styles.lineStyle} />
 
-        <View style={styles.lineStyle} />
+    <TextInput
+      placeholder="Private Key"
+      placeholderTextColor="rgba(255,255,255,0.7)"
+      underlineColorAndroid="rgba(0,0,0,0)"
+      secureTextEntry
+      returnKeyType="go"
+      style={styles.input}
+      ref={(input) => passwordInput = input }
+      onChangeText={value => onChangeText(value)}
+      />
 
-        <TextInput
-          placeholder="Private Key"
-          placeholderTextColor="rgba(255,255,255,0.7)"
-          underlineColorAndroid="rgba(0,0,0,0)"
-          secureTextEntry
-          returnKeyType="go"
-          style={styles.input}
-          ref={(input) => this.passwordInput = input }
-          />
-
-      </View>
+  </View>
 
 );
 
 const styles = StyleSheet.create({
   loginForm: {
-    flex: 1,
+    flex: 0.85,
     justifyContent: 'flex-end',
-    backgroundColor: 'green',
   },
   input: {
     height: 40,

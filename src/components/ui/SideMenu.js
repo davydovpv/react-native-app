@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { DrawerActions, NavigationActions } from 'react-navigation';
 import UserProfile from '../UserProfile';
 import data from '../../data';
+import { Auth } from 'aws-amplify';
 
 class SideMenu extends Component {
 
@@ -14,6 +15,16 @@ class SideMenu extends Component {
   };
 
   render() {
+
+    logoutHandler = () => {
+
+      Auth.signOut()
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
+
+      this.props.navigation.navigate("LoginHandler")
+    }
+
     return(
         <View style={styles.menuContainer}>
 
@@ -84,7 +95,7 @@ class SideMenu extends Component {
 
           <View style={styles.navFooter}>
             <TouchableOpacity
-              onPress={this.navigateToScreen("LoginHandler")}
+              onPress={logoutHandler}
             >
               <Text style={styles.navItemSmall}>Logout</Text>
             </TouchableOpacity>

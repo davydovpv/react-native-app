@@ -7,8 +7,11 @@ import {
   TextInput,
   TouchableOpacity,
   StatusBar,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Button
 } from 'react-native';
+
+import { Auth } from 'aws-amplify';
 
 import {
   BACKGROUND_DARK,
@@ -18,18 +21,74 @@ import {
 
 class LoginScreen extends Component {
 
+    constructor() {
+      super();
+      this.state = {
+        require2StepAuth: true,
+        hasSuccessLogin: false
+      };
+    }
+
+    state: {
+      username: '',
+      password: '',
+      authCode: '',
+      user: ''
+    }
+
+    onChangeText(key, value) {
+      this.setState({
+        [key]: value
+      });
+    }
+
+    signIn() {
+      const { username, password } = this.state
+      Auth.signIn(username, password)
+      .then(user => {
+        console.log('logged in!', user)
+        this.setState({
+          hasSuccessLogin: true,
+          user: user
+        })
+        !this.state.require2StepAuth &&
+          this.props.navigation.navigate("Home")
+      })
+      .catch(err => {
+        console.log('error sign in: ', err)
+      })
+    }
+
+    verify() {
+      const { user, authCode } = this.state
+      Auth.confirmSignIn(user, authCode)
+        .then(user => {
+          console.log('verified user:', user)
+          this.props.navigation.navigate("Home");
+        })
+        .catch(err => {
+          console.log('error confirming sign in: ', err)
+        })
+    }
+
     async componentDidMount() {
       const {
         navigation: { navigate },
       } = this.props;
     }
 
+
     render() {
 
       const { navigation } = this.props;
+      const { hasSuccessLogin } = this.state
 
       loginHandler = () => {
-        navigation.navigate("Home");
+        this.signIn()
+      }
+
+      verifyHandler = () => {
+        this.verify()
       }
 
       registerHandler = () => {
@@ -58,40 +117,81 @@ class LoginScreen extends Component {
                   </View>
 
                   <View style={styles.loginForm}>
-                    <TextInput
-                      placeholder="Username or Email"
-                      placeholderTextColor="rgba(255,255,255,0.7)"
-                      underlineColorAndroid="rgba(0,0,0,0)"
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                      returnKeyType="next"
-                      keyboardType="email-address"
-                      onSubmitEditing={() => this.passwordInput.focus()}
-                      style={styles.input}
-                      />
 
-                    <View style={styles.lineStyle} />
+                    { !this.state.hasSuccessLogin &&
+                      <View>
+                        <TextInput
+                          placeholder="Username"
+                          placeholderTextColor="rgba(255,255,255,0.7)"
+                          underlineColorAndroid="rgba(0,0,0,0)"
+                          autoCapitalize="none"
+                          autoCorrect={false}
+                          returnKeyType="next"
+                          keyboardType="email-address"
+                          onSubmitEditing={() => this.passwordInput.focus()}
+                          style={styles.input}
+                          onChangeText={value => this.onChangeText('username', value)}
+                          />
 
-                    <TextInput
-                      placeholder="Private Key"
-                      placeholderTextColor="rgba(255,255,255,0.7)"
-                      underlineColorAndroid="rgba(0,0,0,0)"
-                      secureTextEntry
-                      returnKeyType="go"
-                      style={styles.input}
-                      ref={(input) => this.passwordInput = input }
-                      />
+                        <View style={styles.lineStyle} />
+
+                        <TextInput
+                          placeholder="Password"
+                          placeholderTextColor="rgba(255,255,255,0.7)"
+                          underlineColorAndroid="rgba(0,0,0,0)"
+                          secureTextEntry
+                          returnKeyType="go"
+                          style={styles.input}
+                          ref={(input) => this.passwordInput = input }
+                          onChangeText={value => this.onChangeText('password', value)}
+                          />
+
+                      </View>
+                    }
+
+                    { this.state.hasSuccessLogin &&
+                      <View>
+
+                        <View style={styles.bodyMessage}>
+                          <Text style={styles.bodyText}>Verification Key sent via SMS</Text>
+                        </View>
+
+                        <TextInput
+                          placeholder="Enter Verification Key"
+                          placeholderTextColor="rgba(255,255,255,0.7)"
+                          underlineColorAndroid="rgba(0,0,0,0)"
+                          secureTextEntry
+                          returnKeyType="go"
+                          style={styles.input}
+                          onChangeText={value => this.onChangeText('authCode', value)}
+                          />
+
+                        <View style={styles.lineStyle} />
+
+                      </View>
+                    }
+
                   </View>
 
               </KeyboardAvoidingView>
 
               <View style={styles.footer}>
 
-                <TouchableOpacity
-                  style={styles.buttonLogin}
-                  onPress={loginHandler}>
-                  <Text style={styles.boldButton}>login</Text>
-                </TouchableOpacity>
+                { this.state.hasSuccessLogin &&
+                  <TouchableOpacity
+                    style={styles.buttonLogin}
+                    onPress={verifyHandler}>
+                    <Text style={styles.boldButton}>verify key</Text>
+                  </TouchableOpacity>
+                }
+
+                { !this.state.hasSuccessLogin &&
+                  <TouchableOpacity
+                    style={styles.buttonLogin}
+                    onPress={loginHandler}>
+                    <Text style={styles.boldButton}>login</Text>
+                  </TouchableOpacity>
+                }
 
                 <TouchableOpacity
                   style={styles.buttonRegister}
@@ -150,6 +250,16 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 4,
+  },
+  bodyMessage: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 40
+  },
+  bodyText: {
+    fontFamily: 'OpenSansBold',
+    fontSize: 14,
+    color: 'rgba(255,255,255,1)',
   },
   footer: {
     justifyContent: 'center',

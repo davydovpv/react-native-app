@@ -8,10 +8,10 @@ import {
   Image,
 } from 'react-native';
 
-import { BUTTON_COLOR } from '../styles/common';
-import RegisterHeader from '../components/RegisterHeader';
+import { BUTTON_COLOR } from '../../styles/common';
+import RegisterHeader from '../../components/Register/Header';
 
-class WelcomeFundScreen extends Component {
+class ScreensRegisterSetup extends Component {
 
     render() {
 
@@ -44,12 +44,12 @@ class WelcomeFundScreen extends Component {
 
                 <View style={{flexDirection: 'row', margin: 5}}>
                   <Image
-                    source={require('../../assets/images/icon-btc.png')}
+                    source={require('../../../assets/images/icon-btc.png')}
                     style={{height:30,width: 30, marginHorizontal: 5}}
                     resizeMode="contain"
                   />
                   <Image
-                    source={require('../../assets/images/icon-eth.png')}
+                    source={require('../../../assets/images/icon-eth.png')}
                     style={{height:32,width: 32, marginHorizontal: 5}}
                     resizeMode="contain"
                   />
@@ -65,19 +65,19 @@ class WelcomeFundScreen extends Component {
                 <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', margin: 5}}>
 
                   <Image
-                    source={require('../../assets/images/logo-chase.png')}
+                    source={require('../../../assets/images/logo-chase.png')}
                     style={{height:25,width: 25, borderRadius: 5, margin: 3}}
                     resizeMode="contain"
                   />
 
                   <Image
-                    source={require('../../assets/images/logo-bofa.png')}
+                    source={require('../../../assets/images/logo-bofa.png')}
                     style={{height:25,width: 25, borderRadius: 5, margin: 3}}
                     resizeMode="contain"
                   />
 
                   <Image
-                    source={require('../../assets/images/logo-citi.png')}
+                    source={require('../../../assets/images/logo-citi.png')}
                     style={{height:25,width: 25, borderRadius: 5, margin: 3}}
                     resizeMode="contain"
                   />
@@ -185,4 +185,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WelcomeFundScreen;
+export default ScreensRegisterSetup;

@@ -8,9 +8,9 @@ import {
   Image,
 } from 'react-native';
 
-import RegisterHeader from '../components/RegisterHeader';
+import RegisterHeader from '../../components/Register/Header';
 
-class VerifyIDScreen extends Component {
+class ScreensRegisterVerifyID extends Component {
 
     render() {
 
@@ -24,7 +24,7 @@ class VerifyIDScreen extends Component {
 
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <Image
-              source={require("../../assets/images/logo-netverify.png")}
+              source={require("../../../assets/images/logo-netverify.png")}
               style={{width: 250, height: 100}}
               resizeMode="contain"
             />
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VerifyIDScreen;
+export default ScreensRegisterVerifyID;

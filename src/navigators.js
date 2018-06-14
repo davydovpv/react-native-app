@@ -7,18 +7,25 @@ import {
 import { Animated, Easing } from 'react-native';
 
 import LoginScreen from "./screens/LoginScreen";
-import HomeScreen from "./screens/HomeScreen";
-import BuyCoinBTCScreen from "./screens/BuyCoinBTCScreen";
-import BuyCoinETHScreen from "./screens/BuyCoinETHScreen";
-import BuyCoinACHScreen from "./screens/BuyCoinACHScreen";
-import BuyConfirmScreen from "./screens/BuyCoinConfirm";
-import CertificateScreen from "./screens/CertificateScreen";
-import RegisterScreen from "./screens/RegisterScreen";
-import VerifyIDScreen from "./screens/VerifyIDScreen";
-import RegisterSuccessScreen from "./screens/RegisterSuccessScreen";
-import RegisterFailScreen from "./screens/RegisterFailScreen";
-import WelcomeFundScreen from "./screens/WelcomeFundScreen";
 import SideMenu from "./components/ui/SideMenu";
+import HomeScreen from "./screens/HomeScreen";
+import CertificateScreen from "./screens/CertificateScreen";
+
+
+// LFI Wallet / Buy Flow
+import ScreensBuyBTC from "./screens/Buy/BTC";
+import ScreensBuyETH from "./screens/Buy/ETH";
+import ScreensBuyACH from "./screens/Buy/ACH";
+import ScreensBuyConfirm from "./screens/Buy/Confirm";
+
+// Create New Account (Cognito) / ID Flow
+import ScreensRegisterAccount from "./screens/Register/Account";
+import ScreensRegisterConfirmID from "./screens/Register/ConfirmID";
+import ScreensRegisterVerifyID from "./screens/Register/VerifyID";
+import ScreensRegisterSuccess from "./screens/Register/Success";
+import ScreensRegisterFail from "./screens/Register/Fail";
+import ScreensRegisterSetup from "./screens/Register/Setup";
+
 
 const globalStackConfig = {
   headerMode: "none"
@@ -37,21 +44,22 @@ const buyCoinStackConfig = {
 
 const BuyCoinStack = createStackNavigator(
   {
-    BuyCoinBTC: { screen: BuyCoinBTCScreen },
-    BuyCoinETH: { screen: BuyCoinETHScreen },
-    BuyCoinACH: { screen: BuyCoinACHScreen },
-    BuyConfirm: { screen: BuyConfirmScreen }
+    BuyCoinBTC: { screen: ScreensBuyBTC },
+    BuyCoinETH: { screen: ScreensBuyETH },
+    BuyCoinACH: { screen: ScreensBuyACH },
+    BuyConfirm: { screen: ScreensBuyConfirm }
   },
   buyCoinStackConfig
 );
 
 const RegisterStack = createStackNavigator(
   {
-    Register_1: { screen: RegisterScreen },
-    Register_2: { screen: VerifyIDScreen },
-    Register_3: { screen: RegisterSuccessScreen },
-    Register_Fail: { screen: RegisterFailScreen },
-    WelcomeFund: { screen: WelcomeFundScreen }
+    Register_0: { screen: ScreensRegisterAccount },
+    Register_1: { screen: ScreensRegisterConfirmID },
+    Register_2: { screen: ScreensRegisterVerifyID },
+    Register_3: { screen: ScreensRegisterSuccess },
+    Register_Fail: { screen: ScreensRegisterFail },
+    WelcomeFund: { screen: ScreensRegisterSetup }
   },
   globalStackConfig
 );

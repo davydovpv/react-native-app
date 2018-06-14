@@ -11,11 +11,11 @@ import {
 } from 'react-native';
 
 import { IntlProvider, FormattedMessage } from 'react-intl';
-import MainHeader from '../components/MainHeader';
-import data from '../data';
+import MainHeader from '../../components/MainHeader';
+import data from '../../data';
 
 
-class BuyConfirmScreen extends Component {
+class ScreensBuyConfirm extends Component {
 
   updateBalanceJSON() {
       data.lfiBalance = parseInt(data.lfiBalance) + parseInt(data.buyLFIAmount)
@@ -37,7 +37,7 @@ class BuyConfirmScreen extends Component {
         <View style={styles.headingRow}>
             <Text style={styles.headingBold}>LFI Purchase Confirmed</Text>
             <Image
-              source={require("../../assets/images/icon-checked.png")}
+              source={require("../../../assets/images/icon-checked.png")}
               style={styles.LFIicon}
               resizeMode="contain"
             />
@@ -49,7 +49,7 @@ class BuyConfirmScreen extends Component {
               <Text style={styles.infoBold}>You Added</Text>
                 <View style={styles.totalDisplay}>
                   <Image
-                    source={require("../../assets/images/icon-lfi.png")}
+                    source={require("../../../assets/images/icon-lfi.png")}
                     style={styles.LFIicon}
                     resizeMode="contain"
                   />
@@ -74,7 +74,7 @@ class BuyConfirmScreen extends Component {
             <Text style={styles.infoBold}>New Balance</Text>
               <View style={styles.totalDisplay}>
                 <Image
-                  source={require("../../assets/images/icon-lfi.png")}
+                  source={require("../../../assets/images/icon-lfi.png")}
                   style={styles.LFIicon}
                   resizeMode="contain"
                 />
@@ -270,4 +270,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default BuyConfirmScreen;
+export default ScreensBuyConfirm;

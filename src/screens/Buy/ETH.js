@@ -11,10 +11,10 @@ import {
 } from 'react-native';
 
 import { IntlProvider, FormattedMessage } from 'react-intl';
-import MainHeader from '../components/MainHeader';
-import data from '../data';
+import MainHeader from '../../components/MainHeader';
+import data from '../../data';
 
-class BuyCoinETHScreen extends Component {
+class ScreensBuyETH extends Component {
 
   state: {
       buyLFI: number,
@@ -72,7 +72,7 @@ class BuyCoinETHScreen extends Component {
             <Text style={styles.headingBold}>LFI Balance</Text>
             <View style={styles.balanceDisplay}>
               <Image
-                source={require("../../assets/images/icon-lfi.png")}
+                source={require("../../../assets/images/icon-lfi.png")}
                 style={styles.LFIicon}
                 resizeMode="contain"
               />
@@ -96,7 +96,7 @@ class BuyCoinETHScreen extends Component {
                     style={{padding: 10, marginLeft: -5}}
                   >
                       <Image
-                        source={require("../../assets/images/arrow-left.png")}
+                        source={require("../../../assets/images/arrow-left.png")}
                         style={{height:15, width: 15}}
                         resizeMode="contain"
                       />
@@ -107,7 +107,7 @@ class BuyCoinETHScreen extends Component {
                   >
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                       <Image
-                        source={require("../../assets/images/icon-eth.png")}
+                        source={require("../../../assets/images/icon-eth.png")}
                         style={styles.BTCicon}
                         resizeMode="contain"
                       />
@@ -120,7 +120,7 @@ class BuyCoinETHScreen extends Component {
                   style={{padding: 10, marginRight: -5}}
                 >
                     <Image
-                      source={require("../../assets/images/arrow-right.png")}
+                      source={require("../../../assets/images/arrow-right.png")}
                       style={{height:15, width: 15}}
                       resizeMode="contain"
                     />
@@ -161,7 +161,7 @@ class BuyCoinETHScreen extends Component {
             <Text style={styles.infoBold}>Wallet</Text>
             <View style={styles.walletDisplay}>
               <Image
-                source={require("../../assets/images/qrcode.png")}
+                source={require("../../../assets/images/qrcode.png")}
                 style={styles.walletQR}
                 resizeMode="contain"
               />
@@ -176,7 +176,7 @@ class BuyCoinETHScreen extends Component {
             </View>
             <View style={styles.totalDisplay}>
               <Image
-                source={require("../../assets/images/icon-lfi.png")}
+                source={require("../../../assets/images/icon-lfi.png")}
                 style={styles.LFIicon}
                 resizeMode="contain"
               />
@@ -382,4 +382,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default BuyCoinETHScreen;
+export default ScreensBuyETH;

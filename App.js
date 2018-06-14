@@ -2,6 +2,12 @@ import 'intl';
 import 'intl/locale-data/jsonp/en';
 import React, { Component } from 'react';
 import Navigator from './src/navigators';
+
+// Auth
+import Amplify from 'aws-amplify';
+import awsconfig from './src/aws-exports';
+Amplify.configure(awsconfig);
+
 class App extends Component {
 
   state = {

@@ -9,10 +9,10 @@ import {
   Image,
 } from 'react-native';
 
-import { BUTTON_COLOR } from '../styles/common';
-import RegisterHeader from '../components/RegisterHeader';
+import { BUTTON_COLOR } from '../../styles/common';
+import RegisterHeader from '../../components/Register/Header';
 
-class RegisterSuccessScreen extends Component {
+class ScreensRegisterSuccess extends Component {
 
     render() {
 
@@ -27,7 +27,7 @@ class RegisterSuccessScreen extends Component {
           <View style={styles.headingRow}>
             <Text style={styles.headingText}>Identify Verified</Text>
             <Image
-              source={require("../../assets/images/icon-checkshield.png")}
+              source={require("../../../assets/images/icon-checkshield.png")}
               style={styles.iconShield}
               resizeMode='contain'
             />
@@ -36,7 +36,7 @@ class RegisterSuccessScreen extends Component {
 
           <ScrollView>
           <View style={styles.body}>
-            
+
             <Text style={styles.bodyText}>
               Dear Adam Rosen, {'\n'}
               {'\n'}
@@ -48,7 +48,7 @@ class RegisterSuccessScreen extends Component {
             </Text>
 
             <Image
-              source={require("../../assets/images/signature.png")}
+              source={require("../../../assets/images/signature.png")}
               style={{height:80, width: 120}}
               resizeMode="contain"
             />
@@ -135,4 +135,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterSuccessScreen;
+export default ScreensRegisterSuccess;
