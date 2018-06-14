@@ -10,8 +10,8 @@ import {
   TextInput
 } from 'react-native';
 
-import { BUTTON_COLOR } from '../../styles/common';
-import RegisterHeader from '../../components/Register/Header';
+import { BUTTON_COLOR } from '@src/styles/common';
+import RegisterHeader from '@src/components/Register/Header';
 
 class ScreensRegisterConfirmID extends Component {
 

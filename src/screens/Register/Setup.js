@@ -8,8 +8,8 @@ import {
   Image,
 } from 'react-native';
 
-import { BUTTON_COLOR } from '../../styles/common';
-import RegisterHeader from '../../components/Register/Header';
+import { BUTTON_COLOR } from '@src/styles/common';
+import RegisterHeader from '@src/components/Register/Header';
 
 class ScreensRegisterSetup extends Component {
 
@@ -44,12 +44,12 @@ class ScreensRegisterSetup extends Component {
 
                 <View style={{flexDirection: 'row', margin: 5}}>
                   <Image
-                    source={require('../../../assets/images/icon-btc.png')}
+                    source={require('@assets/images/icon-btc.png')}
                     style={{height:30,width: 30, marginHorizontal: 5}}
                     resizeMode="contain"
                   />
                   <Image
-                    source={require('../../../assets/images/icon-eth.png')}
+                    source={require('@assets/images/icon-eth.png')}
                     style={{height:32,width: 32, marginHorizontal: 5}}
                     resizeMode="contain"
                   />
@@ -65,19 +65,19 @@ class ScreensRegisterSetup extends Component {
                 <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', margin: 5}}>
 
                   <Image
-                    source={require('../../../assets/images/logo-chase.png')}
+                    source={require('@assets/images/logo-chase.png')}
                     style={{height:25,width: 25, borderRadius: 5, margin: 3}}
                     resizeMode="contain"
                   />
 
                   <Image
-                    source={require('../../../assets/images/logo-bofa.png')}
+                    source={require('@assets/images/logo-bofa.png')}
                     style={{height:25,width: 25, borderRadius: 5, margin: 3}}
                     resizeMode="contain"
                   />
 
                   <Image
-                    source={require('../../../assets/images/logo-citi.png')}
+                    source={require('@assets/images/logo-citi.png')}
                     style={{height:25,width: 25, borderRadius: 5, margin: 3}}
                     resizeMode="contain"
                   />

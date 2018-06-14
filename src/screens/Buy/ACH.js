@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 
 import { IntlProvider, FormattedMessage } from 'react-intl';
-import MainHeader from '../../components/MainHeader';
-import data from '../../data';
+import MainHeader from '@src/components/MainHeader';
+import data from '@src/data';
 
 class ScreensBuyACH extends Component {
 
@@ -51,7 +51,7 @@ class ScreensBuyACH extends Component {
             <Text style={styles.headingBold}>LFI Balance</Text>
             <View style={styles.balanceDisplay}>
               <Image
-                source={require('../../../assets/images/icon-lfi.png')}
+                source={require('@assets/images/icon-lfi.png')}
                 style={styles.LFIicon}
                 resizeMode="contain"
               />
@@ -75,7 +75,7 @@ class ScreensBuyACH extends Component {
                   style={{padding: 10, marginLeft: -5}}
                 >
                     <Image
-                      source={require('../../../assets/images/arrow-left.png')}
+                      source={require('@assets/images/arrow-left.png')}
                       style={{height:15, width: 15}}
                       resizeMode="contain"
                     />
@@ -86,7 +86,7 @@ class ScreensBuyACH extends Component {
                 >
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Image
-                    source={require('../../../assets/images/icon-usd.png')}
+                    source={require('@assets/images/icon-usd.png')}
                     style={styles.BTCicon}
                     resizeMode="contain"
                   />
@@ -98,7 +98,7 @@ class ScreensBuyACH extends Component {
                   style={{padding: 10, marginRight: -5}}
                 >
                     <Image
-                      source={require('../../../assets/images/arrow-right.png')}
+                      source={require('@assets/images/arrow-right.png')}
                       style={{height:15, width: 15}}
                       resizeMode="contain"
                     />
@@ -139,7 +139,7 @@ class ScreensBuyACH extends Component {
             <Text style={styles.infoBold}>Debit from</Text>
               <View style={styles.bankDisplay}>
                 <Image
-                  source={require('../../../assets/images/logo-bofa.png')}
+                  source={require('@assets/images/logo-bofa.png')}
                   style={styles.bankIcon}
                   resizeMode="contain"
                 />
@@ -168,7 +168,7 @@ class ScreensBuyACH extends Component {
             </View>
             <View style={styles.totalDisplay}>
               <Image
-                source={require('../../../assets/images/icon-lfi.png')}
+                source={require('@assets/images/icon-lfi.png')}
                 style={styles.LFIicon}
                 resizeMode="contain"
               />

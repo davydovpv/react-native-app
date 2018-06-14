@@ -17,7 +17,7 @@ import {
   BACKGROUND_DARK,
   BUTTON_COLOR,
   FONT_HEADLINE_SEMIBOLD
-} from '../styles/common';
+} from '@src/styles/common';
 
 class ScreensLogin extends Component {
 
@@ -52,7 +52,7 @@ class ScreensLogin extends Component {
           user: user
         })
         !this.state.require2StepAuth &&
-          this.props.navigation.navigate("Home")
+          this.props.navigation.navigate('Home')
       })
       .catch(err => {
         console.log('error sign in: ', err)
@@ -64,7 +64,7 @@ class ScreensLogin extends Component {
       Auth.confirmSignIn(user, authCode)
         .then(user => {
           console.log('verified user:', user)
-          this.props.navigation.navigate("Home");
+          this.props.navigation.navigate('Home');
         })
         .catch(err => {
           console.log('error confirming sign in: ', err)
@@ -92,7 +92,7 @@ class ScreensLogin extends Component {
       }
 
       registerHandler = () => {
-        navigation.navigate("Register");
+        navigation.navigate('Register');
       }
 
       return (
@@ -105,12 +105,12 @@ class ScreensLogin extends Component {
 
                   <View style={styles.loginLogo}>
                     <Image
-                      source={require('../../assets/images/logo.png')}
+                      source={require('@assets/images/logo.png')}
                       style={styles.logo}
                       resizeMode="contain"
                     />
                     <Image
-                      source={require('../../assets/images/slogan.png')}
+                      source={require('@assets/images/slogan.png')}
                       style={styles.slogan}
                       resizeMode="contain"
                     />

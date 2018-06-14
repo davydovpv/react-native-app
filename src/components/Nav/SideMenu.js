@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { DrawerActions, NavigationActions } from 'react-navigation';
-import UserProfile from '../User/Profile';
-import data from '../../data';
+import UserProfile from '@src/components/User/Profile';
+import data from '@src/data';
 import { Auth } from 'aws-amplify';
 
 class SideMenu extends Component {
@@ -30,7 +30,7 @@ class SideMenu extends Component {
 
           <View style={styles.sideNavTop}>
             <Image
-              source={require('../../../assets/images/logo.png')}
+              source={require('@assets/images/logo.png')}
               style={styles.logo}
               resizeMode="contain"
             />
@@ -38,7 +38,7 @@ class SideMenu extends Component {
               onPress={() => { this.props.navigation.dispatch(DrawerActions.closeDrawer())}}
             >
               <Image
-                source={require('../../../assets/images/icon-menu.png')}
+                source={require('@assets/images/icon-menu.png')}
                 style={styles.iconMenu}
                 resizeMode="contain"
               />
@@ -48,7 +48,7 @@ class SideMenu extends Component {
           <UserProfile
               color="white"
               nameWeight="bold"
-              photo={require('../../../assets/images/profile.png')}
+              photo={require('@assets/images/profile.png')}
               name={data.name}
               age={data.age}
               sex={data.sex}
@@ -62,7 +62,7 @@ class SideMenu extends Component {
               style={styles.navRow}
             >
               <Image
-                source={require('../../../assets/images/icon-wallet.png')}
+                source={require('@assets/images/icon-wallet.png')}
                 style={styles.iconNav}
                 resizeMode="contain"
               />
@@ -74,7 +74,7 @@ class SideMenu extends Component {
               style={styles.navRow}
             >
               <Image
-                source={require('../../../assets/images/icon-coins.png')}
+                source={require('@assets/images/icon-coins.png')}
                 style={styles.iconNav}
                 resizeMode="contain"
               />
@@ -85,7 +85,7 @@ class SideMenu extends Component {
               style={styles.navRow}
             >
               <Image
-                source={require('../../../assets/images/icon-certificate.png')}
+                source={require('@assets/images/icon-certificate.png')}
                 style={styles.iconNav}
                 resizeMode="contain"
               />

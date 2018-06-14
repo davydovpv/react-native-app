@@ -9,8 +9,8 @@ import {
   Image,
 } from 'react-native';
 
-import { BUTTON_COLOR } from '../../styles/common';
-import RegisterHeader from '../../components/Register/Header';
+import { BUTTON_COLOR } from '@src/styles/common';
+import RegisterHeader from '@src/components/Register/Header';
 
 class ScreensRegisterSuccess extends Component {
 
@@ -27,7 +27,7 @@ class ScreensRegisterSuccess extends Component {
           <View style={styles.headingRow}>
             <Text style={styles.headingText}>Identify Verified</Text>
             <Image
-              source={require('../../../assets/images/icon-checkshield.png')}
+              source={require('@assets/images/icon-checkshield.png')}
               style={styles.iconShield}
               resizeMode='contain'
             />
@@ -48,7 +48,7 @@ class ScreensRegisterSuccess extends Component {
             </Text>
 
             <Image
-              source={require('../../../assets/images/signature.png')}
+              source={require('@assets/images/signature.png')}
               style={{height:80, width: 120}}
               resizeMode="contain"
             />

@@ -67,9 +67,9 @@ const RegisterStack = createStackNavigator(
 
 const DrawerNav = createDrawerNavigator(
   {
-    Home: { screen: HomeScreen },
+    Home: { screen: ScreensHome },
     BuyCoin: { screen: BuyCoinStack },
-    Certificate: { screen: CertificateScreen }
+    Certificate: { screen: ScreensCertificate }
   },
   {
      contentComponent: SideMenu,
@@ -84,7 +84,7 @@ const DrawerNav = createDrawerNavigator(
 
 const LoginStack = createSwitchNavigator(
   {
-    LoginHandler: LoginScreen,
+    LoginHandler: ScreensLogin,
     Home: DrawerNav,
     Register: RegisterStack
   },

@@ -9,15 +9,15 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import MainHeader from '../components/MainHeader';
-import UserProfile from '../components/User/Profile';
+import MainHeader from '@src/components/MainHeader';
+import UserProfile from '@src/components/User/Profile';
 import {
   BACKGROUND_DARK,
   BORDER_COLOR,
   FONT_HEADLINE_SEMIBOLD
-} from '../styles/common';
+} from '@src/styles/common';
 
-import data from '../data';
+import data from '@src/data';
 
 
 class ScreensCertificate extends Component {
@@ -30,12 +30,12 @@ class ScreensCertificate extends Component {
         <View style={styles.certificateLFI}>
           <View style={styles.certificateHeader}>
             <Image
-              source={require('../../assets/images/cert-border-left.png')}
+              source={require('@assets/images/cert-border-left.png')}
               style={styles.certBorder}
               resizeMode="contain"
             />
             <Image
-              source={require('../../assets/images/cert-border-right.png')}
+              source={require('@assets/images/cert-border-right.png')}
               style={styles.certBorder}
               resizeMode="contain"
             />
@@ -49,7 +49,7 @@ class ScreensCertificate extends Component {
             <UserProfile
                 color="black"
                 nameWeight="bold"
-                photo={require('../../assets/images/profile.png')}
+                photo={require('@assets/images/profile.png')}
                 name={data.name}
                 age={data.age}
                 sex={data.sex}
@@ -72,7 +72,7 @@ class ScreensCertificate extends Component {
             style={styles.navRow}
           >
             <Image
-              source={require('../../assets/images/icon-email.png')}
+              source={require('@assets/images/icon-email.png')}
               style={styles.iconNav}
               resizeMode="contain"
             />

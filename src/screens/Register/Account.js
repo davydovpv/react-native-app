@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 
 import { Auth } from 'aws-amplify';
-import RegisterHeader from '../../components/Register/Header';
-import { BUTTON_COLOR } from '../../styles/common';
+import RegisterHeader from '@src/components/Register/Header';
+import { BUTTON_COLOR } from '@src/styles/common';
 
 
 class ScreensRegisterAccount extends Component {

@@ -19,7 +19,7 @@ const RegisterHeader = ({ navigation, ...props})  => (
           style={{padding:10}}
         >
           <Image
-            source={require('../../../assets/images/arrow-left.png')}
+            source={require('@assets/images/arrow-left.png')}
             style={styles.iconLeft}
             resizeMode="contain"
           />
@@ -27,7 +27,7 @@ const RegisterHeader = ({ navigation, ...props})  => (
 
 
         <Image
-          source={require('../../../assets/images/logo.png')}
+          source={require('@assets/images/logo.png')}
           style={styles.logo}
           resizeMode="contain"
         />
@@ -37,7 +37,7 @@ const RegisterHeader = ({ navigation, ...props})  => (
           style={{padding:10}}
         >
           <Image
-            source={require('../../../assets/images/icon-close.png')}
+            source={require('@assets/images/icon-close.png')}
             style={styles.iconRight}
             resizeMode="contain"
           />

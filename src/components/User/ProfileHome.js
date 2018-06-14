@@ -6,8 +6,6 @@ import {
   Image,
 } from 'react-native';
 
-import data from '../data';
-
 const UserProfileHome = ({ photo, name }) => (
 
       <View style={styles.profile}>
