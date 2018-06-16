@@ -54,7 +54,7 @@ class ScreensCertificate extends Component {
                 age={data.age}
                 sex={data.sex}
                 location={data.location}
-                ssn4digit={data.ssn4digit}
+                birthdate={data.birthdate}
             />
           </View>
 

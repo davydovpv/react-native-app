@@ -1,19 +1,24 @@
 {
   "user": {
-    "name": "David Cohen",
+    "name": "",
     "photo": "../assets/images/profile.png",
-    "age": 34,
-    "sex": "M",
-    "location": "New York, NY",
+    "age": 99,
+    "sex": "",
+    "address": "Address",
+    "city": "New York",
     "state": "New York",
-    "country": "United States",
-    "ssn4digit": 9010,
-    "id_verified": true
+    "location": "New York, NY",
+    "country": "US",
+    "phone": "",
+    "birthdate": "11-25-1983",
+    "idVerified": false
   },
   "wallet": {
     "lfiBalance": 70000,
     "multipleFactor": 2,
     "multipleYear": 2023,
+    "multipleFactor2": 4,
+    "multipleYear2": 2028,
     "bankAttached": true,
     "bankDetail": [
       {

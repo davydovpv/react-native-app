@@ -6,7 +6,7 @@ import {
   Image,
 } from 'react-native';
 
-const UserProfile = ({ photo, name, age, sex, location, ssn4digit, color }) => (
+const UserProfile = ({ photo, name, age, sex, location, color }) => (
     <View style={styles.profileContent}>
       <Image
         source={photo}
@@ -17,7 +17,7 @@ const UserProfile = ({ photo, name, age, sex, location, ssn4digit, color }) => (
         <Text style={ [styles.profileInfoBold, {color}] }>{name}</Text>
         <Text style={ [styles.profileInfo, {color}] }>{age} {sex}</Text>
         <Text style={ [styles.profileInfo, {color}] }>{location}</Text>
-        <Text style={ [styles.profileInfo, {color}] }>SSN xx-{ssn4digit}</Text>
+        <Text style={ [styles.profileInfo, {color}] }>Joined 2018</Text>
       </View>
     </View>
 );

@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  AsyncStorage
+} from 'react-native';
+
 import { DrawerActions, NavigationActions } from 'react-navigation';
 import UserProfile from '@src/components/User/Profile';
 import data from '@src/data';
@@ -14,18 +22,38 @@ class SideMenu extends Component {
     this.props.navigation.dispatch(navigateAction);
   };
 
-  render() {
+  logoutHandler = () => {
+    Auth.signOut()
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
+    this.props.navigation.navigate('LoginHandler')
+  }
 
-    logoutHandler = () => {
+  drawerHandler = () => {
+    this.props.navigation.dispatch(DrawerActions.closeDrawer())
+  }
 
-      Auth.signOut()
-      .then(data => console.log(data))
-      .catch(err => console.log(err));
 
-      this.props.navigation.navigate('LoginHandler')
+  async componentDidMount() {
+
+    try {
+        let userJSON = await AsyncStorage.getItem('user')
+        let userData = JSON.parse(userJSON)
+        data.name = userData.name
+        data.age = userData.age
+        data.sex = userData.sex
+        data.country = userData.country
+        data.birthdate = userData.birthdate
+      } catch(error) {
+        console.log(error)
     }
 
+  }
+
+  render() {
+
     return(
+
         <View style={styles.menuContainer}>
 
           <View style={styles.sideNavTop}>
@@ -35,7 +63,7 @@ class SideMenu extends Component {
               resizeMode="contain"
             />
             <TouchableOpacity
-              onPress={() => { this.props.navigation.dispatch(DrawerActions.closeDrawer())}}
+              onPress={this.drawerHandler}
             >
               <Image
                 source={require('@assets/images/icon-menu.png')}
@@ -52,8 +80,8 @@ class SideMenu extends Component {
               name={data.name}
               age={data.age}
               sex={data.sex}
-              location={data.location}
-              ssn4digit={data.ssn4digit}
+              location={data.country}
+              birthdate={data.lfiBalance}
           />
 
           <View style={styles.navContent}>
@@ -95,7 +123,7 @@ class SideMenu extends Component {
 
           <View style={styles.navFooter}>
             <TouchableOpacity
-              onPress={logoutHandler}
+              onPress={this.logoutHandler}
             >
               <Text style={styles.navItemSmall}>Logout</Text>
             </TouchableOpacity>

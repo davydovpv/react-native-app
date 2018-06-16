@@ -11,9 +11,24 @@ import {
 } from 'react-native';
 
 import { BUTTON_COLOR } from '@src/styles/common';
-import RegisterHeader from '@src/components/Register/Header';
+import SetupHeader from '@src/components/Setup/Header';
+import { Auth } from 'aws-amplify';
+import data from '@src/data';
 
-class ScreensRegisterConfirmID extends Component {
+class ScreensVerifyIDStart extends Component {
+
+    onChangeText(key, value) {
+      this.setState({
+        [key]: value
+      });
+    }
+
+    registerHandler = () => {
+
+      this.props.navigation.navigate('VerifyID')
+
+    }
+
 
     render() {
 
@@ -24,7 +39,7 @@ class ScreensRegisterConfirmID extends Component {
         <View style={styles.container}>
           <StatusBar barStyle="light-content" />
 
-          <RegisterHeader/>
+          <SetupHeader/>
 
           <View style={styles.headingRow}>
             <Text style={styles.headingText}>Confirm Your Idenfity</Text>
@@ -35,28 +50,21 @@ class ScreensRegisterConfirmID extends Component {
             <ScrollView style={styles.scrollView}>
 
               <View style={styles.inputRow}>
-                <Text style={styles.inputLabel}>First Name</Text>
-                <TextInput
-                  underlineColorAndroid="rgba(0,0,0,0)"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  returnKeyType="next"
-                  ref={(input) => this.firstNameInput = input }
-                  onSubmitEditing={() => this.lastNameInput.focus()}
-                  style={styles.input}
-                  />
+                <Text>Please make sure this information matches your Government Issued ID. For security, all details are verified using Equifax Identity Database.</Text>
               </View>
 
               <View style={styles.inputRow}>
-                <Text style={styles.inputLabel}>Last Name</Text>
+                <Text style={styles.inputLabel}>Full Name</Text>
                 <TextInput
                   underlineColorAndroid="rgba(0,0,0,0)"
                   autoCapitalize="none"
                   autoCorrect={false}
                   returnKeyType="next"
-                  ref={(input) => this.lastNameInput = input }
+                  ref={(input) => this.fullNameInput = input }
                   onSubmitEditing={() => this.addressInput.focus()}
+                  onChangeText={value => this.onChangeText('name', value)}
                   style={styles.input}
+                  value={ data.name }
                   />
               </View>
 
@@ -68,10 +76,40 @@ class ScreensRegisterConfirmID extends Component {
                   autoCorrect={false}
                   returnKeyType="next"
                   ref={(input) => this.addressInput = input }
-                  onSubmitEditing={() => this.countryInput.focus()}
+                  onSubmitEditing={() => this.cityInput.focus()}
+                  onChangeText={value => this.onChangeText('address', value)}
                   style={styles.input}
                   />
               </View>
+
+              <View style={styles.inputRow}>
+                <Text style={styles.inputLabel}>City</Text>
+                <TextInput
+                  placeholder="New York"
+                  underlineColorAndroid="rgba(0,0,0,0)"
+                  autoCorrect={false}
+                  returnKeyType="next"
+                  ref={(input) => this.cityInput = input }
+                  onSubmitEditing={() => this.stateInput.focus()}
+                  onChangeText={value => this.onChangeText('city', value)}
+                  style={styles.input}
+                  />
+              </View>
+
+              <View style={styles.inputRow}>
+                <Text style={styles.inputLabel}>State</Text>
+                <TextInput
+                  placeholder="NY"
+                  underlineColorAndroid="rgba(0,0,0,0)"
+                  autoCorrect={false}
+                  returnKeyType="next"
+                  ref={(input) => this.stateInput = input }
+                  onSubmitEditing={() => this.countryInput.focus()}
+                  onChangeText={value => this.onChangeText('state', value)}
+                  style={styles.input}
+                  />
+              </View>
+
 
               <View style={styles.inputRow}>
                 <Text style={styles.inputLabel}>Country</Text>
@@ -81,20 +119,8 @@ class ScreensRegisterConfirmID extends Component {
                   autoCorrect={false}
                   returnKeyType="next"
                   ref={(input) => this.countryInput = input }
-                  onSubmitEditing={() => this.zipCodeInput.focus()}
-                  style={styles.input}
-                  />
-              </View>
-
-              <View style={styles.inputRow}>
-                <Text style={styles.inputLabel}>Zip Code</Text>
-                <TextInput
-                  underlineColorAndroid="rgba(0,0,0,0)"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  returnKeyType="next"
-                  ref={(input) => this.zipCodeInput = input }
                   onSubmitEditing={() => this.sexInput.focus()}
+                  onChangeText={value => this.onChangeText('country', value)}
                   style={styles.input}
                   />
               </View>
@@ -108,6 +134,7 @@ class ScreensRegisterConfirmID extends Component {
                   autoCorrect={false}
                   returnKeyType="go"
                   ref={(input) => this.sexInput = input }
+                  onChangeText={value => this.onChangeText('sex', value)}
                   style={styles.input}
                   />
               </View>
@@ -118,7 +145,7 @@ class ScreensRegisterConfirmID extends Component {
           <View style={styles.footer}>
             <TouchableOpacity
               style={styles.buttonBuy}
-              onPress={ () => { navigation.navigate('VerifyID')} }
+              onPress={ this.registerHandler }
             >
               <Text style={styles.boldButton}>Continue to Verify ID</Text>
             </TouchableOpacity>
@@ -204,4 +231,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ScreensRegisterConfirmID;
+export default ScreensVerifyIDStart;

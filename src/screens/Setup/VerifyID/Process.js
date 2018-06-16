@@ -8,9 +8,9 @@ import {
   Image,
 } from 'react-native';
 
-import RegisterHeader from '@src/components/Register/Header';
+import SetupHeader from '@src/components/Setup/Header';
 
-class ScreensRegisterVerifyID extends Component {
+class ScreensVerifyIDProcess extends Component {
 
     render() {
 
@@ -20,7 +20,7 @@ class ScreensRegisterVerifyID extends Component {
 
         <View style={styles.container}>
           <StatusBar barStyle="light-content" />
-          <RegisterHeader />
+          <SetupHeader />
 
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <Image
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ScreensRegisterVerifyID;
+export default ScreensVerifyIDProcess;

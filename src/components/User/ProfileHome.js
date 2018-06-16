@@ -6,7 +6,7 @@ import {
   Image,
 } from 'react-native';
 
-const UserProfileHome = ({ photo, name }) => (
+const UserProfileHome = ({ photo, size, name }) => (
 
       <View style={styles.profile}>
         <Image
@@ -25,9 +25,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   profilePic: {
-      width: 175,
       height: 175,
-      borderRadius: 15,
+      width: 175,
+      borderRadius: 25,
       margin: 15,
   },
   profileName: {

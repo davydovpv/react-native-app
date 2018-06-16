@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -7,25 +8,27 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import { DrawerActions, withNavigation } from 'react-navigation';
+import { withNavigation } from 'react-navigation';
 
-const MainHeader = ({ navigation, ...props}) => (
+const SetupHeader = ({ navigation, ...props})  => (
 
     <View style={styles.headerContainer}>
 
         <TouchableOpacity
-          onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-        >
+            onPress={() => { navigation.goBack()}}
+            style={{padding: 10}}
+          >
           <Image
-            source={require("@assets/images/icon-menu.png")}
-            style={styles.iconMenu}
+            source={require('@assets/images/arrow-left.png')}
+            style={styles.iconLeft}
             resizeMode="contain"
           />
         </TouchableOpacity>
 
 
         <TouchableOpacity
-          onPress={() => { navigation.navigate('Home')} }
+          onPress={() => { navigation.navigate('Welcome')}}
+          style={{padding:10}}
         >
         <Image
           source={require('@assets/images/logo.png')}
@@ -34,10 +37,13 @@ const MainHeader = ({ navigation, ...props}) => (
         />
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => { navigation.navigate('Welcome')}}
+          style={{height: 28, width: 30 }}
+        >
           <Image
-            source={require('@assets/images/icon-info-white.png')}
-            style={styles.iconInfo}
+            source={require('@assets/images/icon-close.png')}
+            style={styles.iconRight}
             resizeMode="contain"
           />
         </TouchableOpacity>
@@ -56,21 +62,25 @@ const styles = StyleSheet.create({
     height: 80,
     backgroundColor: '#1E4072',
     padding: 20,
-    paddingTop: 40,
+    paddingTop: 40
   },
-  iconMenu: {
+  iconLeft: {
     height: 20,
     width: 20,
+    tintColor: '#fff'
   },
   logo: {
       width: 125,
-      height: 25,
+      height: 25
   },
-  iconInfo: {
-    height: 28,
-    width: 30,
+  iconRight: {
+    height: 18,
+    width: 18,
+    tintColor: '#fff',
+    padding: 10,
+    margin: 4
   },
 });
 
 
-export default withNavigation(MainHeader);
+export default withNavigation(SetupHeader);

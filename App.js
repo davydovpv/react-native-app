@@ -11,8 +11,11 @@ Amplify.configure(awsconfig);
 class App extends Component {
 
   state = {
-    fontLoaded: false
+    fontLoaded: false,
+    isAuthenticated: false
   };
+
+
 
   async componentDidMount() {
     await Expo.Font.loadAsync({
@@ -23,14 +26,18 @@ class App extends Component {
       OpenSansBold: require('./assets/fonts/Open_Sans/OpenSans-Bold.ttf'),
       Abel: require('./assets/fonts/Abel/Abel-Regular.ttf')
     });
-    this.setState({ fontLoaded: true });
+
+    this.setState({
+      fontLoaded: true
+    });
+
   }
 
   render() {
     return this.state.fontLoaded ? (
-      <Navigator />
+      <Navigator
+      />
     ) : null ;
-
   }
 
 }

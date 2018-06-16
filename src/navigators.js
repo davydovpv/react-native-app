@@ -6,23 +6,31 @@ import {
 } from 'react-navigation';
 import { Animated, Easing } from 'react-native';
 
-import ScreensLogin from './screens/LoginScreen';
-import ScreensHome from './screens/HomeScreen';
-import ScreensCertificate from './screens/CertificateScreen';
+import ScreensLogin from './screens/Login';
+import ScreensHome from './screens/Home';
+import ScreensCertificate from './screens/Certificate';
 
-// LFI Wallet / Buy Flow
+// Create New Account (Cognito)
+import ScreensRegisterAccount from './screens/Register/Account';
+import ScreensRegisterSuccess from './screens/Register/Success';
+
+// Welcome Flow
+import ScreensWelcome from './screens/Welcome/';
+
+// Setup: Verify ID Flow
+import ScreensVerifyIDStart from './screens/Setup/VerifyID/Start';
+import ScreensVerifyIDProcess from './screens/Setup/VerifyID/Process';
+import ScreensVerifyIDSuccess from './screens/Setup/VerifyID/Success';
+import ScreensVerifyIDFail from './screens/Setup/VerifyID/Fail';
+
+// Setup: LFI Wallet
+import ScreensSetupWallet from './screens/Setup/Wallet/';
+
+// Buy Flow
 import ScreensBuyBTC from './screens/Buy/BTC';
 import ScreensBuyETH from './screens/Buy/ETH';
 import ScreensBuyACH from './screens/Buy/ACH';
 import ScreensBuyConfirm from './screens/Buy/Confirm';
-
-// Create New Account (Cognito) / ID Flow
-import ScreensRegisterAccount from './screens/Register/Account';
-import ScreensRegisterConfirmID from './screens/Register/ConfirmID';
-import ScreensRegisterVerifyID from './screens/Register/VerifyID';
-import ScreensRegisterSuccess from './screens/Register/Success';
-import ScreensRegisterFail from './screens/Register/Fail';
-import ScreensRegisterSetup from './screens/Register/Setup';
 
 // Nav Content Component
 import SideMenu from './components/Nav/SideMenu';
@@ -42,6 +50,26 @@ const buyCoinStackConfig = {
   }),
 };
 
+const RegisterStack = createStackNavigator(
+  {
+    NewAccount: { screen: ScreensRegisterAccount },
+    Success: { screen: ScreensRegisterSuccess },
+  },
+  globalStackConfig
+);
+
+const WelcomeStack = createStackNavigator(
+  {
+    Welcome: { screen: ScreensWelcome },
+    VerifyID: { screen: ScreensVerifyIDStart },
+    Process: { screen: ScreensVerifyIDProcess },
+    Success: { screen: ScreensVerifyIDSuccess },
+    Fail: { screen: ScreensVerifyIDFail },
+    SetupWallet: { screen: ScreensSetupWallet }
+  },
+  globalStackConfig
+);
+
 const BuyCoinStack = createStackNavigator(
   {
     BuyCoinBTC: { screen: ScreensBuyBTC },
@@ -51,19 +79,6 @@ const BuyCoinStack = createStackNavigator(
   },
   buyCoinStackConfig
 );
-
-const RegisterStack = createStackNavigator(
-  {
-    NewAccount: { screen: ScreensRegisterAccount },
-    ConfirmID: { screen: ScreensRegisterConfirmID },
-    VerifyID: { screen: ScreensRegisterVerifyID },
-    Success: { screen: ScreensRegisterSuccess },
-    Fail: { screen: ScreensRegisterFail },
-    SetupWallet: { screen: ScreensRegisterSetup }
-  },
-  globalStackConfig
-);
-
 
 const DrawerNav = createDrawerNavigator(
   {
@@ -85,8 +100,9 @@ const DrawerNav = createDrawerNavigator(
 const LoginStack = createSwitchNavigator(
   {
     LoginHandler: ScreensLogin,
-    Home: DrawerNav,
-    Register: RegisterStack
+    Register: RegisterStack,
+    Welcome: WelcomeStack,
+    Home: DrawerNav
   },
   {
     initialRouteName: 'LoginHandler',

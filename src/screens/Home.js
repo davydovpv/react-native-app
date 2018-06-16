@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
@@ -8,38 +8,89 @@ import {
   StatusBar,
   TouchableOpacity,
   Button,
-  Alert
+  Alert,
+  AsyncStorage
 } from 'react-native';
 
-import { IntlProvider, FormattedMessage } from 'react-intl';
+import { IntlProvider, FormattedMessage } from 'react-intl'
 
-import data from '@src/data';
-import MainHeader from '@src/components/MainHeader';
-import UserProfileHome from '@src/components/User/ProfileHome';
-import { BUTTON_COLOR } from '@src/styles/common';
+import data from '@src/data'
+import MainHeader from '@src/components/MainHeader'
+import UserProfileHome from '@src/components/User/ProfileHome'
+import { BUTTON_COLOR } from '@src/styles/common'
 
+// Amplify
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
+import getUser from '@src/queries/getUser'
 
 class ScreensHome extends Component {
 
     state: {
-        balanceUSD: string,
+        balanceUSD: string
     }
 
     constructor(props) {
       super(props);
       this.state = {
         balanceUSD: 15000,
+        isLoading: true,
+        idVerified: data.idVerified
       };
+    }
+
+
+    buyCoinHandler = () => {
+      this.props.navigation.navigate('BuyCoin')
+    }
+
+    async componentWillMount() {
+
+      const userInfo = await API.graphql(graphqlOperation(getUser, { userId: 0 }))
+
+      const {
+        name,
+        age,
+        sex,
+        country
+      } = userInfo.data.getUser;
+
+      let userObj = {
+        name: name,
+        age: age,
+        sex: sex,
+        country: country
+      }
+
+      AsyncStorage.setItem('user', JSON.stringify(userObj))
+      console.log(this.state.hasAuth)
+
+    }
+
+    async componentDidMount() {
+
+      try {
+          let userJSON = await AsyncStorage.getItem('user')
+          let userData = JSON.parse(userJSON)
+          this.setState({
+            isLoading: false,
+            name: userData.name,
+            age: userData.age,
+            sex: userData.sex,
+            country: userData.country
+          })
+        } catch(error) {
+          console.log(error)
+      }
 
     }
 
     render() {
 
       const { navigation } = this.props;
-      const { balanceUSD } = this.state;
+      const { idVerified, balanceUSD, name, age, sex, country } = this.state;
+
       let multiple1 = data.lfiBalance * data.multipleFactor;
       let multiple2 = multiple1 * 2;
-      let multiple3 = multiple2 * 2;
 
       return (
 
@@ -55,10 +106,13 @@ class ScreensHome extends Component {
 
 
           <View style={styles.profileRegion}>
+
             <UserProfileHome
               photo={require('@assets/images/profile.png')}
-              name={data.name}
+              name={ name }
             />
+
+            <Text> {age} {sex}, {country}</Text>
 
             <View style={styles.balance}>
               <View style={styles.balanceRow}>
@@ -75,6 +129,7 @@ class ScreensHome extends Component {
                     />
                   </Text>
               </View>
+
               <View style={styles.balanceRow}>
                   <Image
                     source={require('@assets/images/icon-usd.png')}
@@ -92,22 +147,22 @@ class ScreensHome extends Component {
 
               </View>
             </View>
-          </View>
 
-          <View style={styles.infoRegion}>
+            </View>
 
-            <View style={styles.multiplySchedule}>
-              <Text style={[styles.infoTextBold, {flex: 3}]}>LFI Multiply{'\n'}Schedule</Text>
-              <Text style={[styles.infoText, {flex: 1}]}>
-                {data.multipleYear}{'\n'}
-                {data.multipleYear + 5}{'\n'}
-                {'\n'}
-              </Text>
-              <Text style={[styles.infoText, {flex: 0.75}]}>
-                {data.multipleFactor}x{'\n'}
-                {data.multipleFactor * 2}x{'\n'}
-              </Text>
-              <Text style={[styles.infoText, {flex: 2, alignItems: 'flex-end'}]}>
+            <View style={styles.infoRegion}>
+              <View style={styles.multiplySchedule}>
+
+                <Text style={[styles.infoTextBold, {flex: 3}]}>LFI Multiply{'\n'}Schedule</Text>
+                <Text style={[styles.infoText, {flex: 1}]}>
+                  {data.multipleYear}{'\n'}
+                  {data.multipleYear2}{'\n'}
+                </Text>
+                <Text style={[styles.infoText, {flex: 0.75}]}>
+                  {data.multipleFactor}x{'\n'}
+                  {data.multipleFactor2}x{'\n'}
+                </Text>
+                <Text style={[styles.infoText, {flex: 2, alignItems: 'flex-end'}]}>
 
                 <Image
                     source={require('@assets/images/icon-lfi.png')}
@@ -136,16 +191,19 @@ class ScreensHome extends Component {
 
             <TouchableOpacity
               style={styles.buttonBuy}
-              onPress={() => { navigation.navigate('BuyCoin')}}
+              onPress={ this.buyCoinHandler }
             >
                 <Text style={styles.boldButton}>Buy LFI Coin</Text>
             </TouchableOpacity>
+
           </View>
+          }
 
 
         </View>
 
       </IntlProvider>
+
       );
     }
 
@@ -211,6 +269,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
+    marginBottom: 15
   },
   infoTextBold: {
     fontFamily: 'OpenSansBold',
@@ -240,4 +299,4 @@ ScreensHome.propTypes = {
   navigation: PropTypes.object.isRequired
 };
 
-export default ScreensHome;
+export default ScreensHome

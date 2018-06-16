@@ -2,6 +2,20 @@
 
 import { Auth } from 'aws-amplify';
 
+
+export const SignIn = (username, password) => {
+
+  Auth.signIn(username, password)
+  .then(user => {
+    console.log('logged in!', user)
+    return "success"
+  })
+  .catch(err => {
+    console.log('error sign in: ', err)
+  })
+
+}
+
 export const SignUp = (username, password, email, phone_number) => {
 
     Auth.signUp({

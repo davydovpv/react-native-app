@@ -24,8 +24,9 @@ class ScreensLogin extends Component {
     constructor() {
       super();
       this.state = {
-        require2StepAuth: true,
-        hasSuccessLogin: false
+        has2StepAuth: false,
+        hasSuccessLogin: false,
+        idVerified: false
       };
     }
 
@@ -36,9 +37,15 @@ class ScreensLogin extends Component {
       user: ''
     }
 
+    onChangeText(key, value) {
+      this.setState({
+        [key]: value
+      });
+    }
 
     loginHandler = () => {
       const { username, password } = this.state
+
       Auth.signIn(username, password)
       .then(user => {
         console.log('logged in!', user)
@@ -46,8 +53,9 @@ class ScreensLogin extends Component {
           hasSuccessLogin: true,
           user: user
         })
-        !this.state.require2StepAuth &&
-          this.props.navigation.navigate('Home')
+        { !this.state.has2StepAuth &&
+            this.props.navigation.navigate('Welcome')
+        }
       })
       .catch(err => {
         console.log('error sign in: ', err)
@@ -56,10 +64,11 @@ class ScreensLogin extends Component {
 
     verifyHandler = () => {
       const { user, authCode } = this.state
+
       Auth.confirmSignIn(user, authCode)
         .then(user => {
           console.log('verified user:', user)
-          this.props.navigation.navigate('Home');
+          this.props.screenProps.authenticate(true)
         })
         .catch(err => {
           console.log('error confirming sign in: ', err)
@@ -70,13 +79,7 @@ class ScreensLogin extends Component {
       this.props.navigation.navigate('Register');
     }
 
-    onChangeText(key, value) {
-      this.setState({
-        [key]: value
-      });
-    }
-
-    renderLoginField = (placeholder, name, secure, nextFocus) => {
+    renderLoginField = (placeholder, name, secure) => {
         return (
           <TextInput
             placeholder={`${placeholder}`}
@@ -121,7 +124,7 @@ class ScreensLogin extends Component {
                     { !this.state.hasSuccessLogin &&
                       <View>
 
-                        { this.renderLoginField("Username", 'username', false, 'password') }
+                        { this.renderLoginField("Username", 'username', false) }
 
                         <View style={styles.lineStyle} />
 

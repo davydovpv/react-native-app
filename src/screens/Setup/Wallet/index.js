@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 
 import { BUTTON_COLOR } from '@src/styles/common';
-import RegisterHeader from '@src/components/Register/Header';
+import SetupHeader from '@src/components/Setup/Header';
 
-class ScreensRegisterSetup extends Component {
+class ScreensWalletSetup extends Component {
 
     render() {
 
@@ -21,7 +21,8 @@ class ScreensRegisterSetup extends Component {
 
         <View style={styles.container}>
           <StatusBar barStyle="light-content" />
-          <RegisterHeader />
+
+          <SetupHeader />
 
           <View style={styles.headingRow}>
             <Text style={styles.headingText}>Welcome to LFI</Text>
@@ -185,4 +186,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ScreensRegisterSetup;
+export default ScreensWalletSetup;

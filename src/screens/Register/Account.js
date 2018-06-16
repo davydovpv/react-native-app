@@ -10,10 +10,15 @@ import {
   TextInput
 } from 'react-native';
 
-import { Auth } from 'aws-amplify';
+import {
+  Auth,
+  API,
+  graphqlOperation
+} from 'aws-amplify';
+import data from '@src/data';
+
 import RegisterHeader from '@src/components/Register/Header';
 import { BUTTON_COLOR } from '@src/styles/common';
-
 
 class ScreensRegisterAccount extends Component {
 
@@ -25,6 +30,8 @@ class ScreensRegisterAccount extends Component {
     }
 
     state: {
+      given_name: '',
+      family_name: '',
       username: '',
       password: '',
       email: '',
@@ -39,11 +46,14 @@ class ScreensRegisterAccount extends Component {
     }
 
     signUp() {
-      const { username, password, email, phone_number } = this.state
+      const { given_name, family_name, username, password, email, phone_number } = this.state
+
       Auth.signUp({
         username: username,
         password: password,
         attributes: {
+          given_name: given_name,
+          family_name: family_name,
           email: email,
           phone_number: phone_number
         }
@@ -61,11 +71,14 @@ class ScreensRegisterAccount extends Component {
 
 
     verify() {
-      const { username, authCode } = this.state
+      const { username, authCode, given_name, family_name } = this.state
       Auth.confirmSignUp(username, authCode)
         .then(res => {
           console.log('Confirmed', res)
-          this.props.navigation.navigate('ConfirmID')
+          data.name = `${given_name} ${family_name}`
+          data.email = this.state.email
+          data.phone = this.state.phone_number
+          this.props.navigation.navigate('Success')
         })
         .catch(err => {
           console.log('Error Verifying: ', err)
@@ -76,15 +89,6 @@ class ScreensRegisterAccount extends Component {
 
       registerHandler = () => {
         this.signUp()
-
-        /* To Do: Move to /Util/Auth
-        SignUp (
-          username,
-          password,
-          email,
-          phone_number
-        )
-        */
       }
 
       verifyHandler = () => {
@@ -108,6 +112,37 @@ class ScreensRegisterAccount extends Component {
 
               { !this.state.verifyNewAccount &&
               <View>
+
+                <View style={styles.inputRow}>
+                  <Text style={styles.inputLabel}>First Name</Text>
+                  <TextInput
+                    placeholder="John"
+                    underlineColorAndroid="rgba(0,0,0,0)"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    returnKeyType="next"
+                    ref={(input) => this.givenNameInput = input }
+                    onSubmitEditing={() => this.familyNameInput.focus()}
+                    onChangeText={value => this.onChangeText('given_name', value)}
+                    style={styles.input}
+                    />
+                </View>
+
+                <View style={styles.inputRow}>
+                  <Text style={styles.inputLabel}>Last Name</Text>
+                  <TextInput
+                    placeholder="Smith"
+                    underlineColorAndroid="rgba(0,0,0,0)"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    returnKeyType="next"
+                    ref={(input) => this.familyNameInput = input }
+                    onSubmitEditing={() => this.userNameInput.focus()}
+                    onChangeText={value => this.onChangeText('family_name', value)}
+                    style={styles.input}
+                    />
+                </View>
+
                 <View style={styles.inputRow}>
                   <Text style={styles.inputLabel}>User Name</Text>
                   <TextInput
@@ -116,7 +151,7 @@ class ScreensRegisterAccount extends Component {
                     autoCapitalize="none"
                     autoCorrect={false}
                     returnKeyType="next"
-                    ref={(input) => this.firstNameInput = input }
+                    ref={(input) => this.userNameInput = input }
                     onSubmitEditing={() => this.emailInput.focus()}
                     onChangeText={value => this.onChangeText('username', value)}
                     style={styles.input}

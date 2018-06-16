@@ -10,9 +10,9 @@ import {
 } from 'react-native';
 
 import { BUTTON_COLOR } from '@src/styles/common';
-import RegisterHeader from '@src/components/Register/Header';
+import SetupHeader from '@src/components/Setup/Header';
 
-class ScreensRegisterFail extends Component {
+class ScreensVerifyIDSuccess extends Component {
 
     render() {
 
@@ -22,12 +22,12 @@ class ScreensRegisterFail extends Component {
 
         <View style={styles.container}>
           <StatusBar barStyle="light-content" />
-          <RegisterHeader />
+          <SetupHeader />
 
           <View style={styles.headingRow}>
-            <Text style={styles.headingText}>Identify Not Verified</Text>
+            <Text style={styles.headingText}>Identify Verified</Text>
             <Image
-              source={require('@assets/images/icon-warning.png')}
+              source={require('@assets/images/icon-checkshield.png')}
               style={styles.iconShield}
               resizeMode='contain'
             />
@@ -40,11 +40,11 @@ class ScreensRegisterFail extends Component {
             <Text style={styles.bodyText}>
               Dear Adam Rosen, {'\n'}
               {'\n'}
-              Your identify could not be verified via NETVERIFY. Please contact us to complete your registration manually.
-              {'\n'}{'\n'}
-              For security reasons and to maintain the integrity of our network, we verify every member's identity. After successfully verifying your identity, you'll have full access to the Life Insure App.{'\n'}
+              Your identify was verified with NETVERIFY by Jumio. You now have full access to the Life Insure App and LFI Wallet.{'\n'}
               {'\n'}
-              Thank you for your patience,{'\n'}
+              Welcome to LFI!{'\n'}
+              {'\n'}
+              Best,{'\n'}
             </Text>
 
             <Image
@@ -64,9 +64,9 @@ class ScreensRegisterFail extends Component {
           <View style={styles.footer}>
             <TouchableOpacity
               style={styles.buttonBuy}
-              onPress={ () => { navigation.navigate('ContactSupport')} }
+              onPress={ () => { navigation.navigate('SetupWallet')} }
             >
-              <Text style={styles.boldButton}>Contact LFI Support</Text>
+              <Text style={styles.boldButton}>Setup LFI Wallet</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
   iconShield: {
     height: 30,
     width: 30,
+    tintColor: 'green',
     marginLeft: 10
   },
   body: {
@@ -134,4 +135,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ScreensRegisterFail;
+export default ScreensVerifyIDSuccess;
