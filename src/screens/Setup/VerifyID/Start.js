@@ -7,15 +7,24 @@ import {
   TouchableOpacity,
   ScrollView,
   KeyboardAvoidingView,
-  TextInput
+  TextInput,
+  AsyncStorage,
 } from 'react-native';
 
 import { BUTTON_COLOR } from '@src/styles/common';
 import SetupHeader from '@src/components/Setup/Header';
-import { Auth } from 'aws-amplify';
+
+// Amplify + JSON Data
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
 import data from '@src/data';
 
 class ScreensVerifyIDStart extends Component {
+
+    state = {
+      name: '',
+      country: '',
+      isLoading: true
+    }
 
     onChangeText(key, value) {
       this.setState({
@@ -25,14 +34,28 @@ class ScreensVerifyIDStart extends Component {
 
     registerHandler = () => {
 
-      this.props.navigation.navigate('VerifyID')
-
+      this.props.navigation.navigate('Process')
     }
 
+    async componentWillMount() {
+
+      try {
+          let userJSON = await AsyncStorage.getItem('user')
+          let userData = JSON.parse(userJSON)
+          this.setState({
+            isLoading: false,
+            name: userData.name,
+            country: userData.country
+          })
+          console.log(this.state.name)
+        } catch(error) {
+          console.log(error)
+      }
+    }
 
     render() {
 
-      const { navigation } = this.props;
+      const { name, country } = this.state;
 
       return (
 
@@ -49,8 +72,8 @@ class ScreensVerifyIDStart extends Component {
           <KeyboardAvoidingView style={styles.body} behavior="padding" enabled>
             <ScrollView style={styles.scrollView}>
 
-              <View style={styles.inputRow}>
-                <Text>Please make sure this information matches your Government Issued ID. For security, all details are verified using Equifax Identity Database.</Text>
+              <View style={[styles.inputRow, {marginBottom: 10}]}>
+                <Text>Please make sure this information matches your Government Issued ID.</Text>
               </View>
 
               <View style={styles.inputRow}>
@@ -64,7 +87,7 @@ class ScreensVerifyIDStart extends Component {
                   onSubmitEditing={() => this.addressInput.focus()}
                   onChangeText={value => this.onChangeText('name', value)}
                   style={styles.input}
-                  value={ data.name }
+                  value={ name }
                   />
               </View>
 
@@ -122,6 +145,7 @@ class ScreensVerifyIDStart extends Component {
                   onSubmitEditing={() => this.sexInput.focus()}
                   onChangeText={value => this.onChangeText('country', value)}
                   style={styles.input}
+                  value={ country }
                   />
               </View>
 

@@ -15,8 +15,6 @@ class App extends Component {
     isAuthenticated: false
   };
 
-
-
   async componentDidMount() {
     await Expo.Font.loadAsync({
       MontserratRegular: require('./assets/fonts/Montserrat/Montserrat-Regular.ttf'),

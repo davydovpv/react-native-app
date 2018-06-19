@@ -7,6 +7,7 @@ import {
   StatusBar,
   TouchableOpacity,
   Image,
+  AsyncStorage
 } from 'react-native';
 
 import { BUTTON_COLOR } from '@src/styles/common';
@@ -14,9 +15,35 @@ import SetupHeader from '@src/components/Setup/Header';
 
 class ScreensVerifyIDFail extends Component {
 
+    state = {
+      name: '',
+      isLoading: true
+    }
+
+    failedVerifyIDHandler = () => {
+      this.props.navigation.navigate('ContactSupport')
+    }
+
+    async componentWillMount() {
+      try {
+          let userJSON = await AsyncStorage.getItem('user')
+          let userData = JSON.parse(userJSON)
+          console.log(userData)
+
+          this.setState({
+            isLoading: false,
+            name: userData.name,
+            hasVerifiedID: false
+          })
+          console.log(this.state.name)
+        } catch(error) {
+          console.log(error)
+      }
+    }
+
     render() {
 
-      const { navigation } = this.props;
+      const { name } = this.state;
 
       return (
 
@@ -38,7 +65,7 @@ class ScreensVerifyIDFail extends Component {
           <View style={styles.body}>
 
             <Text style={styles.bodyText}>
-              Dear Adam Rosen, {'\n'}
+              Dear {name}, {'\n'}
               {'\n'}
               Your identify could not be verified via NETVERIFY. Please contact us to complete your registration manually.
               {'\n'}{'\n'}
@@ -64,7 +91,7 @@ class ScreensVerifyIDFail extends Component {
           <View style={styles.footer}>
             <TouchableOpacity
               style={styles.buttonBuy}
-              onPress={ () => { navigation.navigate('ContactSupport')} }
+              onPress={ this.failedVerifyIDHandler }
             >
               <Text style={styles.boldButton}>Contact LFI Support</Text>
             </TouchableOpacity>

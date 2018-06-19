@@ -12,16 +12,14 @@ import {
   AsyncStorage
 } from 'react-native';
 
-import { IntlProvider, FormattedMessage } from 'react-intl'
+// Amplify
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
+import { GetUserWelcome } from '@src/queries/GetUser'
 
-import data from '@src/data'
+// UI
 import SetupHeaderInitial from '@src/components/Setup/HeaderInitial'
 import UserProfileHome from '@src/components/User/ProfileHome'
 import { BUTTON_COLOR } from '@src/styles/common'
-
-// Amplify
-import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
-import getUser from '@src/queries/getUser'
 
 class ScreensWelcome extends Component {
 
@@ -46,8 +44,7 @@ class ScreensWelcome extends Component {
 
     async componentWillMount() {
 
-      const userInfo = await API.graphql(graphqlOperation(getUser, { userId: 0 }))
-
+      const userInfo = await API.graphql(graphqlOperation(GetUserWelcome, { userId: 0 }))
       const {
         name,
         country
@@ -59,7 +56,6 @@ class ScreensWelcome extends Component {
       }
 
       AsyncStorage.setItem('user', JSON.stringify(userObj))
-      console.log(this.state.hasAuth)
     }
 
     async componentDidMount() {
@@ -81,7 +77,7 @@ class ScreensWelcome extends Component {
     render() {
 
       const { navigation } = this.props;
-      const { name, first_name, country } = this.state;
+      const { name, first_name, country, hasVerifiedID } = this.state;
 
       return (
 
@@ -117,6 +113,9 @@ class ScreensWelcome extends Component {
                 resizeMode="contain"
               />
               <Text style={styles.setupIconText}>Verify Identity</Text>
+              { this.state.hasVerifiedID &&
+                <Text>Verified</Text>
+              }
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -128,6 +127,7 @@ class ScreensWelcome extends Component {
                 style={{width:50,height:50}}
                 resizeMode="contain"
               />
+
               <Text style={styles.setupIconText}>Setup LFI Wallet</Text>
             </TouchableOpacity>
 

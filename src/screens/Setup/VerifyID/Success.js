@@ -7,6 +7,7 @@ import {
   StatusBar,
   TouchableOpacity,
   Image,
+  AsyncStorage
 } from 'react-native';
 
 import { BUTTON_COLOR } from '@src/styles/common';
@@ -14,9 +15,37 @@ import SetupHeader from '@src/components/Setup/Header';
 
 class ScreensVerifyIDSuccess extends Component {
 
+    constructor(props) {
+      super(props);
+      this.state = {
+        isLoading: true
+      };
+    }
+
+    successVerifyIDHandler = () => {
+      this.props.navigation.navigate('Welcome')
+    }
+
+    async componentWillMount() {
+      try {
+          let userJSON = await AsyncStorage.getItem('user')
+          let userData = JSON.parse(userJSON)
+
+          this.setState({
+            isLoading: false,
+            name: userData.name,
+            hasVerifiedID: true
+          })
+
+          console.log(this.state.hasVerifiedID)
+        } catch(error) {
+          console.log(error)
+      }
+    }
+
     render() {
 
-      const { navigation } = this.props;
+      const { name } = this.state;
 
       return (
 
@@ -38,7 +67,7 @@ class ScreensVerifyIDSuccess extends Component {
           <View style={styles.body}>
 
             <Text style={styles.bodyText}>
-              Dear Adam Rosen, {'\n'}
+              Dear {name}, {'\n'}
               {'\n'}
               Your identify was verified with NETVERIFY by Jumio. You now have full access to the Life Insure App and LFI Wallet.{'\n'}
               {'\n'}
@@ -64,9 +93,9 @@ class ScreensVerifyIDSuccess extends Component {
           <View style={styles.footer}>
             <TouchableOpacity
               style={styles.buttonBuy}
-              onPress={ () => { navigation.navigate('SetupWallet')} }
+              onPress={ this.successVerifyIDHandler }
             >
-              <Text style={styles.boldButton}>Setup LFI Wallet</Text>
+              <Text style={styles.boldButton}>Proceed to Account</Text>
             </TouchableOpacity>
           </View>
         </View>

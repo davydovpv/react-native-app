@@ -24,9 +24,9 @@ class ScreensLogin extends Component {
     constructor() {
       super();
       this.state = {
-        has2StepAuth: false,
-        hasSuccessLogin: false,
-        idVerified: false
+        has2StepAuth: true,
+        idVerified: false,
+        hasSuccessLogin: false
       };
     }
 
@@ -49,12 +49,14 @@ class ScreensLogin extends Component {
       Auth.signIn(username, password)
       .then(user => {
         console.log('logged in!', user)
+
         this.setState({
           hasSuccessLogin: true,
           user: user
         })
-        { !this.state.has2StepAuth &&
-            this.props.navigation.navigate('Welcome')
+        if (!this.state.has2StepAuth) {
+          !this.state.idVerified && this.props.navigation.navigate('Welcome')
+          this.state.idVerified && this.props.navigation.navigate('Home')
         }
       })
       .catch(err => {
@@ -68,7 +70,9 @@ class ScreensLogin extends Component {
       Auth.confirmSignIn(user, authCode)
         .then(user => {
           console.log('verified user:', user)
-          this.props.screenProps.authenticate(true)
+          //this.props.screenProps.authenticate(true)
+          !this.state.idVerified && this.props.navigation.navigate('Welcome')
+          this.state.idVerified && this.props.navigation.navigate('Home')
         })
         .catch(err => {
           console.log('error confirming sign in: ', err)

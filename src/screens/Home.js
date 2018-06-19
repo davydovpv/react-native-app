@@ -21,7 +21,7 @@ import { BUTTON_COLOR } from '@src/styles/common'
 
 // Amplify
 import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
-import getUser from '@src/queries/getUser'
+import { GetUser } from '@src/queries/GetUser'
 
 class ScreensHome extends Component {
 
@@ -34,7 +34,8 @@ class ScreensHome extends Component {
       this.state = {
         balanceUSD: 15000,
         isLoading: true,
-        idVerified: data.idVerified
+        idVerified: data.idVerified,
+        walletSetup: false
       };
     }
 
@@ -43,9 +44,11 @@ class ScreensHome extends Component {
       this.props.navigation.navigate('BuyCoin')
     }
 
+    // To Do: Pull this into seperate function
     async componentWillMount() {
 
-      const userInfo = await API.graphql(graphqlOperation(getUser, { userId: 0 }))
+      const userInfo = await API.graphql(graphqlOperation(GetUser, { userId: 0 }))
+      console.log(userInfo)
 
       const {
         name,

@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   Text,
+  Image,
   StatusBar,
   TouchableOpacity,
   ScrollView,
@@ -10,11 +11,7 @@ import {
   TextInput
 } from 'react-native';
 
-import {
-  Auth,
-  API,
-  graphqlOperation
-} from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 import data from '@src/data';
 
 import RegisterHeader from '@src/components/Register/Header';
@@ -36,7 +33,8 @@ class ScreensRegisterAccount extends Component {
       password: '',
       email: '',
       phone_number: '',
-      authCode: ''
+      authCode: '',
+      error: ''
     }
 
     onChangeText(key, value) {
@@ -105,7 +103,6 @@ class ScreensRegisterAccount extends Component {
           <View style={styles.headingRow}>
             <Text style={styles.headingText}>Create New Account</Text>
           </View>
-
 
           <KeyboardAvoidingView style={styles.body} behavior="padding" enabled>
             <ScrollView style={styles.scrollView}>
@@ -190,20 +187,33 @@ class ScreensRegisterAccount extends Component {
 
                 <View style={styles.inputRow}>
                   <Text style={styles.inputLabel}>Phone</Text>
-                  <TextInput
-                    underlineColorAndroid="rgba(0,0,0,0)"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    returnKeyType="next"
-                    keyboardType="phone-pad"
-                    ref={(input) => this.phoneInput = input }
-                    onChangeText={value => this.onChangeText('phone_number', value)}
-                    style={styles.input}
-                    />
+
+                  <View style={styles.inputImageGroup}>
+
+                    <View style={styles.inputImage}>
+                      <Image
+                        source={require('@assets/images/icon-usd.png')}
+                        style={{width:30, height: 20}}
+                        resizeMode="contain"
+                      />
+                      <Text>+ 1</Text>
+                    </View>
+
+                    <TextInput
+                      underlineColorAndroid="rgba(0,0,0,0)"
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      returnKeyType="next"
+                      keyboardType="phone-pad"
+                      ref={(input) => this.phoneInput = input }
+                      onChangeText={value => this.onChangeText('phone_number', '+1' + value)}
+                      style={styles.inputWithImage}
+                      />
+                  </View>
                 </View>
 
                 <View style={styles.inputRow}>
-                  <Text>
+                  <Text> {"\n"}
                     We will send you an SMS to confirm your phone number. Message and data rates may apply.
                   </Text>
                 </View>
@@ -278,7 +288,6 @@ const styles = StyleSheet.create({
   headingRow: {
     width: '100%',
     paddingVertical: 30,
-    marginBottom: 5,
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomWidth: 1,
@@ -296,7 +305,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     justifyContent: 'space-between',
-    paddingVertical: 10,
+    paddingVertical: 15,
   },
   scrollView: {
     flex: 1,
@@ -311,17 +320,41 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   inputLabel: {
-    flex: 0.35,
+    width: 115,
     fontFamily: 'MontserratSemiBold',
     fontSize: 15,
   },
   input: {
-    flex: 0.6,
+    flex: 1,
     height: 40,
     padding: 10,
     borderWidth: 1,
     borderColor: '#ccc',
     backgroundColor: '#fff'
+  },
+  inputImageGroup: {
+    flex: 1,
+    flexDirection: 'row',
+    height: 40,
+  },
+  inputImage: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    width: 60,
+    padding: 5,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRightWidth: 0,
+  },
+  inputWithImage: {
+    flex: 1,
+    height: 40,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    backgroundColor: '#fff',
   },
   inputFull: {
     flex: 1,

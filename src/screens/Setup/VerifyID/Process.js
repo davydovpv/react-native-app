@@ -28,7 +28,9 @@ class ScreensVerifyIDProcess extends Component {
               style={{width: 250, height: 100}}
               resizeMode="contain"
             />
-          <Text style={{color: '#ccc'}}>Netverify API</Text>
+          <Text style={{color: 'grey', marginVertical: 25}}>
+              NETVERIFY API will load here...
+            </Text>
           </View>
 
           <View style={{justifyContent: 'center', alignItems: 'center', padding: 20}}>

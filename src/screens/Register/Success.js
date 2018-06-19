@@ -11,6 +11,7 @@ import {
 
 import { BUTTON_COLOR } from '@src/styles/common';
 import RegisterHeader from '@src/components/Register/Header';
+import data from '@src/data';
 
 class ScreensRegisterSuccess extends Component {
 
@@ -38,7 +39,7 @@ class ScreensRegisterSuccess extends Component {
           <View style={styles.body}>
 
             <Text style={styles.bodyText}>
-              Dear ___, {'\n'}
+              Dear {data.name}, {'\n'}
               {'\n'}
               Thank you for registering an account with Life Insure. After you login, you'll be able to register an LFI Wallet and get started.{'\n'}
               {'\n'}
@@ -64,8 +65,7 @@ class ScreensRegisterSuccess extends Component {
           <View style={styles.footer}>
             <TouchableOpacity
               style={styles.buttonBuy}
-              onPress={ () => { 
-                navigation.navigation.popToTop(),
+              onPress={ () => {
                 navigation.navigate('LoginHandler')
               } }
             >
