@@ -23,7 +23,7 @@ class ScreensBuyACH extends Component {
   constructor() {
     super();
     this.state = {
-      buyLFI: 1500,
+      buyLFI: 100,
     };
   }
 

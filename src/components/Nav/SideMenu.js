@@ -10,10 +10,17 @@ import {
 
 import { DrawerActions, NavigationActions } from 'react-navigation';
 import UserProfile from '@src/components/User/Profile';
+
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
+import { GetUserWelcome } from '@src/queries/GetUserWelcome'
 import data from '@src/data';
-import { Auth } from 'aws-amplify';
 
 class SideMenu extends Component {
+
+  state: {
+    name: '',
+    country: ''
+  }
 
   navigateToScreen = route => () => {
     const navigateAction = NavigationActions.navigate({
@@ -33,16 +40,41 @@ class SideMenu extends Component {
     this.props.navigation.dispatch(DrawerActions.closeDrawer())
   }
 
+  async componentWillMount() {
+
+    const userInfo = await API.graphql(graphqlOperation(GetUserWelcome, { userId: data.id }))
+    console.log(userInfo)
+
+    const {
+      name,
+      country
+    } = userInfo.data.getUser;
+
+    let userObj = {
+      name: name,
+      country: country
+    }
+
+    this.setState({
+      isLoading: false,
+      name: userObj.name,
+      country: userObj.country
+    })
+
+    AsyncStorage.setItem('user', JSON.stringify(userObj))
+    console.log(userObj)
+
+  }
 
   async componentDidMount() {
-
     try {
         let userJSON = await AsyncStorage.getItem('user')
         let userData = JSON.parse(userJSON)
-        data.name = userData.name
-        data.age = userData.age
-        data.sex = userData.sex
-        data.country = userData.country
+        this.setState({
+          isLoading: false,
+          name: userData.name,
+          country: userData.country
+        })
       } catch(error) {
         console.log(error)
     }
@@ -50,6 +82,8 @@ class SideMenu extends Component {
   }
 
   render() {
+
+    const { name, country } = this.state;
 
     return(
 
@@ -76,8 +110,8 @@ class SideMenu extends Component {
               color="white"
               nameWeight="bold"
               photo={require('@assets/images/profile.png')}
-              name={data.name}
-              location={data.country}
+              name={name}
+              location={country}
           />
 
           <View style={styles.navContent}>

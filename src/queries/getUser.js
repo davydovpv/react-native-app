@@ -11,6 +11,7 @@ export const GetUser = `query GetUser($userId: ID!) {
     country
     age
     sex
+    lfi_balance
   }
 }`
 
@@ -27,5 +28,12 @@ export const GetUserIDVerified = `query GetUserIDVerified($userId: ID!) {
   getUser(id:$userId) {
     id
     has_verified_id
+  }
+}`
+
+export const GetUserBalance = `query GetUserBalance($userId: ID!) {
+  getUser(id:$userId) {
+    id
+    lfi_balance
   }
 }`

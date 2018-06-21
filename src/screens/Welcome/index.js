@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
+  ScrollView,
   Text,
   Image,
   StatusBar,
@@ -117,49 +118,50 @@ class ScreensWelcome extends Component {
             />
           </View>
 
-          <View style={styles.infoRegion}>
-            <Text style={styles.infoText}>
-              Hi {first_name}! {"\n"}{"\n"}
-              To get started, as a resident of {country} you must complete the following steps to create a Life Insure account.
-            </Text>
-          </View>
+          <ScrollView>
+            <View>
 
-          <View style={styles.setupRegion}>
-            <TouchableOpacity
-              onPress={ this.verifyIDHandler }
-              style={styles.setupIcon}
-              >
-              <Image
-                source={require('@assets/images/icon-idcard.png')}
-                style={{width:50,height:50}}
-                resizeMode="contain"
-              />
-              <Text style={styles.setupIconText}>Verify Identity</Text>
+              <View style={styles.infoRegion}>
+                <Text style={styles.infoText}>
+                  Hi {first_name}! {"\n"}{"\n"}
+                  To get started, as a resident of {country} you must complete the following steps to create a Life Insure account.
+                </Text>
+              </View>
 
-              { this.state.hasVerifiedID &&
-                <Text>Done</Text>
-              }
-            </TouchableOpacity>
+              <View style={styles.setupRegion}>
+                <TouchableOpacity
+                  onPress={ this.verifyIDHandler }
+                  style={styles.setupIcon}
+                  >
+                  <Image
+                    source={require('@assets/images/icon-idcard.png')}
+                    style={{width:50,height:50}}
+                    resizeMode="contain"
+                  />
+                  <Text style={styles.setupIconText}>Verify Identity</Text>
 
-            <TouchableOpacity
-              onPress={ this.setupWalletHandler }
-              style={styles.setupIcon}
-              >
-              <Image
-                source={require('@assets/images/icon-wallet2.png')}
-                style={{width:50,height:50}}
-                resizeMode="contain"
-              />
+                  { this.state.hasVerifiedID &&
+                    <Text>Done</Text>
+                  }
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={ this.setupWalletHandler }
+                  style={styles.setupIcon}
+                  >
+                  <Image
+                    source={require('@assets/images/icon-wallet2.png')}
+                    style={{width:50,height:50}}
+                    resizeMode="contain"
+                  />
+                  <Text style={styles.setupIconText}>Setup LFI Wallet</Text>
+                    { this.state.hasWalletSetup &&
+                      <Text>Done</Text>
+                    }
+                </TouchableOpacity>
+              </View>
 
-              <Text style={styles.setupIconText}>Setup LFI Wallet</Text>
-
-                { this.state.hasWalletSetup &&
-                  <Text>Done</Text>
-                }
-            </TouchableOpacity>
-
-          </View>
-
+            </View>
+          </ScrollView>
 
           <View style={styles.footerRegion}>
             <TouchableOpacity

@@ -61,11 +61,27 @@ class ScreensRegisterAccount extends Component {
       .then(res => {
         this.setState({
           verifyNewAccount: true,
-          userSub: res.userSub
+          userSub: res.userSub,
+          error: ''
         })
         console.log('Account Created! ', res)
       })
       .catch(err => {
+        let msg = '';
+        if (typeof err === 'string') {
+            msg = err;
+        } else if (err.message) {
+            msg = err.message;
+        } else {
+            msg = JSON.stringify(err);
+        }
+
+        const map = this.props.errorMessage || AmplifyMessageMap;
+        msg = (typeof map === 'string')? map : map(msg);
+
+        this.setState({
+          error: msg,
+        });
         console.log('Error Creating Account: ', err)
       })
     }
@@ -96,6 +112,21 @@ class ScreensRegisterAccount extends Component {
 
         })
         .catch(err => {
+          let msg = '';
+          if (typeof err === 'string') {
+              msg = err;
+          } else if (err.message) {
+              msg = err.message;
+          } else {
+              msg = JSON.stringify(err);
+          }
+
+          const map = this.props.errorMessage || AmplifyMessageMap;
+          msg = (typeof map === 'string')? map : map(msg);
+
+          this.setState({
+            error: msg,
+          });
           console.log('Error Verifying: ', err)
         })
     }
@@ -108,6 +139,12 @@ class ScreensRegisterAccount extends Component {
         data.id = userDetails.userId;
 
       this.props.navigation.navigate('Success')
+    }
+
+    clearErrorMessage = () => {
+      this.setState({
+        error: ''
+      });
     }
 
     render() {
@@ -279,6 +316,18 @@ class ScreensRegisterAccount extends Component {
 
           <View style={styles.footer}>
 
+            { this.state.error != null &&
+            <View>
+              <TouchableOpacity
+                onPress={this.clearErrorMessage}
+                >
+                <Text style={{ color: 'hotpink', fontSize: 15, marginBottom: 20}}>
+                  { this.state.error }
+                </Text>
+              </TouchableOpacity>
+            </View>
+            }
+
             { !this.state.verifyNewAccount &&
             <TouchableOpacity
               style={styles.buttonBuy}
@@ -392,6 +441,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   footer: {
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '100%',
     padding: 20,
     borderTopWidth: 1,

@@ -24,7 +24,7 @@ class ScreensBuyBTC extends Component {
   constructor() {
     super();
     this.state = {
-      buyLFI: 1500,
+      buyLFI: 100,
       BTC: 0
     };
   }

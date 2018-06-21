@@ -31,3 +31,16 @@ export const UpdateUserVerifiedID = `mutation UpdateUserVerifiedID(
     id
   }
 }`
+
+
+export const UpdateUserBalance = `mutation UpdateUserBalance(
+  	$userId:ID!,
+    $lfi_balance:Int,
+	) {
+  	updateUser(input: {
+      id: $userId,
+      lfi_balance: $lfi_balance,
+ 	 }) {
+    id
+  }
+}`

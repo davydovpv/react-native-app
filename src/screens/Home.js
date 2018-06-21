@@ -24,22 +24,20 @@ import { GetUser } from '@src/queries/GetUser'
 class ScreensHome extends Component {
 
     state: {
-        balanceUSD: string,
         name: '',
         age: '',
         sex: '',
         city: '',
         state: '',
-        country: ''
+        country: '',
+        lfi_balance: ''
     }
 
     constructor(props) {
       super(props);
       this.state = {
-        balanceUSD: 15000,
         isLoading: true,
-        idVerified: data.idVerified,
-        walletSetup: false
+        idVerified: data.idVerified
       };
     }
 
@@ -59,7 +57,8 @@ class ScreensHome extends Component {
         sex,
         city,
         state,
-        country
+        country,
+        lfi_balance
       } = userInfo.data.getUser;
 
       let userObj = {
@@ -68,7 +67,8 @@ class ScreensHome extends Component {
         sex: sex,
         city: city,
         state: state,
-        country: country
+        country: country,
+        lfi_balance: lfi_balance
       }
 
       this.setState({
@@ -78,8 +78,12 @@ class ScreensHome extends Component {
         sex: userObj.sex,
         city: userObj.city,
         state: userObj.state,
-        country: userObj.country
+        country: userObj.country,
+        lfi_balance: userObj.lfi_balance
       })
+
+      data.name = this.state.name;
+      data.lfiBalance = this.state.lfi_balance;
 
       AsyncStorage.setItem('user', JSON.stringify(userObj))
       console.log(userObj)
@@ -98,7 +102,8 @@ class ScreensHome extends Component {
             sex: userData.sex,
             city: userData.city,
             state: userData.state,
-            country: userData.country
+            country: userData.country,
+            lfi_balance: userData.lfi_balance
           })
         } catch(error) {
           console.log(error)
@@ -109,9 +114,10 @@ class ScreensHome extends Component {
     render() {
 
       const { navigation } = this.props;
-      const { idVerified, balanceUSD, name, age, sex, country } = this.state;
+      const { idVerified, name, age, sex, country, lfi_balance } = this.state;
 
-      let multiple1 = data.lfiBalance * data.multipleFactor;
+      let balanceUSD = lfi_balance / 100;
+      let multiple1 = lfi_balance * data.multipleFactor;
       let multiple2 = multiple1 * 2;
 
       return (
@@ -147,17 +153,17 @@ class ScreensHome extends Component {
                     <FormattedMessage
                       id="balanceLFI"
                       defaultMessage={` {n, number} `}
-                      values={{ n: data.lfiBalance }}
+                      values={{ n: lfi_balance }}
                     />
                   </Text>
               </View>
 
               <View style={styles.balanceRow}>
-                  <Image
-                    source={require('@assets/images/icon-usd.png')}
-                    style={styles.USDicon}
-                    resizeMode="contain"
-                  />
+                <Image
+                  source={require('@assets/images/icon-usd.png')}
+                  style={styles.USDicon}
+                  resizeMode="contain"
+                />
 
                 <Text style={styles.balanceUSD}>
                   <FormattedMessage

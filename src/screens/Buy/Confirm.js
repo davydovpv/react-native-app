@@ -12,14 +12,35 @@ import {
 
 import { IntlProvider, FormattedMessage } from 'react-intl';
 import MainHeader from '@src/components/MainHeader';
+
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
+import { UpdateUserBalance } from '@src/mutations/UpdateUser';
 import data from '@src/data';
 
 
 class ScreensBuyConfirm extends Component {
 
-  updateBalanceJSON() {
-      data.lfiBalance = parseInt(data.lfiBalance) + parseInt(data.buyLFIAmount)
+
+  successBuyHandler = () => {
+    let newLFIBalance = parseInt(data.lfiBalance) + parseInt(data.buyLFIAmount)
+    data.lfiBalance = newLFIBalance
+
+    const userDetails = {
+      "userId": data.id,
+      "lfi_balance": newLFIBalance
+    }
+    this.updateExistingBalance(userDetails)
+
   }
+
+  updateExistingBalance = async (userDetails) => {
+    const updateUser = await API.graphql(graphqlOperation(UpdateUserBalance, userDetails));
+    console.log('db update success: ', updateUser)
+
+    this.props.navigation.popToTop(),
+    this.props.navigation.navigate('Home')
+  }
+
 
   render() {
 
@@ -97,11 +118,7 @@ class ScreensBuyConfirm extends Component {
         <View style={styles.buyRow}>
           <TouchableOpacity
             style={styles.buttonBuy}
-            onPress={() => {
-              this.updateBalanceJSON(),
-              navigation.popToTop(),
-              navigation.navigate('Home')}
-            }
+            onPress={ this.successBuyHandler }
           >
             <Text style={styles.boldButton}>
               Go to Wallet

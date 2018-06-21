@@ -1,4 +1,4 @@
-import C from './constants';
+//import C from './constants';
 import { user, wallet, rates } from './initialState.json';
 
 const data = {
