@@ -13,6 +13,7 @@ export const CreateUser = `mutation CreateUser(
       phone: $phone,
       country: $country,
       cognito_id: $cognitoId,
+      has_verified_id: false
  	 }) {
     id
     name

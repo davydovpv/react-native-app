@@ -131,6 +131,7 @@ class ScreensWelcome extends Component {
               </View>
 
               <View style={styles.setupRegion}>
+                
                 <TouchableOpacity
                   onPress={ this.verifyIDHandler }
                   style={styles.setupIcon}
@@ -141,11 +142,8 @@ class ScreensWelcome extends Component {
                     resizeMode="contain"
                   />
                   <Text style={styles.setupIconText}>Verify Identity</Text>
-
-                  { this.state.hasVerifiedID &&
-                    <Text>Done</Text>
-                  }
                 </TouchableOpacity>
+
                 <TouchableOpacity
                   onPress={ this.setupWalletHandler }
                   style={styles.setupIcon}
@@ -156,10 +154,8 @@ class ScreensWelcome extends Component {
                     resizeMode="contain"
                   />
                   <Text style={styles.setupIconText}>Setup LFI Wallet</Text>
-                    { this.state.hasWalletSetup &&
-                      <Text>Done</Text>
-                    }
                 </TouchableOpacity>
+
               </View>
 
             </View>

@@ -157,14 +157,18 @@ class ScreensLogin extends Component {
     }
 
     verifiedLoginHandler = async (id) => {
-      const { navigation } = this.props;
+      //const { navigation } = this.props;
 
       const userInfo = await API.graphql(graphqlOperation(GetUserIDVerified, { userId: id }))
       const { has_verified_id } = userInfo.data.getUser;
 
       console.log('has_verified_id: ', has_verified_id )
 
-      has_verified_id === true ? navigation.navigate('Home') : navigation.navigate('Welcome')
+      if (has_verified_id === true) {
+        this.props.navigation.navigate('Home')
+      } else {
+        this.props.navigation.navigate('Welcome')
+      }
 
     }
 
