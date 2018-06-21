@@ -26,7 +26,13 @@ import { GetUser } from '@src/queries/GetUser'
 class ScreensHome extends Component {
 
     state: {
-        balanceUSD: string
+        balanceUSD: string,
+        name: '',
+        age: '',
+        sex: '',
+        city: '',
+        state: '',
+        country: ''
     }
 
     constructor(props) {
@@ -39,7 +45,6 @@ class ScreensHome extends Component {
       };
     }
 
-
     buyCoinHandler = () => {
       this.props.navigation.navigate('BuyCoin')
     }
@@ -47,13 +52,15 @@ class ScreensHome extends Component {
     // To Do: Pull this into seperate function
     async componentWillMount() {
 
-      const userInfo = await API.graphql(graphqlOperation(GetUser, { userId: 0 }))
+      const userInfo = await API.graphql(graphqlOperation(GetUser, { userId: data.id }))
       console.log(userInfo)
 
       const {
         name,
         age,
         sex,
+        city,
+        state,
         country
       } = userInfo.data.getUser;
 
@@ -61,8 +68,20 @@ class ScreensHome extends Component {
         name: name,
         age: age,
         sex: sex,
+        city: city,
+        state: state,
         country: country
       }
+
+      this.setState({
+        isLoading: false,
+        name: userObj.name,
+        age: userObj.age,
+        sex: userObj.sex,
+        city: userObj.city,
+        state: userObj.state,
+        country: userObj.country
+      })
 
       AsyncStorage.setItem('user', JSON.stringify(userObj))
       console.log(this.state.hasAuth)
@@ -79,6 +98,8 @@ class ScreensHome extends Component {
             name: userData.name,
             age: userData.age,
             sex: userData.sex,
+            city: userData.city,
+            state: userData.state,
             country: userData.country
           })
         } catch(error) {
@@ -154,42 +175,57 @@ class ScreensHome extends Component {
             </View>
 
             <View style={styles.infoRegion}>
-              <View style={styles.multiplySchedule}>
+              <View style={{flexDirection: 'row'}}>
 
-                <Text style={[styles.infoTextBold, {flex: 3}]}>LFI Multiply{'\n'}Schedule</Text>
-                <Text style={[styles.infoText, {flex: 1}]}>
-                  {data.multipleYear}{'\n'}
-                  {data.multipleYear2}{'\n'}
-                </Text>
-                <Text style={[styles.infoText, {flex: 0.75}]}>
-                  {data.multipleFactor}x{'\n'}
-                  {data.multipleFactor2}x{'\n'}
-                </Text>
-                <Text style={[styles.infoText, {flex: 2, alignItems: 'flex-end'}]}>
+                <View style={{flex: 0.3, marginRight: 15}}>
+                  <Text style={styles.infoTextBold}>LFI Multiply{'\n'}Schedule</Text>
+                </View>
 
-                <Image
-                    source={require('@assets/images/icon-lfi.png')}
-                    style={{ marginHorizontal: 3, height: 18, width: 18}}
-                    resizeMode="contain"
-                  />
-                  <FormattedMessage
-                    id="multiple1"
-                    defaultMessage={`{n, number}`}
-                    values={{ n: multiple1 }}
-                  /> {'\n'}
+                <View style={{flex: 0.70, height: 70}}>
 
-                <Image
-                  source={require('@assets/images/icon-lfi.png')}
-                  style={{ marginHorizontal: 3, height: 18, width: 18}}
-                  resizeMode="contain"
-                />
-                <FormattedMessage
-                  id="multiple2"
-                  defaultMessage={`{n, number}`}
-                  values={{ n: multiple2 }}
-                /> {'\n'}
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={[styles.infoText, {flex: 1}]}>
+                      {data.multipleYear}
+                    </Text>
+                    <Text style={[styles.infoText, {flex: 0.75}]}>
+                      {data.multipleFactor}x
+                    </Text>
+                    <Text style={[styles.infoText, {flex: 2, alignItems: 'flex-end'}]}>
+                      <Image
+                          source={require('@assets/images/icon-lfi.png')}
+                          style={{ marginHorizontal: 5, height: 18, width: 18}}
+                          resizeMode="contain"
+                        />
+                      <FormattedMessage
+                        id="multiple1"
+                        defaultMessage={`{n, number}`}
+                        values={{ n: multiple1 }}
+                      />
+                    </Text>
+                  </View>
 
-              </Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={[styles.infoText, {flex: 1}]}>
+                      {data.multipleYear2}
+                    </Text>
+                    <Text style={[styles.infoText, {flex: 0.75}]}>
+                      {data.multipleFactor2}x
+                    </Text>
+                    <Text style={[styles.infoText, {flex: 2, alignItems: 'flex-end'}]}>
+                      <Image
+                          source={require('@assets/images/icon-lfi.png')}
+                          style={{ marginHorizontal: 5, height: 18, width: 18}}
+                          resizeMode="contain"
+                        />
+                      <FormattedMessage
+                        id="multiple1"
+                        defaultMessage={`{n, number}`}
+                        values={{ n: multiple2 }}
+                      />
+                    </Text>
+                  </View>
+
+              </View>
             </View>
 
             <TouchableOpacity

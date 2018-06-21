@@ -13,34 +13,35 @@ import {
 import { BUTTON_COLOR } from '@src/styles/common';
 import SetupHeader from '@src/components/Setup/Header';
 
+import data from '@src/data';
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
+import { UpdateUserVerifiedID } from '@src/mutations/UpdateUser'
+
 class ScreensVerifyIDSuccess extends Component {
 
     constructor(props) {
       super(props);
       this.state = {
-        isLoading: true
+        isLoading: true,
+        name: data.name
       };
     }
 
     successVerifyIDHandler = () => {
-      this.props.navigation.navigate('Welcome')
+
+      const userDetails = {
+        "userId": data.id,
+        "has_verified_id": true
+      }
+      this.updateExistingUser(userDetails)
+
     }
 
-    async componentWillMount() {
-      try {
-          let userJSON = await AsyncStorage.getItem('user')
-          let userData = JSON.parse(userJSON)
+    updateExistingUser = async (userDetails) => {
+      const updateUser = await API.graphql(graphqlOperation(UpdateUserVerifiedID, userDetails));
+      console.log('db update success: ', updateUser)
 
-          this.setState({
-            isLoading: false,
-            name: userData.name,
-            hasVerifiedID: true
-          })
-
-          console.log(this.state.hasVerifiedID)
-        } catch(error) {
-          console.log(error)
-      }
+      this.props.navigation.navigate('Welcome')
     }
 
     render() {

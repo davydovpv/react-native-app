@@ -11,7 +11,8 @@ import {
   TextInput
 } from 'react-native';
 
-import { Auth } from 'aws-amplify';
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
+import { CreateUser } from '@src/mutations/CreateUser';
 import data from '@src/data';
 
 import RegisterHeader from '@src/components/Register/Header';
@@ -34,6 +35,7 @@ class ScreensRegisterAccount extends Component {
       email: '',
       phone_number: '',
       authCode: '',
+      userSub: '',
       error: ''
     }
 
@@ -53,12 +55,13 @@ class ScreensRegisterAccount extends Component {
           given_name: given_name,
           family_name: family_name,
           email: email,
-          phone_number: phone_number
+          phone_number: phone_number,
         }
       })
       .then(res => {
         this.setState({
-          verifyNewAccount: true
+          verifyNewAccount: true,
+          userSub: res.userSub
         })
         console.log('Account Created! ', res)
       })
@@ -68,19 +71,43 @@ class ScreensRegisterAccount extends Component {
     }
 
 
-    verify() {
-      const { username, authCode, given_name, family_name } = this.state
+     verify() {
+      const { username, authCode, given_name, family_name, email, phone_number, userSub } = this.state
       Auth.confirmSignUp(username, authCode)
         .then(res => {
           console.log('Confirmed', res)
-          data.name = `${given_name} ${family_name}`
-          data.email = this.state.email
-          data.phone = this.state.phone_number
-          this.props.navigation.navigate('Success')
+
+          let fullname = `${given_name} ${family_name}`
+
+          // Temporary Remove once Auth Token implemented
+          data.name = fullname
+          data.username = username
+
+          // Store in DB
+          const userDetails = {
+            "userId": userSub,
+            "cognitoId": username,
+            "name": fullname,
+            "email": email,
+            "phone": phone_number,
+            "country": "USA"
+          }
+          this.createNewUser(userDetails)
+
         })
         .catch(err => {
           console.log('Error Verifying: ', err)
         })
+    }
+
+    createNewUser = async (userDetails) => {
+      const newUser = await API.graphql(graphqlOperation(CreateUser, userDetails));
+      console.log('db success: ', newUser)
+
+      //Temporary for Remove once Auth Token implemented
+        data.id = userDetails.userId;
+
+      this.props.navigation.navigate('Success')
     }
 
     render() {
@@ -105,7 +132,7 @@ class ScreensRegisterAccount extends Component {
           </View>
 
           <KeyboardAvoidingView style={styles.body} behavior="padding" enabled>
-            <ScrollView style={styles.scrollView}>
+            <ScrollView style={styles.scrollView} keyboardDismissMode="on-drag">
 
               { !this.state.verifyNewAccount &&
               <View>
@@ -229,7 +256,7 @@ class ScreensRegisterAccount extends Component {
                   </View>
                   <View style={styles.inputRow}>
                     <TextInput
-                      placeholder="Enter Verification Key"
+                      placeholder="Enter Verification Code"
                       underlineColorAndroid="rgba(0,0,0,0)"
                       secureTextEntry
                       autoCorrect={false}
@@ -241,7 +268,7 @@ class ScreensRegisterAccount extends Component {
                   </View>
                   <View style={styles.inputRow}>
                     <Text>
-                       We have sent a verification key to {this.state.phone_number}.
+                       We have sent a verification code to {this.state.phone_number}.
                        Note: SMS may take a few seconds to arrive.
                     </Text>
                   </View>

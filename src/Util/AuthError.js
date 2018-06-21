@@ -8,17 +8,9 @@ import {
 import { Auth } from 'aws-amplify';
 import AmplifyMessageMap from './AmplifyMessageMap';
 
-class AuthError extends Component {
+export default class AuthError extends Component {
 
-    constructor() {
-      super();
-      this.state = {
-        error: '',
-      };
-    }
-
-    componentDidMount() {
-      error(err) {
+    error(err) {
         let msg = '';
         if (typeof err === 'string') {
             msg = err;
@@ -31,22 +23,13 @@ class AuthError extends Component {
         const map = this.props.errorMessage || AmplifyMessageMap;
         msg = (typeof map === 'string')? map : map(msg);
 
+        msg = data.error;
+
         this.setState({
           error: msg
         });
 
-      }
     }
 
-    render() {
-      return(
-        <View style={{backgroundColor: '#C51162', height: 50}}>
-          <Text style={{ color: '#fff', fontSize: 20, fontWeight: 'bold'}}>
-            Error: { this.state.error }
-          </Text>
-        </View>
-      );
-    }
+
 }
-
-export default AuthError

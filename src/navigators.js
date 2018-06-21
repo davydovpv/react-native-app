@@ -72,8 +72,8 @@ const WelcomeStack = createStackNavigator(
 
 const BuyCoinStack = createStackNavigator(
   {
-    BuyCoinBTC: { screen: ScreensBuyBTC },
     BuyCoinETH: { screen: ScreensBuyETH },
+    BuyCoinBTC: { screen: ScreensBuyBTC },
     BuyCoinACH: { screen: ScreensBuyACH },
     BuyConfirm: { screen: ScreensBuyConfirm }
   },

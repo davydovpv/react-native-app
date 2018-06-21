@@ -40,10 +40,9 @@ class SideMenu extends Component {
         let userJSON = await AsyncStorage.getItem('user')
         let userData = JSON.parse(userJSON)
         data.name = userData.name
-        data.age = userData.age
+        //data.age = userData.age
         data.sex = userData.sex
         data.country = userData.country
-        data.birthdate = userData.birthdate
       } catch(error) {
         console.log(error)
     }

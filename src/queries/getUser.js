@@ -3,9 +3,10 @@ export const GetUser = `query GetUser($userId: ID!) {
     id
     name
     email
-    age
     phone
     address
+    city
+    state
     zip
     country
     age
@@ -17,5 +18,14 @@ export const GetUserWelcome = `query GetUserWelcome($userId: ID!) {
   getUser(id:$userId) {
     name
     country
+    has_verified_id
+    has_wallet_setup
+  }
+}`
+
+export const GetUserIDVerified = `query GetUserIDVerified($userId: ID!) {
+  getUser(id:$userId) {
+    id
+    has_verified_id
   }
 }`

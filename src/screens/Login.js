@@ -11,7 +11,10 @@ import {
   Button
 } from 'react-native';
 
-import { Auth } from 'aws-amplify';
+import data from '@src/data';
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
+import AmplifyMessageMap from '@src/Util/AmplifyMessageMap';
+import { GetUserIDVerified } from '@src/queries/GetUser';
 
 import {
   BACKGROUND_DARK,
@@ -45,22 +48,40 @@ class ScreensLogin extends Component {
 
     loginHandler = () => {
       const { username, password } = this.state
+      const { navigation } = this.props
 
       Auth.signIn(username, password)
       .then(user => {
         console.log('logged in!', user)
 
         this.setState({
+          error: '',
           hasSuccessLogin: true,
           user: user
         })
+
         if (!this.state.has2StepAuth) {
-          !this.state.idVerified && this.props.navigation.navigate('Welcome')
-          this.state.idVerified && this.props.navigation.navigate('Home')
+          !this.state.idVerified && navigation.navigate('Welcome')
+          this.state.idVerified && navigation.navigate('Home')
         }
+
       })
       .catch(err => {
-        console.log('error sign in: ', err)
+        let msg = '';
+        if (typeof err === 'string') {
+            msg = err;
+        } else if (err.message) {
+            msg = err.message;
+        } else {
+            msg = JSON.stringify(err);
+        }
+
+        const map = this.props.errorMessage || AmplifyMessageMap;
+        msg = (typeof map === 'string')? map : map(msg);
+
+        this.setState({
+          error: msg,
+        });
       })
     }
 
@@ -70,12 +91,28 @@ class ScreensLogin extends Component {
       Auth.confirmSignIn(user, authCode)
         .then(user => {
           console.log('verified user:', user)
-          //this.props.screenProps.authenticate(true)
-          !this.state.idVerified && this.props.navigation.navigate('Welcome')
-          this.state.idVerified && this.props.navigation.navigate('Home')
+
+          //To Do: Fix this later by persisting via auth token
+          let signInID = user.signInUserSession.accessToken.payload.sub
+          data.id = signInID
+          this.verifiedLoginHandler(signInID)
         })
         .catch(err => {
-          console.log('error confirming sign in: ', err)
+          let msg = '';
+          if (typeof err === 'string') {
+              msg = err;
+          } else if (err.message) {
+              msg = err.message;
+          } else {
+              msg = JSON.stringify(err);
+          }
+
+          const map = this.props.errorMessage || AmplifyMessageMap;
+          msg = (typeof map === 'string')? map : map(msg);
+
+          this.setState({
+            error: msg,
+          });
         })
     }
 
@@ -96,6 +133,24 @@ class ScreensLogin extends Component {
             onChangeText={value => this.onChangeText(name, value)}
           />
         )
+    }
+
+    clearErrorMessage = () => {
+      this.setState({
+        error: ''
+      });
+    }
+
+    verifiedLoginHandler = async (id) => {
+      const { navigation } = this.props;
+
+      const userInfo = await API.graphql(graphqlOperation(GetUserIDVerified, { userId: id }))
+      const { has_verified_id } = userInfo.data.getUser;
+
+      console.log('has_verified_id: ', has_verified_id )
+
+      has_verified_id === true ? navigation.navigate('Home') : navigation.navigate('Welcome')
+
     }
 
     render() {
@@ -141,10 +196,10 @@ class ScreensLogin extends Component {
                       <View>
 
                         <View style={styles.bodyMessage}>
-                          <Text style={styles.bodyText}>Verification Key sent via SMS</Text>
+                          <Text style={styles.bodyText}>Verification Code sent via SMS</Text>
                         </View>
 
-                          { this.renderLoginField("Enter Verification Key", 'authCode', true) }
+                          { this.renderLoginField("Enter Verification Code", 'authCode', true) }
 
                         <View style={styles.lineStyle} />
 
@@ -156,28 +211,51 @@ class ScreensLogin extends Component {
               </KeyboardAvoidingView>
 
               <View style={styles.footer}>
+                { this.state.error != null &&
+                <View style={styles.footerBlock}>
+                  <TouchableOpacity
+                    onPress={this.clearErrorMessage}
+                    >
+                    <Text style={{ color: 'hotpink', fontSize: 15, paddingVertical: 15}}>
+                      { this.state.error }
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                }
 
                 { this.state.hasSuccessLogin &&
-                  <TouchableOpacity
-                    style={styles.buttonLogin}
-                    onPress={ this.verifyHandler }>
-                    <Text style={styles.boldButton}>verify key</Text>
-                  </TouchableOpacity>
+                  <View style={styles.footerBlock}>
+                    <TouchableOpacity
+                      style={styles.buttonLogin}
+                      onPress={ this.verifyHandler }>
+                      <Text style={styles.boldButton}>verify code</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{paddingVertical: 25}}
+                      onPress={this.resendAuthHandler}
+                      >
+                      <Text style={{ color: '#fff', fontSize: 16}}>
+                        Didn't get it? Resend Code
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 }
 
                 { !this.state.hasSuccessLogin &&
-                  <TouchableOpacity
-                    style={styles.buttonLogin}
-                    onPress={ this.loginHandler }>
-                    <Text style={styles.boldButton}>login</Text>
-                  </TouchableOpacity>
-                }
+                  <View style={styles.footerBlock}>
+                    <TouchableOpacity
+                      style={styles.buttonLogin}
+                      onPress={ this.loginHandler }>
+                      <Text style={styles.boldButton}>login</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity
-                  style={styles.buttonRegister}
-                  onPress={ this.registerHandler }>
-                  <Text style={styles.boldButton}>create account</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.buttonRegister}
+                      onPress={ this.registerHandler }>
+                      <Text style={styles.boldButton}>create account</Text>
+                    </TouchableOpacity>
+                  </View>
+                }
 
                 <Text style={styles.copyright}>
                   {'\u00A9'} 2018 lifeinsure.io
@@ -243,6 +321,11 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,1)',
   },
   footer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 250,
+  },
+  footerBlock: {
     justifyContent: 'center',
     alignItems: 'center',
     width: 250,

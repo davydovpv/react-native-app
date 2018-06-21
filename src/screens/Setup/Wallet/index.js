@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
+  ScrollView,
   View,
   Text,
   StatusBar,
@@ -25,82 +26,108 @@ class ScreensWalletSetup extends Component {
           <SetupHeader />
 
           <View style={styles.headingRow}>
-            <Text style={styles.headingText}>Welcome to LFI</Text>
+            <Text style={styles.headingText}>Setup LFI Wallet</Text>
           </View>
 
-          <View style={styles.body}>
+
+          <ScrollView>
+
+            <View style={styles.body}>
 
             <Text style={styles.bodyText}>
-              To finish setting up your Life Insure Wallet, please add LFI Tokens.
+              To finish setting up your Life Insure Wallet, please add LFI Tokens. {"\n"}
             </Text>
 
-            <Text style={styles.subHeadingText}>I would like to buy LFI Tokens with:</Text>
+            <View style={{marginVertical: 15}}>
+              <Text style={styles.subHeadingText}>I would like to buy LFI Tokens with:</Text>
 
-            <View style={{width: '100%', flexDirection: 'row', justifyContent: 'space-around', margin: 10}}>
+              <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 10}}>
 
-              <TouchableOpacity
-                style={styles.fundMethod}
-                onPress={ () => { navigation.navigate('FundCrypto')} }
-              >
+                <TouchableOpacity
+                  style={styles.fundMethod}
+                  onPress={ () => { navigation.navigate('FundCrypto')} }
+                >
 
-                <View style={{flexDirection: 'row', margin: 5}}>
-                  <Image
-                    source={require('@assets/images/icon-btc.png')}
-                    style={{height:30,width: 30, marginHorizontal: 5}}
-                    resizeMode="contain"
-                  />
-                  <Image
-                    source={require('@assets/images/icon-eth.png')}
-                    style={{height:32,width: 32, marginHorizontal: 5}}
-                    resizeMode="contain"
-                  />
-                </View>
+                  <View style={{flexDirection: 'row', margin: 5}}>
+                    <Image
+                      source={require('@assets/images/icon-eth.png')}
+                      style={{height:32,width: 32, marginHorizontal: 5}}
+                      resizeMode="contain"
+                    />
+                    <Image
+                      source={require('@assets/images/icon-btc.png')}
+                      style={{height:30,width: 30, marginHorizontal: 5}}
+                      resizeMode="contain"
+                    />
+                  </View>
 
-                <Text>Bitcoin or ETH</Text>
-              </TouchableOpacity>
+                  <Text style={styles.setupIconText}>ETH or Bitcoin</Text>
+                </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.fundMethod}
-                onPress={ () => { navigation.navigate('FundBank')} }
-              >
-                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', margin: 5}}>
+                <TouchableOpacity
+                  style={styles.fundMethod}
+                  onPress={ () => { navigation.navigate('FundBank')} }
+                >
+                  <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', margin: 5}}>
 
-                  <Image
-                    source={require('@assets/images/logo-chase.png')}
-                    style={{height:25,width: 25, borderRadius: 5, margin: 3}}
-                    resizeMode="contain"
-                  />
+                    <Image
+                      source={require('@assets/images/logo-chase.png')}
+                      style={{height:25,width: 25, borderRadius: 5, margin: 3}}
+                      resizeMode="contain"
+                    />
 
-                  <Image
-                    source={require('@assets/images/logo-bofa.png')}
-                    style={{height:25,width: 25, borderRadius: 5, margin: 3}}
-                    resizeMode="contain"
-                  />
+                    <Image
+                      source={require('@assets/images/logo-bofa.png')}
+                      style={{height:25,width: 25, borderRadius: 5, margin: 3}}
+                      resizeMode="contain"
+                    />
 
-                  <Image
-                    source={require('@assets/images/logo-citi.png')}
-                    style={{height:25,width: 25, borderRadius: 5, margin: 3}}
-                    resizeMode="contain"
-                  />
+                    <Image
+                      source={require('@assets/images/logo-citi.png')}
+                      style={{height:25,width: 25, borderRadius: 5, margin: 3}}
+                      resizeMode="contain"
+                    />
 
-                </View>
-                <Text>Bank Account</Text>
-              </TouchableOpacity>
+                  </View>
+                  <Text style={styles.setupIconText}>Bank Account</Text>
+                </TouchableOpacity>
+
+              </View>
+            </View>
+
+            <View style={{marginVertical: 10}}>
+              <Text style={styles.subHeadingText}>Bought LFI Coin in a Crypto Exchange?{'\n'}</Text>
+              <View>
+                <TouchableOpacity
+                  style={styles.fundMethod}
+                  onPress={ () => { navigation.navigate('ImportTokens')} }
+                >
+                    <Image
+                      source={require('@assets/images/icon-exchange.png')}
+                      style={styles.iconLFI}
+                      resizeMode="contain"
+                    />
+
+                  <Text style={styles.setupIconText}>Import Tokens</Text>
+
+                </TouchableOpacity>
+              </View>
+            </View>
 
             </View>
 
-          </View>
+          </ScrollView>
 
-          <View style={styles.footer}>
-            <Text style={styles.subHeadingText}>Bought LFI in a crypto exchange?{'\n'}</Text>
 
+          <View style={styles.footerRegion}>
             <TouchableOpacity
               style={styles.buttonBuy}
-              onPress={ () => { navigation.navigate('ImportTokens')} }
+              onPress={ () => { navigation.navigate('Home')} }
             >
-              <Text style={styles.boldButton}>Import Your Tokens</Text>
+              <Text style={styles.boldButton}>Complete Setup</Text>
             </TouchableOpacity>
           </View>
+
         </View>
 
       );
@@ -130,7 +157,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     backgroundColor: 'white',
     height: 120,
-    width: 120,
+    width: 150,
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
@@ -144,45 +171,47 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'MontserratSemiBold'
   },
-  iconShield: {
-    height: 30,
-    width: 30,
-    tintColor: 'green',
-    marginLeft: 10
+  iconLFI: {
+    height: 50,
+    width: 50,
+    margin: 10,
+  },
+  setupIconText: {
+    fontFamily: 'OpenSansBold',
+    fontSize: 16,
+    textAlign: 'center',
   },
   body: {
     flex: 1,
     width: '100%',
-    paddingVertical: 30,
-    paddingHorizontal: 35,
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    padding: 20,
   },
   bodyText: {
-    fontSize: 15,
+    fontSize: 17,
     fontFamily: 'OpenSansRegular',
   },
-  footer: {
+  footerRegion: {
     width: '100%',
-    padding: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderTopWidth: 1,
+    padding: 20,
     borderTopColor: '#ccc',
+    borderTopWidth: 0.5,
+    backgroundColor: '#F2F2F2',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   boldButton: {
     fontFamily: 'MontserratSemiBold',
-    fontSize: 18,
+    fontSize: 20,
     color: 'rgba(255,255,255,1)',
   },
   buttonBuy: {
-    width: '80%',
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: BUTTON_COLOR,
     borderRadius: 15,
-    paddingVertical: 15,
-    height: 50,
+    paddingVertical: 20,
+    height: 65,
   },
 });
 

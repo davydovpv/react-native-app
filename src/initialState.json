@@ -1,16 +1,17 @@
 {
   "user": {
+    "id": "",
+    "username": "",
     "name": "",
     "photo": "../assets/images/profile.png",
     "age": 99,
     "sex": "",
-    "address": "Address",
+    "address": "",
     "city": "New York",
     "state": "New York",
     "location": "New York, NY",
-    "country": "US",
+    "country": "USA",
     "phone": "",
-    "birthdate": "11-25-1983",
     "idVerified": false
   },
   "wallet": {
@@ -53,5 +54,5 @@
     "lfiUSD": 0.01,
     "buyLFIAmount": 1500
   },
-  "errors": []
+  "error": ""
 }

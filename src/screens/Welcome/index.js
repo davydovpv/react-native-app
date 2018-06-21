@@ -12,6 +12,8 @@ import {
   AsyncStorage
 } from 'react-native';
 
+import data from '@src/data';
+
 // Amplify
 import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
 import { GetUserWelcome } from '@src/queries/GetUser'
@@ -26,7 +28,10 @@ class ScreensWelcome extends Component {
     constructor(props) {
       super(props);
       this.state = {
-        isLoading: true
+        isLoading: true,
+        name: '',
+        first_name: '',
+        country: ''
       };
     }
 
@@ -44,18 +49,33 @@ class ScreensWelcome extends Component {
 
     async componentWillMount() {
 
-      const userInfo = await API.graphql(graphqlOperation(GetUserWelcome, { userId: 0 }))
+      const userInfo = await API.graphql(graphqlOperation(GetUserWelcome, { userId: data.id }))
+
       const {
         name,
-        country
+        country,
+        has_verified_id,
+        has_wallet_setup
       } = userInfo.data.getUser;
 
       let userObj = {
         name: name,
-        country: country
+        country: country,
+        has_verified_id: has_verified_id,
+        has_wallet_setup: has_wallet_setup
       }
 
+      this.setState({
+        isLoading: false,
+        name: userObj.name,
+        first_name: userObj.name.split(" ", 1),
+        country: userObj.country,
+        hasVerifiedID: userObj.has_verified_id,
+        hasWalletSetup: userObj.has_wallet_setup
+      })
+
       AsyncStorage.setItem('user', JSON.stringify(userObj))
+
     }
 
     async componentDidMount() {
@@ -63,6 +83,7 @@ class ScreensWelcome extends Component {
       try {
           let userJSON = await AsyncStorage.getItem('user')
           let userData = JSON.parse(userJSON)
+
           this.setState({
             isLoading: false,
             name: userData.name,
@@ -72,12 +93,13 @@ class ScreensWelcome extends Component {
         } catch(error) {
           console.log(error)
       }
+
     }
 
     render() {
 
       const { navigation } = this.props;
-      const { name, first_name, country, hasVerifiedID } = this.state;
+      const { name, first_name, country, hasVerifiedID, hasWalletSetup } = this.state;
 
       return (
 
@@ -113,8 +135,9 @@ class ScreensWelcome extends Component {
                 resizeMode="contain"
               />
               <Text style={styles.setupIconText}>Verify Identity</Text>
+
               { this.state.hasVerifiedID &&
-                <Text>Verified</Text>
+                <Text>Done</Text>
               }
             </TouchableOpacity>
 
@@ -129,6 +152,10 @@ class ScreensWelcome extends Component {
               />
 
               <Text style={styles.setupIconText}>Setup LFI Wallet</Text>
+
+                { this.state.hasWalletSetup &&
+                  <Text>Done</Text>
+                }
             </TouchableOpacity>
 
           </View>

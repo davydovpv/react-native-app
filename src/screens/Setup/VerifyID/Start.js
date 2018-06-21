@@ -16,14 +16,20 @@ import SetupHeader from '@src/components/Setup/Header';
 
 // Amplify + JSON Data
 import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
+import { GetUser } from '@src/queries/GetUser'
+import { UpdateUserRegister } from '@src/mutations/UpdateUser'
 import data from '@src/data';
 
 class ScreensVerifyIDStart extends Component {
 
     state = {
+      isLoading: true,
       name: '',
+      address: '',
+      city: '',
+      state: '',
       country: '',
-      isLoading: true
+      sex: ''
     }
 
     onChangeText(key, value) {
@@ -32,30 +38,63 @@ class ScreensVerifyIDStart extends Component {
       });
     }
 
+    async componentWillMount() {
+
+      const userInfo = await API.graphql(graphqlOperation(GetUser, { userId: data.id }))
+
+      const {
+        name,
+        address,
+        city,
+        state,
+        country,
+        sex
+      } = userInfo.data.getUser;
+
+      this.setState({
+        name: name,
+        address: address,
+        city: city,
+        state: state,
+        country: country,
+        sex: sex,
+        isLoading: false
+      })
+
+      data.name = this.state.name
+
+    }
+
     registerHandler = () => {
+
+      // Bring in rest of user information
+      const { name, address, city, state, country, sex } = this.state
+
+      // Update DB
+      const userDetails = {
+        "userId": data.id,
+        "name": name,
+        "address": address,
+        "city": city,
+        "state": state,
+        "country": country,
+        "sex": sex
+      }
+
+      this.updateExistingUser(userDetails)
+
+    }
+
+    updateExistingUser = async (userDetails) => {
+      const updateUser = await API.graphql(graphqlOperation(UpdateUserRegister, userDetails));
+      console.log('db update success: ', updateUser)
 
       this.props.navigation.navigate('Process')
     }
 
-    async componentWillMount() {
-
-      try {
-          let userJSON = await AsyncStorage.getItem('user')
-          let userData = JSON.parse(userJSON)
-          this.setState({
-            isLoading: false,
-            name: userData.name,
-            country: userData.country
-          })
-          console.log(this.state.name)
-        } catch(error) {
-          console.log(error)
-      }
-    }
-
     render() {
 
-      const { name, country } = this.state;
+      const { name, address, city, state, country, sex } = this.state;
 
       return (
 
@@ -65,7 +104,7 @@ class ScreensVerifyIDStart extends Component {
           <SetupHeader/>
 
           <View style={styles.headingRow}>
-            <Text style={styles.headingText}>Confirm Your Idenfity</Text>
+            <Text style={styles.headingText}>Step 1. Confirm Your Idenfity</Text>
           </View>
 
 
@@ -102,6 +141,7 @@ class ScreensVerifyIDStart extends Component {
                   onSubmitEditing={() => this.cityInput.focus()}
                   onChangeText={value => this.onChangeText('address', value)}
                   style={styles.input}
+                  value={ address }
                   />
               </View>
 
@@ -116,6 +156,7 @@ class ScreensVerifyIDStart extends Component {
                   onSubmitEditing={() => this.stateInput.focus()}
                   onChangeText={value => this.onChangeText('city', value)}
                   style={styles.input}
+                  value={ city }
                   />
               </View>
 
@@ -130,6 +171,7 @@ class ScreensVerifyIDStart extends Component {
                   onSubmitEditing={() => this.countryInput.focus()}
                   onChangeText={value => this.onChangeText('state', value)}
                   style={styles.input}
+                  value={ state }
                   />
               </View>
 
@@ -160,6 +202,7 @@ class ScreensVerifyIDStart extends Component {
                   ref={(input) => this.sexInput = input }
                   onChangeText={value => this.onChangeText('sex', value)}
                   style={styles.input}
+                  value={ sex }
                   />
               </View>
 
