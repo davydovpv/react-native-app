@@ -68,7 +68,7 @@ class ScreensVerifyIDSuccess extends Component {
           <View style={styles.body}>
 
             <Text style={styles.bodyText}>
-              Dear {name}, {'\n'}
+              Dear {data.name}, {'\n'}
               {'\n'}
               Your identify was verified with NETVERIFY by Jumio. You now have full access to the Life Insure App and LFI Wallet.{'\n'}
               {'\n'}

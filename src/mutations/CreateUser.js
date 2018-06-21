@@ -4,7 +4,7 @@ export const CreateUser = `mutation CreateUser(
     $email:String!,
     $phone:String!,
     $country:String,
-    $cognitoId:String,
+    $cognitoId:String
 	) {
   	createUser(input: {
       id: $userId,
@@ -12,8 +12,7 @@ export const CreateUser = `mutation CreateUser(
       email: $email,
       phone: $phone,
       country: $country,
-      cognito_id: $cognitoId,
-      has_verified_id: false
+      cognito_id: $cognitoId
  	 }) {
     id
     name

@@ -29,7 +29,8 @@ class ScreensVerifyIDStart extends Component {
       city: '',
       state: '',
       country: '',
-      sex: ''
+      sex: '',
+      error: ''
     }
 
     onChangeText(key, value) {
@@ -81,15 +82,60 @@ class ScreensVerifyIDStart extends Component {
         "sex": sex
       }
 
+      // Validations
+      if (userDetails.address == null) {
+        this.setState({
+          error: 'Please enter Address',
+        });
+        console.log("address missing")
+        return
+      }
+
+      if (userDetails.city == null) {
+        this.setState({
+          error: 'Please enter City',
+        });
+        console.log("city missing")
+        return
+      }
+
+      if (userDetails.state == null) {
+        this.setState({
+          error: 'Please enter State',
+        });
+        console.log("state missing")
+        return
+      }
+
+      if (userDetails.sex == null) {
+        this.setState({
+          error: 'Please enter Sex',
+        });
+        console.log("sex missing")
+        return
+      }
+
+      // Proceed to Mutuate DB
       this.updateExistingUser(userDetails)
 
     }
 
     updateExistingUser = async (userDetails) => {
+
       const updateUser = await API.graphql(graphqlOperation(UpdateUserRegister, userDetails));
       console.log('db update success: ', updateUser)
 
+      // Temporary - remove this later
+      data.name = userDetails.name
+
+      // Clear Error Message
+      this.setState({
+        error: ''
+      })
+
       this.props.navigation.navigate('Process')
+
+
     }
 
     render() {
@@ -210,6 +256,19 @@ class ScreensVerifyIDStart extends Component {
           </KeyboardAvoidingView>
 
           <View style={styles.footer}>
+
+            { this.state.error != null &&
+            <View>
+              <TouchableOpacity
+                onPress={this.clearErrorMessage}
+                >
+                <Text style={{ color: 'hotpink', fontSize: 15, marginBottom: 20}}>
+                  { this.state.error }
+                </Text>
+              </TouchableOpacity>
+            </View>
+            }
+
             <TouchableOpacity
               style={styles.buttonBuy}
               onPress={ this.registerHandler }

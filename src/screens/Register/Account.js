@@ -169,7 +169,7 @@ class ScreensRegisterAccount extends Component {
           </View>
 
           <KeyboardAvoidingView style={styles.body} behavior="padding" enabled>
-            <ScrollView style={styles.scrollView} keyboardDismissMode="on-drag">
+            <ScrollView style={styles.scrollView}>
 
               { !this.state.verifyNewAccount &&
               <View>
