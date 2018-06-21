@@ -12,7 +12,7 @@ import { DrawerActions, NavigationActions } from 'react-navigation';
 import UserProfile from '@src/components/User/Profile';
 
 import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
-import { GetUserWelcome } from '@src/queries/GetUserWelcome'
+import { GetUserWelcome } from '@src/queries/GetUser'
 import data from '@src/data';
 
 class SideMenu extends Component {
@@ -20,6 +20,15 @@ class SideMenu extends Component {
   state: {
     name: '',
     country: ''
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      name: "",
+      country: ""
+    };
   }
 
   navigateToScreen = route => () => {

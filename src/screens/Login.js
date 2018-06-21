@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   StatusBar,
   KeyboardAvoidingView,
-  Button
+  Button,
+  AsyncStorage
 } from 'react-native';
 
 import data from '@src/data';
@@ -39,6 +40,20 @@ class ScreensLogin extends Component {
       authCode: '',
       user: ''
     }
+
+    async componentWillMount() {
+      let userObj = {
+        name: "",
+        age: "",
+        sex: "",
+        city: "",
+        state: "",
+        country: "",
+        lfi_balance: ""
+      }
+      AsyncStorage.setItem('user', JSON.stringify(userObj))
+    }
+
 
     onChangeText(key, value) {
       this.setState({

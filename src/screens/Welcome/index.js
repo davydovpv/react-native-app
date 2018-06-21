@@ -30,6 +30,7 @@ class ScreensWelcome extends Component {
       super(props);
       this.state = {
         isLoading: true,
+        hasVerifiedID: '',
         name: '',
         first_name: '',
         country: ''
@@ -89,7 +90,8 @@ class ScreensWelcome extends Component {
             isLoading: false,
             name: userData.name,
             first_name: userData.name.split(" ", 1),
-            country: userData.country
+            country: userData.country,
+            hasVerifiedID: userData.hasVerifiedID
           })
         } catch(error) {
           console.log(error)
@@ -164,12 +166,14 @@ class ScreensWelcome extends Component {
           </ScrollView>
 
           <View style={styles.footerRegion}>
+
             <TouchableOpacity
               style={styles.buttonBuy}
               onPress={ this.getStartedHandler }
               >
               <Text style={styles.boldButton}>Get Started</Text>
             </TouchableOpacity>
+
           </View>
 
 

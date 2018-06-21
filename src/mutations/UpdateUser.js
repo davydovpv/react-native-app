@@ -5,7 +5,7 @@ export const UpdateUserRegister = `mutation UpdateUserRegister(
     $city:String!,
     $state:String!,
     $country:String,
-    $sex:String,
+    $sex:String
 	) {
   	updateUser(input: {
       id: $userId,
@@ -14,7 +14,7 @@ export const UpdateUserRegister = `mutation UpdateUserRegister(
       city: $city,
       state: $state,
       country: $country,
-      sex: $sex,
+      sex: $sex
  	 }) {
     id
   }
@@ -27,6 +27,7 @@ export const UpdateUserVerifiedID = `mutation UpdateUserVerifiedID(
   	updateUser(input: {
       id: $userId,
       has_verified_id: $has_verified_id,
+      lfi_balance: 0
  	 }) {
     id
   }

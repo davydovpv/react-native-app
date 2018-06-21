@@ -19,9 +19,10 @@ import {
 
 import data from '@src/data';
 
-
 class ScreensCertificate extends Component {
+
   render() {
+
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -51,14 +52,14 @@ class ScreensCertificate extends Component {
                 nameWeight="bold"
                 photo={require('@assets/images/profile.png')}
                 name={data.name}
-                location={data.location}
+                location={`${data.city}, ${data.state}`}
             />
           </View>
 
           <ScrollView>
             <View style={styles.certContent}>
-              <Text style={styles.certText}>This certificate guarantees that this wallet and contained LFI tokens belong to {data.name}, resident of the State of {data.state} and a Citizen of the {data.country} with Social Security Number ending xx-{data.ssn4digit}.{"\n"}</Text>
-              <Text style={styles.certText}>Upon his death, our Smart Contract will verify records via the US Social Security Administration and other API's. Once validated, the balance of his LFI wallet will multiply and funds will be available to the holder of this certificate.</Text>
+              <Text style={styles.certText}>This certificate guarantees that this wallet and contained LFI tokens belong to {data.name}, resident of the State of {data.state} and a Citizen of the {data.country} with Social Security Number ending xx-0000.{"\n"}</Text>
+              <Text style={styles.certText}>Upon passing, our Smart Contract will verify records via the US Social Security Administration and other API's. Once validated, the balance of his LFI wallet will multiply and funds will be available to the holder of this certificate.</Text>
             </View>
           </ScrollView>
         </View>

@@ -83,6 +83,8 @@ class ScreensHome extends Component {
       })
 
       data.name = this.state.name;
+      data.city = this.state.city;
+      data.state = this.state.state;
       data.lfiBalance = this.state.lfi_balance;
 
       AsyncStorage.setItem('user', JSON.stringify(userObj))
@@ -114,7 +116,7 @@ class ScreensHome extends Component {
     render() {
 
       const { navigation } = this.props;
-      const { idVerified, name, age, sex, country, lfi_balance } = this.state;
+      const { idVerified, name, age, sex, city, state, country, lfi_balance } = this.state;
 
       let balanceUSD = lfi_balance / 100;
       let multiple1 = lfi_balance * data.multipleFactor;
@@ -140,7 +142,7 @@ class ScreensHome extends Component {
               name={ name }
             />
 
-            <Text> {age} {sex}, {country}</Text>
+          <Text> {city}, {state}</Text>
 
             <View style={styles.balance}>
               <View style={styles.balanceRow}>
