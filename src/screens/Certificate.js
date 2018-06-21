@@ -51,10 +51,7 @@ class ScreensCertificate extends Component {
                 nameWeight="bold"
                 photo={require('@assets/images/profile.png')}
                 name={data.name}
-                age={data.age}
-                sex={data.sex}
                 location={data.location}
-                birthdate={data.birthdate}
             />
           </View>
 

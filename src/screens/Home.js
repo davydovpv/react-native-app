@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import {
   StyleSheet,
@@ -19,7 +18,6 @@ import MainHeader from '@src/components/MainHeader'
 import UserProfileHome from '@src/components/User/ProfileHome'
 import { BUTTON_COLOR } from '@src/styles/common'
 
-// Amplify
 import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
 import { GetUser } from '@src/queries/GetUser'
 
@@ -49,7 +47,7 @@ class ScreensHome extends Component {
       this.props.navigation.navigate('BuyCoin')
     }
 
-    // To Do: Pull this into seperate function
+
     async componentWillMount() {
 
       const userInfo = await API.graphql(graphqlOperation(GetUser, { userId: data.id }))
@@ -84,7 +82,7 @@ class ScreensHome extends Component {
       })
 
       AsyncStorage.setItem('user', JSON.stringify(userObj))
-      console.log(this.state.hasAuth)
+      console.log(userObj)
 
     }
 
@@ -236,8 +234,6 @@ class ScreensHome extends Component {
             </TouchableOpacity>
 
           </View>
-          }
-
 
         </View>
 
@@ -333,9 +329,5 @@ const styles = StyleSheet.create({
     height: 65,
   },
 });
-
-ScreensHome.propTypes = {
-  navigation: PropTypes.object.isRequired
-};
 
 export default ScreensHome

@@ -104,7 +104,7 @@ class ScreensVerifyIDStart extends Component {
           <SetupHeader/>
 
           <View style={styles.headingRow}>
-            <Text style={styles.headingText}>Step 1. Confirm Your Idenfity</Text>
+            <Text style={styles.headingText}>Confirm Your Idenfity</Text>
           </View>
 
 

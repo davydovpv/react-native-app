@@ -40,7 +40,7 @@ class SideMenu extends Component {
         let userJSON = await AsyncStorage.getItem('user')
         let userData = JSON.parse(userJSON)
         data.name = userData.name
-        //data.age = userData.age
+        data.age = userData.age
         data.sex = userData.sex
         data.country = userData.country
       } catch(error) {
@@ -77,10 +77,7 @@ class SideMenu extends Component {
               nameWeight="bold"
               photo={require('@assets/images/profile.png')}
               name={data.name}
-              age={data.age}
-              sex={data.sex}
               location={data.country}
-              birthdate={data.lfiBalance}
           />
 
           <View style={styles.navContent}>
