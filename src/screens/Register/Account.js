@@ -11,9 +11,10 @@ import {
   TextInput
 } from 'react-native';
 
-import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
-import { CreateUser } from '@src/mutations/CreateUser';
 import data from '@src/data';
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify';
+import { CreateUser } from '@src/mutations/CreateUser';
+import { AuthError } from '@src/Util/AuthError';
 
 import RegisterHeader from '@src/components/Register/Header';
 import { BUTTON_COLOR } from '@src/styles/common';
@@ -67,21 +68,8 @@ class ScreensRegisterAccount extends Component {
         console.log('Account Created! ', res)
       })
       .catch(err => {
-        let msg = '';
-        if (typeof err === 'string') {
-            msg = err;
-        } else if (err.message) {
-            msg = err.message;
-        } else {
-            msg = JSON.stringify(err);
-        }
-
-        const map = this.props.errorMessage || AmplifyMessageMap;
-        msg = (typeof map === 'string')? map : map(msg);
-
-        this.setState({
-          error: msg,
-        });
+        AuthError(err)
+        this.setState({ error: msg });
         console.log('Error Creating Account: ', err)
       })
     }
@@ -112,21 +100,8 @@ class ScreensRegisterAccount extends Component {
 
         })
         .catch(err => {
-          let msg = '';
-          if (typeof err === 'string') {
-              msg = err;
-          } else if (err.message) {
-              msg = err.message;
-          } else {
-              msg = JSON.stringify(err);
-          }
-
-          const map = this.props.errorMessage || AmplifyMessageMap;
-          msg = (typeof map === 'string')? map : map(msg);
-
-          this.setState({
-            error: msg,
-          });
+          AuthError(err)
+          this.setState({ error: msg });
           console.log('Error Verifying: ', err)
         })
     }

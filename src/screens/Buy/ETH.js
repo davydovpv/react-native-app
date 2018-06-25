@@ -44,7 +44,7 @@ class ScreensBuyETH extends Component {
     });
   }
 
-  async componentDidMount() {
+  async componentWillMount() {
     this.loadData();
   }
 

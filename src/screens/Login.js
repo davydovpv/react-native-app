@@ -14,8 +14,8 @@ import {
 
 import data from '@src/data';
 import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
-import AmplifyMessageMap from '@src/Util/AmplifyMessageMap';
 import { GetUserIDVerified } from '@src/queries/GetUser';
+import { SignIn, AuthError } from '@src/Util/Auth';
 
 import {
   BACKGROUND_DARK,
@@ -61,43 +61,38 @@ class ScreensLogin extends Component {
       });
     }
 
-    loginHandler = () => {
+    loginHandler = async () => {
+
       const { username, password } = this.state
       const { navigation } = this.props
 
+      // Start Dev Mode (Skip login, set user as David S)
+      // let signInID = 'cf06c2c8-673d-44bc-8c96-6e50aaf24dee'
+      // data.id = signInID
+      // this.verifiedLoginHandler(signInID)
+      // return
+      // End Dev Mode
+
+      // To Do - Figure out state issues to import Util/Auth.js
+      // SignIn(username, password)
+
       Auth.signIn(username, password)
-      .then(user => {
-        console.log('logged in!', user)
-
-        this.setState({
-          error: '',
-          hasSuccessLogin: true,
-          user: user
+        .then(user => {
+          console.log('logged in!', user)
+          this.setState({
+            error: '',
+            hasSuccessLogin: true,
+            user: user
+          })
+          if (!this.state.has2StepAuth) {
+            !this.state.idVerified && navigation.navigate('Welcome')
+            this.state.idVerified && navigation.navigate('Home')
+          }
         })
-
-        if (!this.state.has2StepAuth) {
-          !this.state.idVerified && navigation.navigate('Welcome')
-          this.state.idVerified && navigation.navigate('Home')
-        }
-
-      })
-      .catch(err => {
-        let msg = '';
-        if (typeof err === 'string') {
-            msg = err;
-        } else if (err.message) {
-            msg = err.message;
-        } else {
-            msg = JSON.stringify(err);
-        }
-
-        const map = this.props.errorMessage || AmplifyMessageMap;
-        msg = (typeof map === 'string')? map : map(msg);
-
-        this.setState({
-          error: msg,
-        });
-      })
+        .catch(err => {
+          AuthError(err)
+          this.setState({ error: msg });
+        })
     }
 
     verifyHandler = () => {
@@ -111,23 +106,11 @@ class ScreensLogin extends Component {
           let signInID = user.signInUserSession.accessToken.payload.sub
           data.id = signInID
           this.verifiedLoginHandler(signInID)
+
         })
         .catch(err => {
-          let msg = '';
-          if (typeof err === 'string') {
-              msg = err;
-          } else if (err.message) {
-              msg = err.message;
-          } else {
-              msg = JSON.stringify(err);
-          }
-
-          const map = this.props.errorMessage || AmplifyMessageMap;
-          msg = (typeof map === 'string')? map : map(msg);
-
-          this.setState({
-            error: msg,
-          });
+          AuthError(err)
+          this.setState({ error: msg });
         })
     }
 
@@ -157,7 +140,6 @@ class ScreensLogin extends Component {
     }
 
     verifiedLoginHandler = async (id) => {
-      //const { navigation } = this.props;
 
       const userInfo = await API.graphql(graphqlOperation(GetUserIDVerified, { userId: id }))
       const { has_verified_id } = userInfo.data.getUser;
@@ -169,7 +151,6 @@ class ScreensLogin extends Component {
       } else {
         this.props.navigation.navigate('Welcome')
       }
-
     }
 
     render() {

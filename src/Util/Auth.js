@@ -1,41 +1,44 @@
-//To Do: Move Auth Logic Here
+import Amplify, { Auth } from 'aws-amplify';
+import AmplifyMessageMap from './AmplifyMessageMap';
 
-import { Auth } from 'aws-amplify';
-
-
-export const SignIn = (username, password) => {
-
-  Auth.signIn(username, password)
-  .then(user => {
-    console.log('logged in!', user)
-    return "success"
-  })
-  .catch(err => {
-    console.log('error sign in: ', err)
-  })
-
+export const AuthError = (err) => {
+    if (typeof err === 'string') {
+        msg = err;
+    } else if (err.message) {
+        msg = err.message;
+    } else {
+        msg = JSON.stringify(err);
+    }
+    const map = AmplifyMessageMap;
+    msg = (typeof map === 'string')? map : map(msg);
+    return msg
 }
 
-export const SignUp = (username, password, email, phone_number) => {
+export const SignIn = async (username, password) => {
+  Auth.signIn(username, password)
+  .then(user => {
+    console.log('trying to login')
+    console.log('Logged In!', user)
+    return user
+  })
+  .catch(err => {
+    AuthError(err)
+    console.log('failing to login', msg)
+    return msg
+  })
+}
 
-    Auth.signUp({
-      username: username,
-      password: password,
-      attributes: {
-        email: email,
-        phone_number: phone_number
-      }
+export const VerifySignIn = async (user, authCode) => {
+  Auth.confirmSignIn(user, authCode)
+    .then(user => {
+      console.log('verified user:', user)
+      //To Do: Fix this later by persisting via auth token
+      let signInID = user.signInUserSession.accessToken.payload.sub
+      data.id = signInID
+      this.verifiedLoginHandler(signInID)
     })
-
-    .then(res => {
-      this.setState({
-        verifyNewAccount: true
-      })
-      console.log('signed up!', res)
-    })
-
     .catch(err => {
-      console.log('error: ', err)
+      AuthError(err)
+      return msg
     })
-
 }

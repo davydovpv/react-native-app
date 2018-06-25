@@ -2,7 +2,10 @@ import 'intl';
 import 'intl/locale-data/jsonp/en';
 import React, { Component } from 'react';
 import Navigator from './src/navigators';
-import { FontAwesome } from '@expo/vector-icons';
+
+// View MessageQueue (Performance Checks)
+// import MessageQueue from 'react-native/Libraries/BatchedBridge/MessageQueue'
+// MessageQueue.spy(true);
 
 // Auth
 import Amplify from 'aws-amplify';

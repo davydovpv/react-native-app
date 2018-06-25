@@ -42,6 +42,7 @@ class SideMenu extends Component {
     Auth.signOut()
     .then(data => console.log(data))
     .catch(err => console.log(err));
+    AsyncStorage.clear();
     this.props.navigation.navigate('LoginHandler')
   }
 
