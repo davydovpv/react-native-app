@@ -30,7 +30,6 @@ class ScreensBuyETH extends Component {
   }
 
   async loadData() {
-
     await fetch('https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=ETH')
 
     .then(response => response.json())

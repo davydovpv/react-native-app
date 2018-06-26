@@ -10,8 +10,8 @@ import {
   AsyncStorage
 } from 'react-native';
 
-import { BUTTON_COLOR } from '@src/styles/common';
 import SetupHeader from '@src/components/Setup/Header';
+import { ButtonLogin } from '@src/components/Forms/Buttons';
 
 import data from '@src/data';
 import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
@@ -92,12 +92,10 @@ class ScreensVerifyIDSuccess extends Component {
           </ScrollView>
 
           <View style={styles.footer}>
-            <TouchableOpacity
-              style={styles.buttonBuy}
-              onPress={ this.successVerifyIDHandler }
-            >
-              <Text style={styles.boldButton}>Proceed to Account</Text>
-            </TouchableOpacity>
+            <ButtonLogin
+              buttonLabel="Proceed to Account"
+              onPressHandler={ this.successVerifyIDHandler }
+            />
           </View>
         </View>
 
@@ -148,21 +146,7 @@ const styles = StyleSheet.create({
   footer: {
     width: '100%',
     padding: 20,
-  },
-  boldButton: {
-    fontFamily: 'MontserratSemiBold',
-    fontSize: 20,
-    color: 'rgba(255,255,255,1)',
-  },
-  buttonBuy: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: BUTTON_COLOR,
-    borderRadius: 15,
-    paddingVertical: 20,
-    height: 65,
-  },
+  }
 });
 
 export default ScreensVerifyIDSuccess;

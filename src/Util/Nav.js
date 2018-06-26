@@ -1,11 +1,9 @@
 import { NavigationActions } from 'react-navigation';
 
-navigateToScreen = route => () => {
-
+const NavigateToScreen = route => {
   const navigateAction = NavigationActions.navigate({
     routeName: route
   });
-
 };
 
-export default navigateToScreen
+export { NavigateToScreen }

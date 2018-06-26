@@ -11,14 +11,16 @@ import {
   AsyncStorage,
 } from 'react-native';
 
-import { BUTTON_COLOR } from '@src/styles/common';
 import SetupHeader from '@src/components/Setup/Header';
+import { ButtonLogin } from '@src/components/Forms/Buttons';
 
 // Amplify + JSON Data
 import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
 import { GetUser } from '@src/queries/GetUser'
 import { UpdateUserRegister } from '@src/mutations/UpdateUser'
 import data from '@src/data';
+
+import ErrorDisplay from '@src/components/Forms/ErrorDisplay';
 
 class ScreensVerifyIDStart extends Component {
 
@@ -29,8 +31,7 @@ class ScreensVerifyIDStart extends Component {
       city: '',
       state: '',
       country: '',
-      sex: '',
-      error: ''
+      sex: ''
     }
 
     onChangeText(key, value) {
@@ -257,24 +258,16 @@ class ScreensVerifyIDStart extends Component {
 
           <View style={styles.footer}>
 
-            { this.state.error != null &&
-            <View>
-              <TouchableOpacity
-                onPress={this.clearErrorMessage}
-                >
-                <Text style={{ color: 'hotpink', fontSize: 15, marginBottom: 20}}>
-                  { this.state.error }
-                </Text>
-              </TouchableOpacity>
-            </View>
-            }
+            <ErrorDisplay
+              error={this.state.error}
+              formType="Register"
+            />
 
-            <TouchableOpacity
-              style={styles.buttonBuy}
-              onPress={ this.registerHandler }
-            >
-              <Text style={styles.boldButton}>Continue to Verify ID</Text>
-            </TouchableOpacity>
+            <ButtonLogin
+              buttonLabel="Continue to Verify ID"
+              onPressHandler={ this.registerHandler }
+            />
+
           </View>
         </View>
 
@@ -340,20 +333,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#ccc',
     backgroundColor: '#F2F2F2',
-  },
-  boldButton: {
-    fontFamily: 'MontserratSemiBold',
-    fontSize: 20,
-    color: 'rgba(255,255,255,1)',
-  },
-  buttonBuy: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: BUTTON_COLOR,
-    borderRadius: 15,
-    paddingVertical: 20,
-    height: 65,
   },
 });
 

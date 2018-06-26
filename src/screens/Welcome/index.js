@@ -22,7 +22,9 @@ import { GetUserWelcome } from '@src/queries/GetUser'
 // UI
 import SetupHeaderInitial from '@src/components/Setup/HeaderInitial'
 import UserProfileHome from '@src/components/User/ProfileHome'
-import { BUTTON_COLOR } from '@src/styles/common'
+import { SetupIcon } from '@src/components/UI/Common';
+import { ButtonLogin } from '@src/components/Forms/Buttons';
+
 
 class ScreensWelcome extends Component {
 
@@ -131,30 +133,18 @@ class ScreensWelcome extends Component {
               </View>
 
               <View style={styles.setupRegion}>
-                
-                <TouchableOpacity
-                  onPress={ this.verifyIDHandler }
-                  style={styles.setupIcon}
-                  >
-                  <Image
-                    source={require('@assets/images/icon-idcard.png')}
-                    style={{width:50,height:50}}
-                    resizeMode="contain"
-                  />
-                  <Text style={styles.setupIconText}>Verify Identity</Text>
-                </TouchableOpacity>
 
-                <TouchableOpacity
-                  onPress={ this.setupWalletHandler }
-                  style={styles.setupIcon}
-                  >
-                  <Image
-                    source={require('@assets/images/icon-wallet2.png')}
-                    style={{width:50,height:50}}
-                    resizeMode="contain"
-                  />
-                  <Text style={styles.setupIconText}>Setup LFI Wallet</Text>
-                </TouchableOpacity>
+                <SetupIcon
+                  iconLabel="Verify Identity"
+                  imageSource={require('@assets/images/icon-idcard.png')}
+                  onPressHandler={ this.verifyIDHandler }
+                />
+
+                <SetupIcon
+                  iconLabel="Setup LFI Wallet"
+                  imageSource={require('@assets/images/icon-wallet2.png')}
+                  onPressHandler={ this.setupWalletHandler }
+                />
 
               </View>
 
@@ -162,14 +152,10 @@ class ScreensWelcome extends Component {
           </ScrollView>
 
           <View style={styles.footerRegion}>
-
-            <TouchableOpacity
-              style={styles.buttonBuy}
-              onPress={ this.getStartedHandler }
-              >
-              <Text style={styles.boldButton}>Get Started</Text>
-            </TouchableOpacity>
-
+            <ButtonLogin
+              onPressHandler={ this.getStartedHandler }
+              buttonLabel="Get Started"
+            />
           </View>
 
 
@@ -218,23 +204,6 @@ const styles = StyleSheet.create({
     fontFamily: 'OpenSansRegular',
     fontSize: 17,
   },
-  setupIcon: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 140,
-    width: 140,
-    margin: 10,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 10,
-    backgroundColor: 'white',
-  },
-  setupIconText: {
-    fontFamily: 'OpenSansBold',
-    fontSize: 16,
-    textAlign: 'center',
-  },
   footerRegion: {
     width: '100%',
     padding: 20,
@@ -243,20 +212,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F2F2F2',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  boldButton: {
-    fontFamily: 'MontserratSemiBold',
-    fontSize: 20,
-    color: 'rgba(255,255,255,1)',
-  },
-  buttonBuy: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: BUTTON_COLOR,
-    borderRadius: 15,
-    paddingVertical: 20,
-    height: 65,
   },
 });
 

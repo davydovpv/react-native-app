@@ -9,10 +9,14 @@ import {
   Image,
 } from 'react-native';
 
-import { BUTTON_COLOR } from '@src/styles/common';
 import SetupHeader from '@src/components/Setup/Header';
+import { ButtonLogin } from '@src/components/Forms/Buttons';
 
 class ScreensWalletSetup extends Component {
+
+    completeSetupHandler = () => {
+      this.props.navigation.navigate('Home')
+    }
 
     render() {
 
@@ -120,12 +124,10 @@ class ScreensWalletSetup extends Component {
 
 
           <View style={styles.footerRegion}>
-            <TouchableOpacity
-              style={styles.buttonBuy}
-              onPress={ () => { navigation.navigate('Home')} }
-            >
-              <Text style={styles.boldButton}>Complete Setup</Text>
-            </TouchableOpacity>
+            <ButtonLogin
+              onPressHandler={this.completeSetupHandler}
+              buttonLabel="Complete Setup"
+            />
           </View>
 
         </View>
@@ -198,20 +200,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F2F2F2',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  boldButton: {
-    fontFamily: 'MontserratSemiBold',
-    fontSize: 20,
-    color: 'rgba(255,255,255,1)',
-  },
-  buttonBuy: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: BUTTON_COLOR,
-    borderRadius: 15,
-    paddingVertical: 20,
-    height: 65,
   },
 });
 

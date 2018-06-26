@@ -45,7 +45,6 @@ class ScreensHome extends Component {
       this.props.navigation.navigate('BuyCoin')
     }
 
-
     async componentWillMount() {
 
       const userInfo = await API.graphql(graphqlOperation(GetUser, { userId: data.id }))

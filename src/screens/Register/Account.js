@@ -17,7 +17,9 @@ import { CreateUser } from '@src/mutations/CreateUser';
 import { AuthError } from '@src/Util/AuthError';
 
 import RegisterHeader from '@src/components/Register/Header';
-import { BUTTON_COLOR } from '@src/styles/common';
+import ErrorDisplay from '@src/components/Forms/ErrorDisplay';
+import { ButtonLogin } from '@src/components/Forms/Buttons';
+
 
 class ScreensRegisterAccount extends Component {
 
@@ -111,7 +113,7 @@ class ScreensRegisterAccount extends Component {
       console.log('db success: ', newUser)
 
       //Temporary for Remove once Auth Token implemented
-        data.id = userDetails.userId;
+      data.id = userDetails.userId;
 
       this.props.navigation.navigate('Success')
     }
@@ -291,34 +293,27 @@ class ScreensRegisterAccount extends Component {
 
           <View style={styles.footer}>
 
-            { this.state.error != null &&
-            <View>
-              <TouchableOpacity
-                onPress={this.clearErrorMessage}
-                >
-                <Text style={{ color: 'hotpink', fontSize: 15, marginBottom: 20}}>
-                  { this.state.error }
-                </Text>
-              </TouchableOpacity>
-            </View>
-            }
+            <ErrorDisplay
+              error={this.state.error}
+              formType="Register"
+            />
 
             { !this.state.verifyNewAccount &&
-            <TouchableOpacity
-              style={styles.buttonBuy}
-              onPress={ registerHandler }
-            >
-              <Text style={styles.boldButton}>Sign Up</Text>
-            </TouchableOpacity>
+
+              <ButtonLogin
+                buttonLabel="Sign Up"
+                onPressHandler={ registerHandler }
+              />
+            
             }
 
             { this.state.verifyNewAccount &&
-              <TouchableOpacity
-                style={styles.buttonBuy}
-                onPress={ verifyHandler }
-              >
-                <Text style={styles.boldButton}>Verify Phone Number</Text>
-              </TouchableOpacity>
+
+              <ButtonLogin
+                buttonLabel="Verify Phone Number"
+                onPressHandler={ verifyHandler }
+              />
+
             }
 
           </View>
@@ -423,21 +418,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#ccc',
     backgroundColor: '#F2F2F2',
-  },
-  boldButton: {
-    fontFamily: 'MontserratSemiBold',
-    fontSize: 20,
-    color: 'rgba(255,255,255,1)',
-  },
-  buttonBuy: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: BUTTON_COLOR,
-    borderRadius: 15,
-    paddingVertical: 20,
-    height: 65,
-  },
+  }
 });
 
 export default ScreensRegisterAccount;

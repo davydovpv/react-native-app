@@ -15,7 +15,10 @@ import {
 import data from '@src/data';
 import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
 import { GetUserIDVerified } from '@src/queries/GetUser';
-import { SignIn, AuthError } from '@src/Util/Auth';
+import { AuthError, SignIn } from '@src/Util/Auth';
+import ErrorDisplay from '@src/components/Forms/ErrorDisplay';
+import { ButtonLogin, ButtonLoginText } from '@src/components/Forms/Buttons';
+import { FieldLogin } from '@src/components/Forms/Login';
 
 import {
   BACKGROUND_DARK,
@@ -25,8 +28,8 @@ import {
 
 class ScreensLogin extends Component {
 
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
       this.state = {
         has2StepAuth: true,
         idVerified: false,
@@ -54,7 +57,6 @@ class ScreensLogin extends Component {
       AsyncStorage.setItem('user', JSON.stringify(userObj))
     }
 
-
     onChangeText(key, value) {
       this.setState({
         [key]: value
@@ -62,7 +64,6 @@ class ScreensLogin extends Component {
     }
 
     loginHandler = async () => {
-
       const { username, password } = this.state
       const { navigation } = this.props
 
@@ -73,9 +74,6 @@ class ScreensLogin extends Component {
       // return
       // End Dev Mode
 
-      // To Do - Figure out state issues to import Util/Auth.js
-      // SignIn(username, password)
-
       Auth.signIn(username, password)
         .then(user => {
           console.log('logged in!', user)
@@ -84,10 +82,6 @@ class ScreensLogin extends Component {
             hasSuccessLogin: true,
             user: user
           })
-          if (!this.state.has2StepAuth) {
-            !this.state.idVerified && navigation.navigate('Welcome')
-            this.state.idVerified && navigation.navigate('Home')
-          }
         })
         .catch(err => {
           AuthError(err)
@@ -100,18 +94,19 @@ class ScreensLogin extends Component {
 
       Auth.confirmSignIn(user, authCode)
         .then(user => {
-          console.log('verified user:', user)
-
-          //To Do: Fix this later by persisting via auth token
+          //To Do: Fix this later by persisting via Auth Token
           let signInID = user.signInUserSession.accessToken.payload.sub
           data.id = signInID
           this.verifiedLoginHandler(signInID)
-
         })
         .catch(err => {
           AuthError(err)
           this.setState({ error: msg });
         })
+    }
+
+    updateError = (err) => {
+      return
     }
 
     registerHandler = () => {
@@ -134,17 +129,13 @@ class ScreensLogin extends Component {
     }
 
     clearErrorMessage = () => {
-      this.setState({
-        error: ''
-      });
+      this.setState({ error: '' });
     }
 
     verifiedLoginHandler = async (id) => {
 
       const userInfo = await API.graphql(graphqlOperation(GetUserIDVerified, { userId: id }))
       const { has_verified_id } = userInfo.data.getUser;
-
-      console.log('has_verified_id: ', has_verified_id )
 
       if (has_verified_id === true) {
         this.props.navigation.navigate('Home')
@@ -161,7 +152,6 @@ class ScreensLogin extends Component {
         <View style={styles.loginContainer}>
 
             <StatusBar barStyle="light-content" />
-
 
               <KeyboardAvoidingView style={styles.body} behavior="padding" enabled>
 
@@ -188,21 +178,18 @@ class ScreensLogin extends Component {
                         <View style={styles.lineStyle} />
 
                         { this.renderLoginField("Password", 'password', true) }
-
                       </View>
                     }
 
                     { this.state.hasSuccessLogin &&
                       <View>
-
                         <View style={styles.bodyMessage}>
                           <Text style={styles.bodyText}>Verification Code sent via SMS</Text>
                         </View>
 
-                          { this.renderLoginField("Enter Verification Code", 'authCode', true) }
+                        { this.renderLoginField("Enter Verification Code", 'authCode', true) }
 
                         <View style={styles.lineStyle} />
-
                       </View>
                     }
 
@@ -211,49 +198,37 @@ class ScreensLogin extends Component {
               </KeyboardAvoidingView>
 
               <View style={styles.footer}>
-                { this.state.error != null &&
-                <View style={styles.footerBlock}>
-                  <TouchableOpacity
-                    onPress={this.clearErrorMessage}
-                    >
-                    <Text style={{ color: 'hotpink', fontSize: 15, paddingVertical: 15}}>
-                      { this.state.error }
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                }
+
+                <ErrorDisplay
+                  error={this.state.error}
+                  formType="Login"
+                />
 
                 { this.state.hasSuccessLogin &&
                   <View style={styles.footerBlock}>
-                    <TouchableOpacity
-                      style={styles.buttonLogin}
-                      onPress={ this.verifyHandler }>
-                      <Text style={styles.boldButton}>verify code</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={{paddingVertical: 25}}
-                      onPress={this.resendAuthHandler}
-                      >
-                      <Text style={{ color: '#fff', fontSize: 16}}>
-                        Didn't get it? Resend Code
-                      </Text>
-                    </TouchableOpacity>
+                    <ButtonLogin
+                      buttonLabel="verify code"
+                      onPressHandler={this.verifyHandler}
+                    />
+                    <ButtonLoginText
+                      buttonLabel="Didn't get it? Resend Code"
+                      textType="light"
+                      onPressHandler={this.resendAuthHandler}
+                    />
                   </View>
                 }
 
                 { !this.state.hasSuccessLogin &&
                   <View style={styles.footerBlock}>
-                    <TouchableOpacity
-                      style={styles.buttonLogin}
-                      onPress={ this.loginHandler }>
-                      <Text style={styles.boldButton}>login</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                      style={styles.buttonRegister}
-                      onPress={ this.registerHandler }>
-                      <Text style={styles.boldButton}>create account</Text>
-                    </TouchableOpacity>
+                    <ButtonLogin
+                      buttonLabel="login"
+                      onPressHandler={this.loginHandler}
+                    />
+                    <ButtonLoginText
+                      buttonLabel="create account"
+                      textType="bold"
+                      onPressHandler={this.registerHandler}
+                    />
                   </View>
                 }
 
@@ -329,24 +304,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 250,
-  },
-  boldButton: {
-    fontFamily: FONT_HEADLINE_SEMIBOLD,
-    fontSize: 20,
-    color: 'rgba(255,255,255,1)',
-  },
-  buttonLogin: {
-    backgroundColor: BUTTON_COLOR,
-    borderRadius: 15,
-    paddingVertical: 20,
-    height: 65,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonRegister: {
-    marginTop: 5,
-    paddingVertical: 20,
   },
   copyright: {
     marginTop: 20,
