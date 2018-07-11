@@ -16,7 +16,7 @@ import { IntlProvider, FormattedMessage } from 'react-intl'
 import data from '@src/data'
 import MainHeader from '@src/components/MainHeader'
 import UserProfileHome from '@src/components/User/ProfileHome'
-import { BUTTON_COLOR } from '@src/styles/common'
+import { ButtonLogin } from '@src/components/Forms/Buttons'
 
 import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
 import { GetUser } from '@src/queries/GetUser'
@@ -233,12 +233,10 @@ class ScreensHome extends Component {
               </View>
             </View>
 
-            <TouchableOpacity
-              style={styles.buttonBuy}
-              onPress={ this.buyCoinHandler }
-            >
-                <Text style={styles.boldButton}>Buy LFI Coin</Text>
-            </TouchableOpacity>
+            <ButtonLogin
+              buttonLabel="Buy LFI Coin"
+              onPressHandler={ this.buyCoinHandler }
+            />
 
           </View>
 
@@ -320,20 +318,6 @@ const styles = StyleSheet.create({
   infoText: {
     fontFamily: 'OpenSansRegular',
     fontSize: 16,
-  },
-  boldButton: {
-    fontFamily: 'MontserratSemiBold',
-    fontSize: 20,
-    color: 'rgba(255,255,255,1)',
-  },
-  buttonBuy: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: BUTTON_COLOR,
-    borderRadius: 15,
-    paddingVertical: 20,
-    height: 65,
   },
 });
 

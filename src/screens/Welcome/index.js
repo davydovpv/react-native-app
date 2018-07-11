@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import {
   StyleSheet,
@@ -214,9 +213,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-ScreensWelcome.propTypes = {
-  navigation: PropTypes.object.isRequired
-};
 
 export default ScreensWelcome

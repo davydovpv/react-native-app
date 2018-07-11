@@ -19,6 +19,14 @@ const ButtonLogin = ({ buttonLabel, onPressHandler }) => (
   </TouchableOpacity>
 );
 
+const ButtonLoginSmall = ({ buttonLabel, onPressHandler }) => (
+  <TouchableOpacity
+    style={styles.buttonLoginSM}
+    onPress={ onPressHandler }>
+    <Text style={styles.labelBoldSM}> {buttonLabel} </Text>
+  </TouchableOpacity>
+);
+
 const ButtonLoginText = ({ buttonLabel, onPressHandler, textType="bold" }) => (
   <View>
   { textType === "light" &&
@@ -50,7 +58,21 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingVertical: 20,
   },
+  buttonLoginSM: {
+    height: 55,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: BUTTON_COLOR,
+    borderRadius: 15,
+    paddingVertical: 10,
+  },
   labelBold: {
+    fontFamily: FONT_HEADLINE_SEMIBOLD,
+    fontSize: 20,
+    color: 'rgba(255,255,255,1)',
+  },
+  labelBoldSM: {
     fontFamily: FONT_HEADLINE_SEMIBOLD,
     fontSize: 20,
     color: 'rgba(255,255,255,1)',
@@ -61,4 +83,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { ButtonLogin, ButtonLoginText } ;
+export { ButtonLogin, ButtonLoginSmall, ButtonLoginText } ;

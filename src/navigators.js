@@ -14,8 +14,9 @@ import ScreensCertificate from './screens/Certificate';
 import ScreensRegisterAccount from './screens/Register/Account';
 import ScreensRegisterSuccess from './screens/Register/Success';
 
-// Welcome Flow
+// Welcome Flow + Onboarding
 import ScreensWelcome from './screens/Welcome/';
+import WelcomeTour from './screens/Welcome/Tour';
 
 // Setup: Verify ID Flow
 import ScreensVerifyIDStart from './screens/Setup/VerifyID/Start';
@@ -102,7 +103,8 @@ const LoginStack = createSwitchNavigator(
     LoginHandler: ScreensLogin,
     Register: RegisterStack,
     Welcome: WelcomeStack,
-    Home: DrawerNav
+    Home: DrawerNav,
+    Onboard: WelcomeTour,
   },
   {
     initialRouteName: 'LoginHandler',

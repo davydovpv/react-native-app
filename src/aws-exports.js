@@ -9,7 +9,7 @@ const config = {
     'aws_appsync_graphqlEndpoint': 'https://hyhhf2doo5exxohzirc66e4rbe.appsync-api.us-east-2.amazonaws.com/graphql',
     'aws_appsync_region': 'us-east-2',
     'aws_appsync_authenticationType': 'API_KEY',
-    'aws_appsync_apiKey': 'da2-zyvkkqzfvbfwfaeppzxdlg4nze'
+    'aws_appsync_apiKey': 'da2-kca7qmvbovd2jhcd6tf4mye6r4'
   }
 }
 

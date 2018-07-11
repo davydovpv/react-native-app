@@ -15,6 +15,7 @@ import MainHeader from '@src/components/MainHeader';
 
 import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
 import { UpdateUserBalance } from '@src/mutations/UpdateUser';
+import { ButtonLogin } from '@src/components/Forms/Buttons';
 import data from '@src/data';
 
 
@@ -116,14 +117,12 @@ class ScreensBuyConfirm extends Component {
         </ScrollView>
 
         <View style={styles.buyRow}>
-          <TouchableOpacity
-            style={styles.buttonBuy}
-            onPress={ this.successBuyHandler }
-          >
-            <Text style={styles.boldButton}>
-              Go to Wallet
-            </Text>
-          </TouchableOpacity>
+
+          <ButtonLogin
+            buttonLabel="Go to Wallet"
+            onPressHandler={this.successBuyHandler}
+          />
+
         </View>
       </View>
     </IntlProvider>
@@ -269,21 +268,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     backgroundColor: '#F2F2F2',
   },
-  boldButton: {
-    fontFamily: 'MontserratSemiBold',
-    fontSize: 20,
-    color: 'rgba(255,255,255,1)',
-  },
-  buttonBuy: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#2FB87E',
-    borderRadius: 15,
-    paddingVertical: 20,
-    height: 65,
-  },
-
 });
 
 

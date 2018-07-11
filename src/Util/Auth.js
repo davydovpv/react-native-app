@@ -16,9 +16,7 @@ const AuthError = (err) => {
     return msg
 }
 
-// To Do - Bring all Cognito Functions here.
-
-// Cognito Sign-In
+// To Do - Bring all Cognito Functions here!
 const SignIn = async (username, password) => {
   Auth.signIn(username, password)
     .then(user => {

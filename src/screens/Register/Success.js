@@ -9,13 +9,17 @@ import {
   Image,
 } from 'react-native';
 
-import { BUTTON_COLOR } from '@src/styles/common';
 import RegisterHeader from '@src/components/Register/Header';
+import { ButtonLogin } from '@src/components/Forms/Buttons';
 import data from '@src/data';
 
 class ScreensRegisterSuccess extends Component {
 
     render() {
+
+      loginHandler = () => {
+        this.props.navigation.navigate('LoginHandler')
+      }
 
       const { navigation } = this.props;
 
@@ -32,7 +36,6 @@ class ScreensRegisterSuccess extends Component {
               style={styles.iconShield}
               resizeMode='contain'
             />
-
           </View>
 
           <ScrollView>
@@ -63,14 +66,10 @@ class ScreensRegisterSuccess extends Component {
           </ScrollView>
 
           <View style={styles.footer}>
-            <TouchableOpacity
-              style={styles.buttonBuy}
-              onPress={ () => {
-                navigation.navigate('LoginHandler')
-              } }
-            >
-              <Text style={styles.boldButton}>Proceed to Login</Text>
-            </TouchableOpacity>
+            <ButtonLogin
+              buttonLabel="Proceed to Login"
+              onPressHandler={loginHandler}
+            />
           </View>
         </View>
 
@@ -121,20 +120,6 @@ const styles = StyleSheet.create({
   footer: {
     width: '100%',
     padding: 20,
-  },
-  boldButton: {
-    fontFamily: 'MontserratSemiBold',
-    fontSize: 20,
-    color: 'rgba(255,255,255,1)',
-  },
-  buttonBuy: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: BUTTON_COLOR,
-    borderRadius: 15,
-    paddingVertical: 20,
-    height: 65,
   },
 });
 

@@ -144,6 +144,10 @@ class ScreensLogin extends Component {
       }
     }
 
+    welcomeTourHandler = () => {
+      this.props.navigation.navigate('Onboard');
+    }
+
     render() {
 
       const { hasSuccessLogin } = this.state
@@ -232,9 +236,12 @@ class ScreensLogin extends Component {
                   </View>
                 }
 
-                <Text style={styles.copyright}>
-                  {'\u00A9'} 2018 lifeinsure.io
-                </Text>
+                <TouchableOpacity
+                  onPress={this.welcomeTourHandler}>
+                  <Text style={styles.copyright}>
+                      {'\u00A9'} 2018 lifeinsure.io
+                  </Text>
+                </TouchableOpacity>
 
               </View>
 

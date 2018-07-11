@@ -191,6 +191,8 @@ class ScreensBuyBTC extends Component {
         </ScrollView>
 
         <View style={styles.buyRow}>
+
+
           <TouchableOpacity
             style={styles.buttonBuy}
             onPress={() => {
