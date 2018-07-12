@@ -32,7 +32,7 @@ class WelcomeTour extends Component {
 
         <StatusBar barStyle="light-content" />
 
-        <Swiper autoplay={true} autoplayTimeout={3.5} loop={false}>
+        <Swiper loop={false}>
           <View style={styles.welcomeContent}>
             <Text style={styles.headline}>Welcome to the Future of Life Insurance</Text>
             <Image
@@ -67,7 +67,7 @@ class WelcomeTour extends Component {
                 style={styles.tourImage}
                 resizeMode="contain"
               />
-            <Text style={styles.text}>Upon passing, your LFI balance multiplies and can be widthdrawn. {'\n'}</Text>
+            <Text style={styles.text}>Upon passing, your LFI balance multiplies and can be widthdrawn. {'\n'}{'\n'}</Text>
 
             <ButtonLoginSmall
               onPressHandler={this.skipHandler}

@@ -214,6 +214,7 @@ class ScreensRegisterAccount extends Component {
 
                 <View style={styles.inputRow}>
                   <Text style={styles.inputLabel}>Password</Text>
+                  // To Fix: AWS Cognito pool settings just req number (General Settings > Policies)
                   <TextInput
                     underlineColorAndroid="rgba(0,0,0,0)"
                     secureTextEntry
@@ -304,7 +305,7 @@ class ScreensRegisterAccount extends Component {
                 buttonLabel="Sign Up"
                 onPressHandler={ registerHandler }
               />
-            
+
             }
 
             { this.state.verifyNewAccount &&
