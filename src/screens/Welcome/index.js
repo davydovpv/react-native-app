@@ -33,7 +33,6 @@ class ScreensWelcome extends Component {
         isLoading: true,
         hasVerifiedID: '',
         name: '',
-        first_name: '',
         country: ''
       };
     }
@@ -55,14 +54,12 @@ class ScreensWelcome extends Component {
       const userInfo = await API.graphql(graphqlOperation(GetUserWelcome, { userId: data.id }))
 
       const {
-        name,
         country,
         has_verified_id,
         has_wallet_setup
       } = userInfo.data.getUser;
 
       let userObj = {
-        name: name,
         country: country,
         has_verified_id: has_verified_id,
         has_wallet_setup: has_wallet_setup
@@ -70,8 +67,6 @@ class ScreensWelcome extends Component {
 
       this.setState({
         isLoading: false,
-        name: userObj.name,
-        first_name: userObj.name.split(" ", 1),
         country: userObj.country,
         hasVerifiedID: userObj.has_verified_id,
         hasWalletSetup: userObj.has_wallet_setup
@@ -89,8 +84,6 @@ class ScreensWelcome extends Component {
 
           this.setState({
             isLoading: false,
-            name: userData.name,
-            first_name: userData.name.split(" ", 1),
             country: userData.country,
             hasVerifiedID: userData.hasVerifiedID
           })
@@ -103,7 +96,7 @@ class ScreensWelcome extends Component {
     render() {
 
       const { navigation } = this.props;
-      const { name, first_name, country, hasVerifiedID, hasWalletSetup } = this.state;
+      const { country, hasVerifiedID, hasWalletSetup } = this.state;
 
       return (
 
@@ -126,8 +119,7 @@ class ScreensWelcome extends Component {
 
               <View style={styles.infoRegion}>
                 <Text style={styles.infoText}>
-                  Hi {first_name}! {"\n"}{"\n"}
-                  To get started, as a resident of {country} you must complete the following steps to create a Life Insure account.
+                  To get started, as a resident of { country } you must complete the following steps to create a Life Insure account.
                 </Text>
               </View>
 

@@ -12,6 +12,7 @@ import Amplify from 'aws-amplify';
 import awsconfig from './src/aws-exports';
 Amplify.configure(awsconfig);
 
+
 class App extends Component {
 
   state = {
@@ -37,8 +38,7 @@ class App extends Component {
 
   render() {
     return this.state.fontLoaded ? (
-      <Navigator
-      />
+      <Navigator />
     ) : null ;
   }
 

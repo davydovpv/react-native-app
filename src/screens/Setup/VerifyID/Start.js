@@ -19,8 +19,11 @@ import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
 import { GetUser } from '@src/queries/GetUser'
 import { UpdateUserRegister } from '@src/mutations/UpdateUser'
 import data from '@src/data';
-
 import ErrorDisplay from '@src/components/Forms/ErrorDisplay';
+
+// HOC
+import * as HOC from '@src/HOC';
+const DismissKeyboardView = HOC.DismissKeyboardHOC(View);
 
 class ScreensVerifyIDStart extends Component {
 
@@ -84,6 +87,14 @@ class ScreensVerifyIDStart extends Component {
       }
 
       // Validations
+      if (userDetails.name == null) {
+        this.setState({
+          error: 'Please enter Full Name',
+        });
+        console.log("name missing")
+        return
+      }
+
       if (userDetails.address == null) {
         this.setState({
           error: 'Please enter Address',
@@ -146,6 +157,7 @@ class ScreensVerifyIDStart extends Component {
       return (
 
         <View style={styles.container}>
+
           <StatusBar barStyle="light-content" />
 
           <SetupHeader/>
@@ -154,9 +166,10 @@ class ScreensVerifyIDStart extends Component {
             <Text style={styles.headingText}>Confirm Your Idenfity</Text>
           </View>
 
-
           <KeyboardAvoidingView style={styles.body} behavior="padding" enabled>
+
             <ScrollView style={styles.scrollView}>
+            <DismissKeyboardView>
 
               <View style={[styles.inputRow, {marginBottom: 10}]}>
                 <Text>Please make sure this information matches your Government Issued ID.</Text>
@@ -253,7 +266,9 @@ class ScreensVerifyIDStart extends Component {
                   />
               </View>
 
+            </DismissKeyboardView>
             </ScrollView>
+
           </KeyboardAvoidingView>
 
           <View style={styles.footer}>
@@ -269,8 +284,8 @@ class ScreensVerifyIDStart extends Component {
             />
 
           </View>
-        </View>
 
+        </View>
       );
     }
 

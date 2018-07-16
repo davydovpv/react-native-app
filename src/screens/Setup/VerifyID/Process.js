@@ -29,7 +29,7 @@ class ScreensVerifyIDProcess extends Component {
               resizeMode="contain"
             />
           <Text style={{color: 'grey', marginVertical: 25}}>
-              NETVERIFY API will load here...
+              NETVERIFY will load here in future release.
             </Text>
           </View>
 
@@ -37,14 +37,9 @@ class ScreensVerifyIDProcess extends Component {
             <TouchableOpacity
               onPress={ () => { navigation.navigate('Success')} }
             >
-              <Text style={{fontFamily: 'MontserratSemiBold', fontSize: 16}}>Proceed to Successful Verification{'\n'}</Text>
+              <Text style={{fontFamily: 'MontserratSemiBold', fontSize: 16}}>Click Here to Proceed{'\n'}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={ () => { navigation.navigate('Fail')} }
-            >
-              <Text>Show Failed Verification</Text>
-            </TouchableOpacity>
           </View>
         </View>
 

@@ -41,7 +41,7 @@ class ScreensVerifyIDSuccess extends Component {
       const updateUser = await API.graphql(graphqlOperation(UpdateUserVerifiedID, userDetails));
       console.log('db update success: ', updateUser)
 
-      this.props.navigation.navigate('SetupWallet')
+      this.props.navigation.navigate('Home')
     }
 
     render() {

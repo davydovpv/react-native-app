@@ -3,13 +3,15 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   Image,
   TextInput,
   TouchableOpacity,
-  StatusBar,
   KeyboardAvoidingView,
+  Keyboard,
   Button,
-  AsyncStorage
+  StatusBar,
+  AsyncStorage,
 } from 'react-native';
 
 import data from '@src/data';
@@ -20,11 +22,19 @@ import ErrorDisplay from '@src/components/Forms/ErrorDisplay';
 import { ButtonLogin, ButtonLoginText } from '@src/components/Forms/Buttons';
 import { FieldLogin } from '@src/components/Forms/Login';
 
+import * as HOC from '@src/HOC';
+const DismissKeyboardView = HOC.DismissKeyboardHOC(View);
+
+const FullSCreenSpinnerAndDismissKeyboardView = HOC.FullScreenSpinnerHOC(
+  DismissKeyboardView
+);
+
 import {
   BACKGROUND_DARK,
   BUTTON_COLOR,
   FONT_HEADLINE_SEMIBOLD
 } from '@src/styles/common';
+
 
 class ScreensLogin extends Component {
 
@@ -33,7 +43,8 @@ class ScreensLogin extends Component {
       this.state = {
         has2StepAuth: true,
         idVerified: false,
-        hasSuccessLogin: false
+        hasSuccessLogin: false,
+        logging: false,
       };
     }
 
@@ -45,6 +56,7 @@ class ScreensLogin extends Component {
     }
 
     async componentWillMount() {
+
       let userObj = {
         name: "",
         age: "",
@@ -59,20 +71,25 @@ class ScreensLogin extends Component {
 
     onChangeText(key, value) {
       this.setState({
-        [key]: value
+        [key]: value.replace(/\s/g, '')
       });
     }
 
     loginHandler = async () => {
+      this.setState({
+        error: '',
+        logging: true
+      })
+
       const { username, password } = this.state
       const { navigation } = this.props
 
-      // Start Dev Mode (Skip login, set user as David S)
-      // let signInID = 'cf06c2c8-673d-44bc-8c96-6e50aaf24dee'
+      // // Start Dev Mode (Skip login, set user as David S.)
+      // let signInID = 'b7251d14-1ae5-40d0-9fb3-0664865b1997'
       // data.id = signInID
       // this.verifiedLoginHandler(signInID)
       // return
-      // End Dev Mode
+      // // End Dev Mode
 
       Auth.signIn(username, password)
         .then(user => {
@@ -80,16 +97,18 @@ class ScreensLogin extends Component {
           this.setState({
             error: '',
             hasSuccessLogin: true,
-            user: user
+            user: user,
+            logging: false
           })
         })
         .catch(err => {
           AuthError(err)
-          this.setState({ error: msg });
+          this.setState({ error: msg, logging: false });
         })
     }
 
     verifyHandler = () => {
+      this.setState({ logging: true })
       const { user, authCode } = this.state
 
       Auth.confirmSignIn(user, authCode)
@@ -101,7 +120,7 @@ class ScreensLogin extends Component {
         })
         .catch(err => {
           AuthError(err)
-          this.setState({ error: msg });
+          this.setState({ error: msg, logging: false });
         })
     }
 
@@ -113,18 +132,38 @@ class ScreensLogin extends Component {
       this.props.navigation.navigate('Register');
     }
 
-    renderLoginField = (placeholder, name, secure) => {
+    renderLoginField = (placeholder, name, type, secure) => {
         return (
-          <TextInput
-            placeholder={`${placeholder}`}
-            placeholderTextColor="rgba(255,255,255,0.7)"
-            underlineColorAndroid="rgba(0,0,0,0)"
-            style={styles.input}
-            autoCorrect={false}
-            autoCapitalize="none"
-            secureTextEntry={secure}
-            onChangeText={value => this.onChangeText(name, value)}
-          />
+            <TextInput
+              placeholder={`${placeholder}`}
+              placeholderTextColor="rgba(255,255,255,0.7)"
+              underlineColorAndroid="rgba(0,0,0,0)"
+              style={styles.input}
+              autoCorrect={false}
+              autoCapitalize={'none'}
+              returnKeyType={'next'}
+              keyboardType={type}
+              secureTextEntry={secure}
+              onChangeText={value => this.onChangeText(name, value)}
+            />
+        )
+    }
+
+    renderAuthField = (placeholder, name, secure) => {
+        return (
+            <TextInput
+              placeholder={`${placeholder}`}
+              placeholderTextColor="rgba(255,255,255,0.7)"
+              underlineColorAndroid="rgba(0,0,0,0)"
+              style={styles.inputAuth}
+              autoCorrect={false}
+              autoCapitalize={'none'}
+              returnKeyType={'next'}
+              keyboardType={'numeric'}
+              maxLength={6}
+              secureTextEntry={secure}
+              onChangeText={value => this.onChangeText(name, value)}
+            />
         )
     }
 
@@ -136,6 +175,8 @@ class ScreensLogin extends Component {
 
       const userInfo = await API.graphql(graphqlOperation(GetUserIDVerified, { userId: id }))
       const { has_verified_id } = userInfo.data.getUser;
+
+      this.setState({ logging: false })
 
       if (has_verified_id === true) {
         this.props.navigation.navigate('Home')
@@ -153,8 +194,13 @@ class ScreensLogin extends Component {
       const { hasSuccessLogin } = this.state
 
       return (
-        <View style={styles.loginContainer}>
 
+        <FullSCreenSpinnerAndDismissKeyboardView
+          spinner={this.state.logging}
+          style={styles.screenCover}
+          >
+
+        <View style={styles.loginContainer}>
             <StatusBar barStyle="light-content" />
 
               <KeyboardAvoidingView style={styles.body} behavior="padding" enabled>
@@ -177,28 +223,27 @@ class ScreensLogin extends Component {
                     { !this.state.hasSuccessLogin &&
                       <View>
 
-                        { this.renderLoginField("Username", 'username', false) }
+                        { this.renderLoginField("Username / Email", 'username', 'email-address', false) }
 
                         <View style={styles.lineStyle} />
 
-                        { this.renderLoginField("Password", 'password', true) }
+                        { this.renderLoginField("Password", 'password', 'default', true) }
                       </View>
                     }
 
                     { this.state.hasSuccessLogin &&
                       <View>
                         <View style={styles.bodyMessage}>
-                          <Text style={styles.bodyText}>Verification Code sent via SMS</Text>
+                          <Text style={styles.bodyText}>6-Digit Code sent via SMS</Text>
                         </View>
 
-                        { this.renderLoginField("Enter Verification Code", 'authCode', true) }
+                        { this.renderAuthField("Verification Code", 'authCode', true) }
 
                         <View style={styles.lineStyle} />
                       </View>
                     }
 
                   </View>
-
               </KeyboardAvoidingView>
 
               <View style={styles.footer}>
@@ -221,7 +266,6 @@ class ScreensLogin extends Component {
                     />
                   </View>
                 }
-
                 { !this.state.hasSuccessLogin &&
                   <View style={styles.footerBlock}>
                     <ButtonLogin
@@ -235,22 +279,22 @@ class ScreensLogin extends Component {
                     />
                   </View>
                 }
-
-                <TouchableOpacity
-                  onPress={this.welcomeTourHandler}>
-                  <Text style={styles.copyright}>
-                      {'\u00A9'} 2018 lifeinsure.io
-                  </Text>
-                </TouchableOpacity>
+                <Text style={styles.copyright}>
+                  {'\u00A9'} 2018 lifeinsure.io / Build: 15-Jul.v2
+                </Text>
 
               </View>
-
         </View>
+
+        </FullSCreenSpinnerAndDismissKeyboardView>
         );
     }
 }
 
 const styles = StyleSheet.create({
+  screenCover: {
+    flex: 1,
+  },
   loginContainer: {
     flex: 1,
     justifyContent: 'space-between',
@@ -278,7 +322,14 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     width: 250,
-    fontSize: 18,
+    fontSize: 20,
+    textAlign: 'center',
+    color: 'rgba(255,255,255,1)',
+  },
+  inputAuth: {
+    height: 45,
+    width: 250,
+    fontSize: 22,
     textAlign: 'center',
     color: 'rgba(255,255,255,1)',
   },
@@ -286,7 +337,7 @@ const styles = StyleSheet.create({
     width: 250,
     borderWidth: 0.5,
     borderColor: 'rgba(255,255,255,0.5)',
-    margin: 10,
+    marginVertical: 10,
   },
   body: {
     flex: 4,
@@ -299,7 +350,7 @@ const styles = StyleSheet.create({
   bodyText: {
     justifyContent: 'center',
     fontFamily: 'OpenSansBold',
-    fontSize: 14,
+    fontSize: 16,
     color: 'rgba(255,255,255,1)',
   },
   footer: {

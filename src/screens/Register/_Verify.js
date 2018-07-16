@@ -13,16 +13,15 @@ import {
 
 import data from '@src/data';
 import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify';
+import { CreateUser } from '@src/mutations/CreateUser';
 import { AuthError } from '@src/Util/AuthError';
 
 import RegisterHeader from '@src/components/Register/Header';
 import ErrorDisplay from '@src/components/Forms/ErrorDisplay';
 import { ButtonLogin } from '@src/components/Forms/Buttons';
 
-import * as HOC from '@src/HOC';
-const DismissKeyboardView = HOC.DismissKeyboardHOC(View);
 
-class ScreensRegisterAccount extends Component {
+class ScreensRegisterVerify extends Component {
 
     constructor() {
       super();
@@ -32,11 +31,7 @@ class ScreensRegisterAccount extends Component {
     }
 
     state: {
-      username: '',
-      email: '',
-      password: '',
-      phone_number: '',
-      userSub: '',
+      authCode: '',
       error: ''
     }
 
@@ -46,41 +41,41 @@ class ScreensRegisterAccount extends Component {
       });
     }
 
-    signUp() {
-      const { email, password, phone_number } = this.state
+    verify() {
+      const { authCode } = this.state
 
-      Auth.signUp({
-        username: email,
-        email: email,
-        password: password,
-        attributes: {
-          phone_number: phone_number,
-        }
-      })
-      .then(res => {
-        this.setState({
-          verifyNewAccount: true,
-          userSub: res.userSub,
-          error: ''
+      Auth.confirmSignUp(data.username, authCode)
+        .then(res => {
+          console.log('Confirmed', res)
+
+          // Store in DB
+          const userDetails = {
+            "userId": data.id,
+            "cognitoId": data.username,
+            "name": data.name,
+            "email": data.email,
+            "phone": data.phone,
+            "country": "USA"
+          }
+          this.createNewUser(userDetails)
+
         })
-
-        // Temporary
-        data.id = res.userSub
-        data.username = email
-        data.email = email
-        data.phone = phone_number
-
-        console.log('Account Created! ', res)
-
-        this.props.navigation.navigate('VerifyAccount')
-      })
-      .catch(err => {
-        AuthError(err)
-        this.setState({ error: msg });
-        console.log('Error Creating Account: ', err)
-      })
+        .catch(err => {
+          AuthError(err)
+          this.setState({ error: msg });
+          console.log('Error Verifying: ', err)
+        })
     }
 
+    createNewUser = async (userDetails) => {
+      const newUser = await API.graphql(graphqlOperation(CreateUser, userDetails));
+      console.log('db success: ', newUser)
+
+      //Temporary for Remove once Auth Token implemented
+      data.id = userDetails.userId;
+
+      this.props.navigation.navigate('Success')
+    }
 
     clearErrorMessage = () => {
       this.setState({
@@ -90,14 +85,13 @@ class ScreensRegisterAccount extends Component {
 
     render() {
 
-      registerHandler = () => {
-        this.signUp()
+      verifyHandler = () => {
+        this.verify()
       }
 
       return (
 
         <View style={styles.container}>
-
           <StatusBar barStyle="light-content" />
 
           <RegisterHeader/>
@@ -107,72 +101,43 @@ class ScreensRegisterAccount extends Component {
           </View>
 
           <KeyboardAvoidingView style={styles.body} behavior="padding" enabled>
-          <DismissKeyboardView>
+            <ScrollView style={styles.scrollView}>
 
-                <View style={styles.inputRow}>
-                  <Text style={styles.inputLabel}>Email</Text>
-                  <TextInput
-                    placeholder="james.smith@gmail.com"
-                    underlineColorAndroid="rgba(0,0,0,0)"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    returnKeyType="next"
-                    keyboardType="email-address"
-                    ref={(input) => this.emailInput = input }
-                    onSubmitEditing={() => this.passwordInput.focus()}
-                    onChangeText={value => this.onChangeText('email', value)}
-                    style={styles.input}
-                    />
-                </View>
+                <View>
+                  <View style={styles.inputRow}>
+                    <Text style={styles.smallHeadingText}>
+                      Verify Phone Number
+                    </Text>
+                  </View>
 
-                <View style={styles.inputRow}>
-                  <Text style={styles.inputLabel}>Password</Text>
-                  <TextInput
-                    underlineColorAndroid="rgba(0,0,0,0)"
-                    secureTextEntry
-                    autoCorrect={false}
-                    returnKeyType="next"
-                    ref={(input) => this.passwordInput = input }
-                    onSubmitEditing={() => this.phoneInput.focus()}
-                    onChangeText={value => this.onChangeText('password', value)}
-                    style={styles.input}
-                    />
-                </View>
+                  <View style={styles.inputRow}>
+                    <Text style={{fontSize: 16}}>
+                      We have sent a verification code to {this.state.phone_number}.
+                    </Text>
+                  </View>
 
-                <View style={styles.inputRow}>
-                  <Text style={styles.inputLabel}>Phone</Text>
-
-                  <View style={styles.inputImageGroup}>
-
-                    <View style={styles.inputImage}>
-                      <Image
-                        source={require('@assets/images/icon-usd.png')}
-                        style={{width:30, height: 20}}
-                        resizeMode="contain"
-                      />
-                      <Text>+ 1</Text>
-                    </View>
-
+                  <View style={styles.inputRow}>
                     <TextInput
+                      placeholder="Enter Verification Code"
                       underlineColorAndroid="rgba(0,0,0,0)"
-                      autoCapitalize="none"
                       autoCorrect={false}
-                      returnKeyType="next"
-                      keyboardType="phone-pad"
-                      ref={(input) => this.phoneInput = input }
-                      onChangeText={value => this.onChangeText('phone_number', '+1' + value)}
-                      style={styles.inputWithImage}
+                      returnKeyType={'go'}
+                      keyboardType={'numeric'}
+                      onChangeText={value => this.onChangeText('authCode', value)}
+                      style={styles.inputAuth}
                       />
+                  </View>
+
+                  <View style={styles.inputRow}>
+                    <TouchableOpacity>
+                      <Text style={styles.resendCode}>
+                        Resend Code
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
 
-                <View style={styles.inputRow}>
-                  <Text> {"\n"}
-                    We will send you an SMS to confirm your phone number. Message and data rates may apply.
-                  </Text>
-                </View>
-
-          </DismissKeyboardView>
+            </ScrollView>
           </KeyboardAvoidingView>
 
           <View style={styles.footer}>
@@ -182,14 +147,13 @@ class ScreensRegisterAccount extends Component {
               formType="Register"
             />
             <ButtonLogin
-              buttonLabel="Sign Up"
-              onPressHandler={ registerHandler }
+              buttonLabel="Verify Phone Number"
+              onPressHandler={ verifyHandler }
             />
 
           </View>
-
-
         </View>
+
       );
     }
 
@@ -243,7 +207,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    height: 42,
+    height: 40,
     padding: 10,
     borderWidth: 1,
     borderColor: '#ccc',
@@ -253,13 +217,13 @@ const styles = StyleSheet.create({
   inputImageGroup: {
     flex: 1,
     flexDirection: 'row',
-    height: 42,
+    height: 40,
   },
   inputImage: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 42,
+    height: 40,
     width: 60,
     padding: 5,
     borderWidth: 1,
@@ -268,7 +232,7 @@ const styles = StyleSheet.create({
   },
   inputWithImage: {
     flex: 1,
-    height: 42,
+    height: 40,
     padding: 10,
     borderWidth: 1,
     borderColor: '#ccc',
@@ -277,7 +241,7 @@ const styles = StyleSheet.create({
   },
   inputFull: {
     flex: 1,
-    height: 42,
+    height: 40,
     padding: 10,
     borderWidth: 1,
     borderColor: '#ccc',
@@ -286,7 +250,7 @@ const styles = StyleSheet.create({
   },
   inputAuth: {
     width: 250,
-    height: 42,
+    height: 40,
     padding: 10,
     marginTop: 20,
     backgroundColor: '#fff',
@@ -315,4 +279,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ScreensRegisterAccount;
+export default ScreensRegisterVerify;

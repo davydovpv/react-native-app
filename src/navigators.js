@@ -12,6 +12,7 @@ import ScreensCertificate from './screens/Certificate';
 
 // Create New Account (Cognito)
 import ScreensRegisterAccount from './screens/Register/Account';
+import ScreensRegisterVerify from './screens/Register/Verify';
 import ScreensRegisterSuccess from './screens/Register/Success';
 
 // Welcome Flow + Onboarding
@@ -54,6 +55,7 @@ const buyCoinStackConfig = {
 const RegisterStack = createStackNavigator(
   {
     NewAccount: { screen: ScreensRegisterAccount },
+    VerifyAccount: { screen: ScreensRegisterVerify },
     Success: { screen: ScreensRegisterSuccess },
   },
   globalStackConfig
@@ -107,7 +109,7 @@ const LoginStack = createSwitchNavigator(
     Onboard: WelcomeTour,
   },
   {
-    initialRouteName: 'LoginHandler',
+    initialRouteName: 'Onboard',
     headerMode: 'none'
   }
 );

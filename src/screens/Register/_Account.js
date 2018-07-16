@@ -13,14 +13,13 @@ import {
 
 import data from '@src/data';
 import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify';
+import { CreateUser } from '@src/mutations/CreateUser';
 import { AuthError } from '@src/Util/AuthError';
 
 import RegisterHeader from '@src/components/Register/Header';
 import ErrorDisplay from '@src/components/Forms/ErrorDisplay';
 import { ButtonLogin } from '@src/components/Forms/Buttons';
 
-import * as HOC from '@src/HOC';
-const DismissKeyboardView = HOC.DismissKeyboardHOC(View);
 
 class ScreensRegisterAccount extends Component {
 
@@ -32,10 +31,13 @@ class ScreensRegisterAccount extends Component {
     }
 
     state: {
+      given_name: '',
+      family_name: '',
       username: '',
-      email: '',
       password: '',
+      email: '',
       phone_number: '',
+      authCode: '',
       userSub: '',
       error: ''
     }
@@ -47,13 +49,15 @@ class ScreensRegisterAccount extends Component {
     }
 
     signUp() {
-      const { email, password, phone_number } = this.state
+      const { given_name, family_name, username, password, email, phone_number } = this.state
 
       Auth.signUp({
-        username: email,
-        email: email,
+        username: username,
         password: password,
         attributes: {
+          given_name: given_name,
+          family_name: family_name,
+          email: email,
           phone_number: phone_number,
         }
       })
@@ -63,16 +67,7 @@ class ScreensRegisterAccount extends Component {
           userSub: res.userSub,
           error: ''
         })
-
-        // Temporary
-        data.id = res.userSub
-        data.username = email
-        data.email = email
-        data.phone = phone_number
-
         console.log('Account Created! ', res)
-
-        this.props.navigation.navigate('VerifyAccount')
       })
       .catch(err => {
         AuthError(err)
@@ -81,6 +76,47 @@ class ScreensRegisterAccount extends Component {
       })
     }
 
+
+     verify() {
+      const { username, authCode, given_name, family_name, email, phone_number, userSub } = this.state
+      Auth.confirmSignUp(username, authCode)
+        .then(res => {
+          console.log('Confirmed', res)
+
+          let fullname = `${given_name} ${family_name}`
+
+          // Temporary Remove once Auth Token implemented
+          data.name = fullname
+          data.username = username
+
+          // Store in DB
+          const userDetails = {
+            "userId": userSub,
+            "cognitoId": username,
+            "name": fullname,
+            "email": email,
+            "phone": phone_number,
+            "country": "USA"
+          }
+          this.createNewUser(userDetails)
+
+        })
+        .catch(err => {
+          AuthError(err)
+          this.setState({ error: msg });
+          console.log('Error Verifying: ', err)
+        })
+    }
+
+    createNewUser = async (userDetails) => {
+      const newUser = await API.graphql(graphqlOperation(CreateUser, userDetails));
+      console.log('db success: ', newUser)
+
+      //Temporary for Remove once Auth Token implemented
+      data.id = userDetails.userId;
+
+      this.props.navigation.navigate('Success')
+    }
 
     clearErrorMessage = () => {
       this.setState({
@@ -94,10 +130,13 @@ class ScreensRegisterAccount extends Component {
         this.signUp()
       }
 
+      verifyHandler = () => {
+        this.verify()
+      }
+
       return (
 
         <View style={styles.container}>
-
           <StatusBar barStyle="light-content" />
 
           <RegisterHeader/>
@@ -107,7 +146,55 @@ class ScreensRegisterAccount extends Component {
           </View>
 
           <KeyboardAvoidingView style={styles.body} behavior="padding" enabled>
-          <DismissKeyboardView>
+            <ScrollView style={styles.scrollView}>
+
+              { !this.state.verifyNewAccount &&
+              <View>
+
+                <View style={styles.inputRow}>
+                  <Text style={styles.inputLabel}>First Name</Text>
+                  <TextInput
+                    placeholder="John"
+                    underlineColorAndroid="rgba(0,0,0,0)"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    returnKeyType="next"
+                    ref={(input) => this.givenNameInput = input }
+                    onSubmitEditing={() => this.familyNameInput.focus()}
+                    onChangeText={value => this.onChangeText('given_name', value)}
+                    style={styles.input}
+                    />
+                </View>
+
+                <View style={styles.inputRow}>
+                  <Text style={styles.inputLabel}>Last Name</Text>
+                  <TextInput
+                    placeholder="Smith"
+                    underlineColorAndroid="rgba(0,0,0,0)"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    returnKeyType="next"
+                    ref={(input) => this.familyNameInput = input }
+                    onSubmitEditing={() => this.userNameInput.focus()}
+                    onChangeText={value => this.onChangeText('family_name', value)}
+                    style={styles.input}
+                    />
+                </View>
+
+                <View style={styles.inputRow}>
+                  <Text style={styles.inputLabel}>User Name</Text>
+                  <TextInput
+                    placeholder="Ex: jsmith72"
+                    underlineColorAndroid="rgba(0,0,0,0)"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    returnKeyType="next"
+                    ref={(input) => this.userNameInput = input }
+                    onSubmitEditing={() => this.emailInput.focus()}
+                    onChangeText={value => this.onChangeText('username', value)}
+                    style={styles.input}
+                    />
+                </View>
 
                 <View style={styles.inputRow}>
                   <Text style={styles.inputLabel}>Email</Text>
@@ -171,8 +258,45 @@ class ScreensRegisterAccount extends Component {
                     We will send you an SMS to confirm your phone number. Message and data rates may apply.
                   </Text>
                 </View>
+              </View>
+              }
 
-          </DismissKeyboardView>
+              { this.state.verifyNewAccount &&
+                <View>
+                  <View style={styles.inputRow}>
+                    <Text style={styles.smallHeadingText}>
+                      Verify Phone Number
+                    </Text>
+                  </View>
+
+                  <View style={styles.inputRow}>
+                    <Text style={{fontSize: 16}}>
+                      We have sent a verification code to {this.state.phone_number}.
+                    </Text>
+                  </View>
+
+                  <View style={styles.inputRow}>
+                    <TextInput
+                      placeholder="Enter Verification Code"
+                      underlineColorAndroid="rgba(0,0,0,0)"
+                      autoCorrect={false}
+                      returnKeyType={'go'}
+                      keyboardType={'numeric'}
+                      onChangeText={value => this.onChangeText('authCode', value)}
+                      style={styles.inputAuth}
+                      />
+                  </View>
+
+                  <View style={styles.inputRow}>
+                    <TouchableOpacity>
+                      <Text style={styles.resendCode}>
+                        Resend Code
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              }
+            </ScrollView>
           </KeyboardAvoidingView>
 
           <View style={styles.footer}>
@@ -181,15 +305,28 @@ class ScreensRegisterAccount extends Component {
               error={this.state.error}
               formType="Register"
             />
-            <ButtonLogin
-              buttonLabel="Sign Up"
-              onPressHandler={ registerHandler }
-            />
+
+            { !this.state.verifyNewAccount &&
+
+              <ButtonLogin
+                buttonLabel="Sign Up"
+                onPressHandler={ registerHandler }
+              />
+
+            }
+
+            { this.state.verifyNewAccount &&
+
+              <ButtonLogin
+                buttonLabel="Verify Phone Number"
+                onPressHandler={ verifyHandler }
+              />
+
+            }
 
           </View>
-
-
         </View>
+
       );
     }
 
@@ -243,7 +380,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    height: 42,
+    height: 40,
     padding: 10,
     borderWidth: 1,
     borderColor: '#ccc',
@@ -253,13 +390,13 @@ const styles = StyleSheet.create({
   inputImageGroup: {
     flex: 1,
     flexDirection: 'row',
-    height: 42,
+    height: 40,
   },
   inputImage: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 42,
+    height: 40,
     width: 60,
     padding: 5,
     borderWidth: 1,
@@ -268,7 +405,7 @@ const styles = StyleSheet.create({
   },
   inputWithImage: {
     flex: 1,
-    height: 42,
+    height: 40,
     padding: 10,
     borderWidth: 1,
     borderColor: '#ccc',
@@ -277,7 +414,7 @@ const styles = StyleSheet.create({
   },
   inputFull: {
     flex: 1,
-    height: 42,
+    height: 40,
     padding: 10,
     borderWidth: 1,
     borderColor: '#ccc',
@@ -286,7 +423,7 @@ const styles = StyleSheet.create({
   },
   inputAuth: {
     width: 250,
-    height: 42,
+    height: 40,
     padding: 10,
     marginTop: 20,
     backgroundColor: '#fff',

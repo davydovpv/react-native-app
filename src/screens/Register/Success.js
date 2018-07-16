@@ -42,8 +42,6 @@ class ScreensRegisterSuccess extends Component {
           <View style={styles.body}>
 
             <Text style={styles.bodyText}>
-              Dear {data.name}, {'\n'}
-              {'\n'}
               Thank you for registering an account with Life Insure. After you login, you'll be able to register an LFI Wallet and get started.{'\n'}
               {'\n'}
               Welcome to LFI!{'\n'}
@@ -114,7 +112,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   bodyText: {
-    fontSize: 15,
+    fontSize: 16,
     fontFamily: 'OpenSansRegular',
   },
   footer: {

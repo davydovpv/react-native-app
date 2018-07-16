@@ -6,6 +6,8 @@ import {
   Image,
   StatusBar,
   TouchableOpacity,
+  ScrollView,
+  Dimensions,
   Button,
   Alert,
   AsyncStorage
@@ -20,6 +22,8 @@ import { ButtonLogin } from '@src/components/Forms/Buttons'
 
 import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
 import { GetUser } from '@src/queries/GetUser'
+
+const { width: windowWidth } = Dimensions.get('window');
 
 class ScreensHome extends Component {
 
@@ -37,7 +41,8 @@ class ScreensHome extends Component {
       super(props);
       this.state = {
         isLoading: true,
-        idVerified: data.idVerified
+        idVerified: data.idVerified,
+        windowWidth: windowWidth
       };
     }
 
@@ -106,11 +111,13 @@ class ScreensHome extends Component {
             country: userData.country,
             lfi_balance: userData.lfi_balance
           })
+          console.log(windowWidth)
         } catch(error) {
           console.log(error)
       }
 
     }
+
 
     render() {
 
@@ -133,13 +140,13 @@ class ScreensHome extends Component {
 
           <MainHeader />
 
-
+          <ScrollView style={{width: '100%'}}>
           <View style={styles.profileRegion}>
 
-            <UserProfileHome
-              photo={require('@assets/images/profile.png')}
-              name={ name }
-            />
+          <UserProfileHome
+            photo={require('@assets/images/profile.png')}
+            name={ name }
+          />
 
           <Text> {city}, {state}</Text>
 
@@ -178,6 +185,7 @@ class ScreensHome extends Component {
             </View>
 
             </View>
+            </ScrollView>
 
             <View style={styles.infoRegion}>
               <View style={{flexDirection: 'row'}}>
@@ -252,6 +260,7 @@ class ScreensHome extends Component {
 const styles = StyleSheet.create({
   homeContainer: {
     flex: 1,
+    width: windowWidth,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
