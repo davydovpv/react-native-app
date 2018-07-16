@@ -16,7 +16,7 @@ import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify';
 import { CreateUserNew } from '@src/mutations/CreateUserNew';
 import { AuthError } from '@src/Util/AuthError';
 
-import RegisterHeader from '@src/components/Register/Header';
+import RegisterHeader from '@src/components/Register/HeaderStart';
 import ErrorDisplay from '@src/components/Forms/ErrorDisplay';
 import { ButtonLogin } from '@src/components/Forms/Buttons';
 
@@ -97,7 +97,7 @@ class ScreensRegisterVerify extends Component {
 
           <StatusBar barStyle="light-content" />
 
-          <RegisterHeader/>
+          <RegisterHeader />
 
           <View style={styles.headingRow}>
             <Text style={styles.headingText}>Create New Account</Text>

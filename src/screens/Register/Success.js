@@ -9,7 +9,7 @@ import {
   Image,
 } from 'react-native';
 
-import RegisterHeader from '@src/components/Register/Header';
+import RegisterHeader from '@src/components/Register/HeaderStart';
 import { ButtonLogin } from '@src/components/Forms/Buttons';
 import data from '@src/data';
 

@@ -290,7 +290,7 @@ class ScreensLogin extends Component {
                 }
 
                 <Text style={styles.copyright}>
-                  {'\u00A9'} 2018 lifeinsure.io / Build: 15-Jul.v2
+                  {'\u00A9'} 2018 lifeinsure.io / Build: 15-Jul.v3
                 </Text>
 
               </View>
