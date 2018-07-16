@@ -15,11 +15,11 @@ import {
 } from 'react-native';
 
 import data from '@src/data';
-import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
-import { GetUserIDVerified } from '@src/queries/GetUser';
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify';
+
 import { AuthError, SignIn } from '@src/Util/Auth';
 import ErrorDisplay from '@src/components/Forms/ErrorDisplay';
-import { ButtonLogin, ButtonRegister, ButtonLoginText } from '@src/components/Forms/Buttons';
+import { ButtonLogin, ButtonLoginText } from '@src/components/Forms/Buttons';
 import { FieldLogin } from '@src/components/Forms/Login';
 
 import * as HOC from '@src/HOC';
@@ -36,101 +36,65 @@ import {
 } from '@src/styles/common';
 
 
-class ScreensLogin extends Component {
+class ScreensResetPassword extends Component {
 
     constructor(props) {
       super(props);
       this.state = {
-        has2StepAuth: true,
-        idVerified: false,
-        hasSuccessLogin: false,
-        logging: false
+        delivery: null,
+        logging: false,
       };
     }
 
     state: {
       username: '',
       password: '',
-      authCode: '',
       user: ''
     }
 
-    async componentWillMount() {
-
-      let userObj = {
-        name: "",
-        age: "",
-        sex: "",
-        city: "",
-        state: "",
-        country: "",
-        lfi_balance: ""
-      }
-      AsyncStorage.setItem('user', JSON.stringify(userObj))
-
-    }
-
-    onChangeText(key, value) {
+    onChangeText = (key, value) => {
       this.setState({
         [key]: value.replace(/\s/g, '')
       });
     }
 
-    loginHandler = async () => {
-      this.setState({
-        error: '',
-        logging: true
-      })
-
-      const { username, password } = this.state
-      const { navigation } = this.props
-
-      // // Start Dev Mode (Skip login, set user as David S.)
-      // let signInID = 'b7251d14-1ae5-40d0-9fb3-0664865b1997'
-      // data.id = signInID
-      // this.verifiedLoginHandler(signInID)
-      // return
-      // // End Dev Mode
-
-      Auth.signIn(username, password)
-        .then(user => {
-          console.log('logged in!', user)
-          this.setState({
-            error: '',
-            hasSuccessLogin: true,
-            user: user,
-            logging: false
-          })
-        })
-        .catch(err => {
-          AuthError(err)
-          this.setState({ error: msg, logging: false });
-        })
+    cancelResetHandler = () => {
+      this.props.navigation.navigate('LoginHandler');
     }
 
-    verifyHandler = () => {
+    requestResetHandler = () => {
+      const { username } = this.state;
+      if (!username) {
+          this.setState({ error: 'Username cannot be empty' });
+          return;
+      }
       this.setState({ logging: true })
-      const { user, authCode } = this.state
-
-      Auth.confirmSignIn(user, authCode)
-        .then(user => {
-          //To Do: Fix this later by persisting via Auth Token
-          let signInID = user.signInUserSession.accessToken.payload.sub
-          data.id = signInID
-          this.verifiedLoginHandler(signInID)
-        })
-        .catch(err => {
-          AuthError(err)
-          this.setState({ error: msg, logging: false });
-        })
+      Auth.forgotPassword(username)
+           .then(data => {
+               this.setState({
+                 error: '',
+                 delivery: data.CodeDeliveryDetails,
+                 logging: false,
+               });
+           })
+           .catch(err => {
+             AuthError(err)
+             this.setState({ error: msg, logging: false });
+           });
     }
 
-    updateError = (err) => {
-      return
-    }
-
-    registerHandler = () => {
-      this.props.navigation.navigate('Register');
+    submitResetHandler = () => {
+        const { username, authCode, password } = this.state;
+        this.setState({ logging: true })
+        Auth.forgotPasswordSubmit(username, authCode, password)
+            .then(data => {
+                console.log('Reset Successful')
+                this.props.navigation.navigate('LoginHandler');
+            })
+            .catch(err => {
+              AuthError(err)
+              this.setState({ error: msg, logging: false });
+            });
     }
 
     renderLoginField = (placeholder, name, type, secure) => {
@@ -168,32 +132,6 @@ class ScreensLogin extends Component {
         )
     }
 
-    clearErrorMessage = () => {
-      this.setState({ error: '' });
-    }
-
-    verifiedLoginHandler = async (id) => {
-
-      const userInfo = await API.graphql(graphqlOperation(GetUserIDVerified, { userId: id }))
-      const { has_verified_id } = userInfo.data.getUser;
-
-      this.setState({ logging: false })
-
-      if (has_verified_id === true) {
-        this.props.navigation.navigate('Home')
-      } else {
-        this.props.navigation.navigate('Welcome')
-      }
-    }
-
-    welcomeTourHandler = () => {
-      this.props.navigation.navigate('Onboard');
-    }
-
-    resetPassHandler = () => {
-      this.props.navigation.navigate('ResetPassword');
-    }
-
     render() {
 
       const { hasSuccessLogin } = this.state
@@ -225,26 +163,32 @@ class ScreensLogin extends Component {
 
                   <View style={styles.loginForm}>
 
-                    { !this.state.hasSuccessLogin &&
+                    { !this.state.delivery &&
                       <View>
 
-                        { this.renderLoginField("Username / Email", 'username', 'email-address', false) }
+                        <View style={styles.bodyMessage}>
+                          <Text style={styles.bodyText}>Reset your password</Text>
+                        </View>
+
+                        { this.renderLoginField("Email Address", 'username', 'email-address', false) }
 
                         <View style={styles.lineStyle} />
 
-                        { this.renderLoginField("Password", 'password', 'default', true) }
                       </View>
                     }
 
-                    { this.state.hasSuccessLogin &&
+                    { this.state.delivery &&
                       <View>
                         <View style={styles.bodyMessage}>
-                          <Text style={styles.bodyText}>Login Code sent via SMS</Text>
+                          <Text style={styles.bodyText}>Reset Code sent via SMS</Text>
                         </View>
 
-                        { this.renderAuthField("Verification Code", 'authCode', true) }
+                        { this.renderAuthField("Enter Reset Code", 'authCode', false) }
 
                         <View style={styles.lineStyle} />
+
+                        { this.renderLoginField("New Password", 'password', 'default', true) }
+
                       </View>
                     }
 
@@ -258,11 +202,24 @@ class ScreensLogin extends Component {
                   formType="Login"
                 />
 
-                { this.state.hasSuccessLogin &&
+                { !this.state.delivery &&
                   <View style={styles.footerBlock}>
                     <ButtonLogin
-                      buttonLabel="verify code"
-                      onPressHandler={this.verifyHandler}
+                      buttonLabel="get reset code"
+                      onPressHandler={this.requestResetHandler}
+                    />
+                    <ButtonLoginText
+                      buttonLabel="Cancel Reset"
+                      textType="light"
+                      onPressHandler={this.cancelResetHandler}
+                    />
+                  </View>
+                }
+                { this.state.delivery &&
+                  <View style={styles.footerBlock}>
+                    <ButtonLogin
+                      buttonLabel="submit"
+                      onPressHandler={this.submitResetHandler}
                     />
                     <ButtonLoginText
                       buttonLabel="Didn't get it? Resend Code"
@@ -271,26 +228,9 @@ class ScreensLogin extends Component {
                     />
                   </View>
                 }
-                { !this.state.hasSuccessLogin &&
-                  <View style={styles.footerBlock}>
-                    <ButtonLogin
-                      buttonLabel="login"
-                      onPressHandler={this.loginHandler}
-                    />
-                    <ButtonRegister
-                      buttonLabel="create account"
-                      onPressHandler={this.registerHandler}
-                    />
-                    <ButtonLoginText
-                      buttonLabel="Forgot Password?"
-                      textType="light"
-                      onPressHandler={this.resetPassHandler}
-                    />
-                  </View>
-                }
 
                 <Text style={styles.copyright}>
-                  {'\u00A9'} 2018 lifeinsure.io / Build: 15-Jul.v2
+                  {'\u00A9'} 2018 lifeinsure.io / Build: 15-Jul.v3
                 </Text>
 
               </View>
@@ -339,7 +279,7 @@ const styles = StyleSheet.create({
   inputAuth: {
     height: 45,
     width: 250,
-    fontSize: 22,
+    fontSize: 20,
     textAlign: 'center',
     color: 'rgba(255,255,255,1)',
   },
@@ -363,6 +303,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'rgba(255,255,255,1)',
   },
+  bodyLight: {
+    justifyContent: 'center',
+    fontFamily: 'OpenSansRegular',
+    fontSize: 16,
+    color: 'rgba(255,255,255,1)',
+  },
   footer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -382,4 +328,4 @@ const styles = StyleSheet.create({
 
 
 
-export default ScreensLogin;
+export default ScreensResetPassword;

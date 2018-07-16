@@ -6,7 +6,11 @@ import {
 } from 'react-navigation';
 import { Animated, Easing } from 'react-native';
 
+//Login Flow
 import ScreensLogin from './screens/Login';
+import ScreensResetPassword from './screens/Login/ResetPassword';
+
+// App Home
 import ScreensHome from './screens/Home';
 import ScreensCertificate from './screens/Certificate';
 
@@ -103,6 +107,7 @@ const DrawerNav = createDrawerNavigator(
 const LoginStack = createSwitchNavigator(
   {
     LoginHandler: ScreensLogin,
+    ResetPassword: ScreensResetPassword,
     Register: RegisterStack,
     Welcome: WelcomeStack,
     Home: DrawerNav,

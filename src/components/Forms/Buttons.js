@@ -3,7 +3,7 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 
 import {
@@ -27,11 +27,19 @@ const ButtonLoginSmall = ({ buttonLabel, onPressHandler }) => (
   </TouchableOpacity>
 );
 
+const ButtonRegister = ({ buttonLabel, onPressHandler }) => (
+  <TouchableOpacity
+    style={styles.buttonRegister}
+    onPress={ onPressHandler }>
+    <Text style={styles.labelBold}> {buttonLabel} </Text>
+  </TouchableOpacity>
+);
+
 const ButtonLoginText = ({ buttonLabel, onPressHandler, textType="bold" }) => (
   <View>
   { textType === "light" &&
   <TouchableOpacity
-    style={{paddingVertical: 25}}
+    style={{paddingVertical: 20}}
     onPress={ onPressHandler }
     >
     <Text style={styles.labelLight}> {buttonLabel} </Text>
@@ -50,13 +58,13 @@ const ButtonLoginText = ({ buttonLabel, onPressHandler, textType="bold" }) => (
 
 const styles = StyleSheet.create({
   buttonLogin: {
-    height: 65,
+    height: 60,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: BUTTON_COLOR,
     borderRadius: 15,
-    paddingVertical: 20,
+    paddingVertical: 15,
   },
   buttonLoginSM: {
     height: 55,
@@ -66,6 +74,18 @@ const styles = StyleSheet.create({
     backgroundColor: BUTTON_COLOR,
     borderRadius: 15,
     paddingVertical: 10,
+  },
+  buttonRegister: {
+    height: 60,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 10,
+    marginTop: 10,
+    backgroundColor: 'rgba(0,0,0,0)',
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.5)',
   },
   labelBold: {
     fontFamily: FONT_HEADLINE_SEMIBOLD,
@@ -83,4 +103,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { ButtonLogin, ButtonLoginSmall, ButtonLoginText } ;
+export { ButtonLogin, ButtonLoginSmall, ButtonRegister, ButtonLoginText } ;
