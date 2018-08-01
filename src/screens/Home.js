@@ -190,11 +190,11 @@ class ScreensHome extends Component {
             <View style={styles.infoRegion}>
               <View style={{flexDirection: 'row'}}>
 
-                <View style={{flex: 0.3, marginRight: 15}}>
+                <View style={{flex: 0.4, marginRight: 20}}>
                   <Text style={styles.infoTextBold}>LFI Multiply{'\n'}Schedule</Text>
                 </View>
 
-                <View style={{flex: 0.70, height: 70}}>
+                <View style={{flex: 0.6, height: 70}}>
 
                   <View style={{flexDirection: 'row'}}>
                     <Text style={[styles.infoText, {flex: 1}]}>
@@ -204,11 +204,6 @@ class ScreensHome extends Component {
                       {data.multipleFactor}x
                     </Text>
                     <Text style={[styles.infoText, {flex: 2, alignItems: 'flex-end'}]}>
-                      <Image
-                          source={require('@assets/images/icon-lfi.png')}
-                          style={{ marginHorizontal: 5, height: 18, width: 18}}
-                          resizeMode="contain"
-                        />
                       <FormattedMessage
                         id="multiple1"
                         defaultMessage={`{n, number}`}
@@ -225,11 +220,6 @@ class ScreensHome extends Component {
                       {data.multipleFactor2}x
                     </Text>
                     <Text style={[styles.infoText, {flex: 2, alignItems: 'flex-end'}]}>
-                      <Image
-                          source={require('@assets/images/icon-lfi.png')}
-                          style={{ marginHorizontal: 5, height: 18, width: 18}}
-                          resizeMode="contain"
-                        />
                       <FormattedMessage
                         id="multiple1"
                         defaultMessage={`{n, number}`}
@@ -321,8 +311,8 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   infoTextBold: {
-    fontFamily: 'OpenSansBold',
-    fontSize: 16,
+    fontFamily: 'MontserratSemiBold',
+    fontSize: 15,
   },
   infoText: {
     fontFamily: 'OpenSansRegular',

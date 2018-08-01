@@ -9,7 +9,15 @@ const config = {
     'aws_appsync_graphqlEndpoint': 'https://hyhhf2doo5exxohzirc66e4rbe.appsync-api.us-east-2.amazonaws.com/graphql',
     'aws_appsync_region': 'us-east-2',
     'aws_appsync_authenticationType': 'API_KEY',
-    'aws_appsync_apiKey': 'da2-a2ofxtfmyvaktbw74n42q72rqa'
+    'aws_appsync_apiKey': 'da2-q6bvmknht5efjoq2jn3s2o72f4'
+  },
+  AWSPinpoint: {
+    appId: 'fc227622b7874d8c853c757d133672f0',
+    region: 'us-east-1',
+    bufferSize: 1000,
+    flushInterval: 5000,
+    flushSize: 100,
+    resendLimit: 5
   }
 }
 

@@ -38,15 +38,17 @@
   },
   "transactions": [
     {
-      "fundAmount": 150,
+      "date": "2015-06-04",
+      "total": 500,
       "fundCurrency": "ETH",
-      "fundDate": "2018-06-04",
+      "fundAmount": 0.04,
       "hash": "1239xf9231902nw9210091k"
     },
     {
-      "fundAmount": 1200,
+      "date": "2018-05-20",
+      "total": 500,
       "fundCurrency": "USD",
-      "fundDate": "2018-05-20",
+      "fundAmount": 120,
       "hash": "5902w1u290495490xp001w"
     }
   ],

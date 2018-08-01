@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 
 import data from '@src/data';
-import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify'
+import Amplify, { Analytics, Auth, API, graphqlOperation } from 'aws-amplify'
 import { GetUserIDVerified } from '@src/queries/GetUser';
 import { AuthError, SignIn } from '@src/Util/Auth';
 import ErrorDisplay from '@src/components/Forms/ErrorDisplay';
@@ -105,6 +105,10 @@ class ScreensLogin extends Component {
         .catch(err => {
           AuthError(err)
           this.setState({ error: msg, logging: false });
+          Analytics.record({
+            name: '_userauth.auth_fail',
+            attributes: { username }
+          });
         })
     }
 
@@ -122,6 +126,10 @@ class ScreensLogin extends Component {
         .catch(err => {
           AuthError(err)
           this.setState({ error: msg, logging: false });
+          Analytics.record({
+            name: '_userauth.auth_fail',
+            attributes: { username }
+          });
         })
     }
 
@@ -175,9 +183,14 @@ class ScreensLogin extends Component {
     verifiedLoginHandler = async (id) => {
 
       const userInfo = await API.graphql(graphqlOperation(GetUserIDVerified, { userId: id }))
-      const { has_verified_id } = userInfo.data.getUser;
+      const { cognito_id, has_verified_id } = userInfo.data.getUser;
 
       this.setState({ logging: false })
+
+      Analytics.record({
+        name: '_userauth.sign_in',
+        attributes: { cognito_id },
+      });
 
       if (has_verified_id === true) {
         this.props.navigation.navigate('Home')
@@ -290,7 +303,7 @@ class ScreensLogin extends Component {
                 }
 
                 <Text style={styles.copyright}>
-                  {'\u00A9'} 2018 lifeinsure.io / Build: 15-Jul.v3
+                  {'\u00A9'} 2018 lifeinsure.io / Build: 23-Jul.v1
                 </Text>
 
               </View>

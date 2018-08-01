@@ -27,6 +27,7 @@ export const GetUserWelcome = `query GetUserWelcome($userId: ID!) {
 export const GetUserIDVerified = `query GetUserIDVerified($userId: ID!) {
   getUser(id:$userId) {
     id
+    cognito_id
     has_verified_id
   }
 }`
